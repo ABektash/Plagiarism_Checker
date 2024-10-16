@@ -31,9 +31,49 @@ main h2 {
     color: #027e6f;
 }
 
-#Group-Container{
+/* #Group-Container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: red;
+
+} */
+
+#Group-Container {
+  display: flex;
+  justify-content: space-between; 
+  /* gap: 20px;  */
+}
+
+#Left-Group-Container{
     display: flex;
     flex-direction: row;
+    width: 70%;
+}
+
+#Right-Group-Container{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+}
+
+#Right-Group-Container button{
+    width: 30%;
+    height:80%;
+    margin-left: 2%;
+    font-size: 100%; 
+    border: 1px solid #ccc; 
+    border-radius: 10px;
+    background-color: #027e6f; 
+    text-align: center;
+    color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;  
+}
+
+#Right-Group-Container button:hover{
+    color: #f9f9f9;
+    background-color: #00231F; 
+    cursor: pointer;
 }
 
 #Group-Selection {
@@ -52,7 +92,12 @@ main h2 {
   }
   
   #Group-Selection:hover {
-    background-color: #027e6f; 
+    background-color: #00231F; 
+    cursor: pointer;
+  }
+
+  #Group-Selection:focus {
+    background-color: #00231F; 
   }
   
 table {
@@ -66,7 +111,7 @@ table th, table td {
     width: 20%;
     padding: 12px;
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
 }
 
 table th { 
@@ -79,30 +124,23 @@ table td {
     font-size: medium;
 }
 
-.a-link {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.a-link:hover {
-    text-decoration: underline;
-}
-
-.progress-bar {
-    width: 100%;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.progress {
-    height: 20px;
-    background-color: #4caf50;
-    color: #ffffff;
-    line-height: 20px;
+.View-Profile-btn{
+    background-color: #027e6f; 
     text-align: center;
-} 
+    font-size: 16px; 
+    color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;  
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    width: 12%;
+    height:100%;
+
+}
+
+.View-Profile-btn:hover{
+    background-color: #00231F; 
+    cursor: pointer;
+}
 
 
 @media (max-width: 1050px){
