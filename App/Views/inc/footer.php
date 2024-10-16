@@ -12,8 +12,8 @@
         <div class="footer-content-center">
             <h2>JOIN US</h2>
             <ul>
-                <li>Login</li>
-                <li>Sign Up</li>
+                <li onclick="window.location.href='<?php url('login/index'); ?>'">Login</li>
+                <li onclick="window.location.href='<?php url('login/index'); ?>'">Sign Up</li>
             </ul>
         </div>
         <div class="footer-content-right">

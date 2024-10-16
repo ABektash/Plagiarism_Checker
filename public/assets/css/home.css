@@ -62,7 +62,10 @@
 }
 
 .explore-menu h1{
-    color: #262626;
+    margin: auto auto;
+    margin-top: 100px;
+    font-size: max(3vw, 20px);
+    text-align: center;
     font-weight: 500;
 }
 
@@ -127,6 +130,7 @@
     box-sizing: border-box;
     padding: 0;
 }
+
 
 .feature-contents{
     position: absolute;
