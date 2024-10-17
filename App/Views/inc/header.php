@@ -1,10 +1,10 @@
 <div class="navbar">
     <h1 style="color: #027e6f;">PLAGIARISM DETECTION</h1>
     <ul class="navbar-menu">
-        <!-- <a href="/" class="nav-link">Dashboard</a>
+        <a href="#" class="nav-link">Dashboard</a>
         <a href="#explore-menu" class="nav-link">Manage Assignments</a>
         <a href="#app-download" class="nav-link">Manage Students</a>
-        <a href="#footer" class="nav-link">Discussion forum</a> -->
+        <a href="#footer" class="nav-link">Discussion forum</a>
     </ul>
     <div class="navbar-right">
         <button onclick="window.location.href='<?php url('login/index'); ?>'">Login</button>

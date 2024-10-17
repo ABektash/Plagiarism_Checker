@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/dashboards.css">
+    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/dashboard.css">
     <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/header.css">
     <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/footer.css">
 </head>
@@ -19,8 +19,8 @@
         session_start();
         $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-        // if ($user_role == 'student'): 
-        if ('student' == 'student'):
+        if ($user_role == 'student'): 
+        // if ('student' == 'student'):
         ?>
             <!-- Student Dashboard -->
             <section id="submissions">
@@ -87,8 +87,8 @@
 
         <?php
 
-        if ($user_role == 'instructor'):
-            //if ('instructor' == 'instructor'):
+        // if ($user_role == 'instructor'):
+            if ('instructor' == 'instructor'):
         ?>
             <!-- Instructor Dashboard -->
             <section id="groups">
