@@ -7,7 +7,7 @@ class View
     protected $view_file;
     protected $view_data;
 
-    /**
+    /*
      * defining view file and data was that comming 
      * @param string $view  => name of file 
      * @param array $data => data sent to the file 
@@ -18,8 +18,6 @@ class View
         $this->view_data = $data;
         $this->render();
     }
-
-
 
 
     private function render()

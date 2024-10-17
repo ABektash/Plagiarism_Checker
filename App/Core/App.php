@@ -21,7 +21,7 @@ class App
 
 
 
-    /**
+    /*
      * extract controller and method and all parameters
      * @param string $url -> request from url path 
      * @return 
@@ -45,9 +45,6 @@ class App
         
     }
 
-
-
-
     private function removePublicAndBefore($url) {
         // Find the position of "/public" in the URL
         $publicPos = strpos($url, '/public');
@@ -64,7 +61,7 @@ class App
 
 
 
-    /**
+    /*
      * render controller and method and send parameters 
      * @return function 
      */

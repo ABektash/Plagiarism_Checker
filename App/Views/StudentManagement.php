@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,32 +11,33 @@
     <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/StudentManagement.css">
 
 </head>
+
 <body>
 
     <?php include 'inc/header.php'; ?>
 
     <main>
 
-    <!-- Students Dashboard -->
+        <!-- Students Dashboard -->
         <section id="Groups">
-        <div id="Group-Container">
-        <div id="Left-Group-Container">
-         <h2>Group:</h2>
-    
-        <select name="Group Number" id="Group-Selection">
-          <option value="1">1</option>
-          <option value="2">2</option>
-         <option value="3">3</option>
-         <option value="4">4</option>
-        </select>
-        </div>
-  
-  <div id="Right-Group-Container">
-    <button id="create-group-btn">Create Group</button>
-    <button id="edit-group-btn">Edit Group</button>
-    <button id="delete-group-btn">Delete Group</button>
-  </div>
-</div>
+            <div id="Group-Container">
+                <div id="Left-Group-Container">
+                    <h2>Group:</h2>
+
+                    <select name="Group Number" id="Group-Selection">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div id="Right-Group-Container">
+                    <button id="create-group-btn">Create Group</button>
+                    <button id="edit-group-btn">Edit Group</button>
+                    <button id="delete-group-btn">Delete Group</button>
+                </div>
+            </div>
 
             <table>
                 <thead>
@@ -60,3 +62,11 @@
             </table>
 
         </section>
+
+    </main>
+
+    <?php include 'inc/footer.php'; ?>
+
+</body>
+
+</html>
