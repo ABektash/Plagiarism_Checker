@@ -24,6 +24,7 @@
             document.getElementById('date-error').innerText = 'Due date cannot be in the past.';
             isValid = false;
         }
+       
 
         // Prevent form submission if invalid
         if (!isValid) {
@@ -36,7 +37,7 @@
     <?php include 'inc/header.php'; ?> 
 
     <section id="reports">
-                <h2>Assignments </h2>
+                <h2 id="h2Assignments">Assignments </h2>
                 <table>
                     <thead>
                         <tr>
