@@ -10,28 +10,28 @@
     padding: 2% ;
 }
 
-body {
+.StudentManagementBody {
     
     font-family: Arial, sans-serif;
-    background-color: #027e6f;
+    background-color: #f3f3f3;
     color: #333;
     line-height: 1.6;
 }
 
-main {
+.StudentManagementMain {
     padding: 2%;
     margin: 2%;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-main h2 {
+.StudentManagementMain h2 {
     margin-bottom: 20px;
     color: #027e6f;
 }
 
-/* #Group-Container{
+/* .Group-Container{
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -39,25 +39,25 @@ main h2 {
 
 } */
 
-#Group-Container {
+.Group-Container {
   display: flex;
   justify-content: space-between; 
   /* gap: 20px;  */
 }
 
-#Left-Group-Container{
+.Left-Group-Container{
     display: flex;
     flex-direction: row;
     width: 70%;
 }
 
-#Right-Group-Container{
+.Right-Group-Container{
     display: flex;
     flex-direction: row;
     width: 30%;
 }
 
-#Right-Group-Container button{
+.Right-Group-Container button{
     width: 30%;
     height:80%;
     margin-left: 2%;
@@ -70,13 +70,13 @@ main h2 {
     transition: background-color 0.3s ease, color 0.3s ease;  
 }
 
-#Right-Group-Container button:hover{
+.Right-Group-Container button:hover{
     color: #f9f9f9;
     background-color: #00231F; 
     cursor: pointer;
 }
 
-#Group-Selection {
+.Group-Selection {
     width: 45px;
     height: 45px;
     margin-left: 2%;
@@ -91,13 +91,8 @@ main h2 {
     transition: all 0.3s ease; 
   }
   
-  #Group-Selection:hover {
-    background-color: #00231F; 
+  .Group-Selection:hover {
     cursor: pointer;
-  }
-
-  #Group-Selection:focus {
-    background-color: #00231F; 
   }
   
 table {

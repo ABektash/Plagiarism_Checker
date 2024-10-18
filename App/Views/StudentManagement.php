@@ -12,18 +12,18 @@
 
 </head>
 
-<body>
+<body class="StudentManagementBody">
 
+    <?php include 'inc/header.php'; ?>
 
-    <main>
+    <main class="StudentManagementMain">
 
-        <!-- Students Dashboard -->
-        <section id="Groups">
-            <div id="Group-Container">
-                <div id="Left-Group-Container">
+        <section class="Groups">
+            <div class="Group-Container">
+                <div class="Left-Group-Container">
                     <h2>Group:</h2>
 
-                    <select name="Group Number" id="Group-Selection">
+                    <select name="Group Number" class="Group-Selection">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -31,10 +31,10 @@
                     </select>
                 </div>
 
-                <div id="Right-Group-Container">
-                    <button id="create-group-btn">Create Group</button>
-                    <button id="edit-group-btn">Edit Group</button>
-                    <button id="delete-group-btn">Delete Group</button>
+                <div class="Right-Group-Container">
+                    <button class="create-group-btn">Create Group</button>
+                    <button class="edit-group-btn">Edit Group</button>
+                    <button class="delete-group-btn">Delete Group</button>
                 </div>
             </div>
 
