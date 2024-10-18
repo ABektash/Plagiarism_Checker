@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/login.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/login.css">
 </head>
 <body>
     <br>

@@ -3,9 +3,9 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/manageAssignments.css"> 
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/header.css"> 
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/footer.css"> 
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css"> 
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css"> 
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css"> 
 </head>
 <script>
     document.getElementById('assignment-form').addEventListener('submit', function(event) {

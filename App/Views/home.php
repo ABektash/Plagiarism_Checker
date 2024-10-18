@@ -3,10 +3,10 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/home.css">
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/header.css">
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/footer.css">
-    <link rel="stylesheet" href="/Plagarism_Checker/public/assets/css/LoginPopup.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/home.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/LoginPopup.css">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const menuItems = document.querySelectorAll('.explore-menu-list-item img');
@@ -20,25 +20,25 @@
                     title: "Student Account",
                     description: "Create and manage your student account to submit assignments for plagiarism analysis. Track your submissions and view detailed reports to improve your writing.",
                     buttonText: "Sign Up",
-                    backgroundImage: "/Plagarism_Checker/public/assets/images/image.png"
+                    backgroundImage: "/Plagiarism_Checker/public/assets/images/image.png"
                 },
                 {
                     title: "Instructor Account",
                     description: "Manage your instructor account to review submissions, access plagiarism reports, and guide students on improving their originality and writing skills.",
                     buttonText: "Get Started",
-                    backgroundImage: "/Plagarism_Checker/public/assets/images/image.png"
+                    backgroundImage: "/Plagiarism_Checker/public/assets/images/image.png"
                 },
                 {
                     title: "Plagiarism Detection",
                     description: "Our advanced plagiarism detection algorithms ensure that submissions are thoroughly analyzed against a vast database of sources to detect copied content.",
                     buttonText: "Check Now",
-                    backgroundImage: "/Plagarism_Checker/public/assets/images/image.png"
+                    backgroundImage: "/Plagiarism_Checker/public/assets/images/image.png"
                 },
                 {
                     title: "Discussion Forum",
                     description: "Join the discussion forum to collaborate with peers, ask questions, and seek advice on how to maintain originality and improve writing quality.",
                     buttonText: "Join the Forum",
-                    backgroundImage: "/Plagarism_Checker/public/assets/images/image.png"
+                    backgroundImage: "/Plagiarism_Checker/public/assets/images/image.png"
                 }
             ];
 
@@ -88,19 +88,19 @@
 
         <div class="explore-menu-list">
             <div class="explore-menu-list-item">
-                <img class="" src="/Plagarism_Checker/public/assets/images/student.jpg" alt="Menu Item 1" />
+                <img class="" src="/Plagiarism_Checker/public/assets/images/student.jpg" alt="Menu Item 1" />
                 <p>Student Account</p>
             </div>
             <div class="explore-menu-list-item">
-                <img class="" src="/Plagarism_Checker/public/assets/images/instructor.png" alt="Feature 2" />
+                <img class="" src="/Plagiarism_Checker/public/assets/images/instructor.png" alt="Feature 2" />
                 <p>Instructor Account</p>
             </div>
             <div class="explore-menu-list-item">
-                <img class="" src="/Plagarism_Checker/public/assets/images/plagiarism.png" alt="Feature 3" />
+                <img class="" src="/Plagiarism_Checker/public/assets/images/plagiarism.png" alt="Feature 3" />
                 <p>Plagiarism Detection</p>
             </div>
             <div class="explore-menu-list-item">
-                <img class="" src="/Plagarism_Checker/public/assets/images/h-removebg-preview.png" alt="Feature 4" />
+                <img class="" src="/Plagiarism_Checker/public/assets/images/h-removebg-preview.png" alt="Feature 4" />
                 <p>Discussion Forum</p>
             </div>
         </div>
