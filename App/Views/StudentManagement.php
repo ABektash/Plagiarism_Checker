@@ -41,6 +41,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Student Name</th>
                         <th>Email</th>
                         <th>Profile</th>
@@ -48,11 +49,13 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>03242</td>
                         <td>Ahmed Mohamed</td>
                         <td>ghazouly@gmail.com</td>
                         <td><button class="View-Profile-btn">View</button></td>
                     </tr>
                     <tr>
+                        <td>00106</td>
                         <td>Ammar Bektash</td>
                         <td>Abektash@gmail.com</td>
                         <td><button class="View-Profile-btn">View</button></td>
