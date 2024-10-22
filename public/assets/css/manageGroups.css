@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+:root {
+  --poppins: "Poppins", sans-serif;
+  --lato: "Lato", sans-serif;
+
+  --light: #f9f9f9;
+  --blue: #027e6f;
+  --light-blue: #cfe8ff;
+  --grey: #eee;
+  --dark-grey: #aaaaaa;
+  --dark: #342e37;
+  --light-dark: #555555;
+  --red: #db504a;
+  --yellow: #ffce26;
+  --light-yellow: #fff2c6;
+  --orange: #fd7238;
+  --light-orange: #ffe0d3;
+}
+body.dark {
+  --light: #0c0c1e;
+  --grey: #060714;
+  --dark: #fbfbfb;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: var(--grey);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+#content {
+  position: relative;
+  width: calc(100% - 280px);
+  left: 280px;
+  transition: 0.3s ease;
+}
+#sidebar.hide ~ #content {
+  width: calc(100% - 60px);
+  left: 60px;
+}
+#content main {
+  width: 100%;
+  padding: 36px 24px;
+  font-family: var(--poppins);
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+#content main .head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 16px;
+  flex-wrap: wrap;
+}
+#content main .head-title h1  {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+.Group-Selection-Title{
+    color: var(--dark);
+
+}
+.Group-Container {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+
+    /* gap: 20px;  */
+  }
+  
+.Left-Group-Container{
+      display: flex;
+      flex-direction: row;
+      width: 70%;
+}
+  
+.Right-Group-Container{
+      display: flex;
+      flex-direction: row;
+      width: 30%;
+      justify-content: center;
+}
+  
+.create-group-btn , .add-std-btn{
+      width: 30%;
+      height:100%;
+      margin-left: 2%;
+      font-size: 100%; 
+      border: 1px solid #ccc; 
+      border-radius: 10px;
+      background-color: #027e6f; 
+      text-align: center;
+      color: #f9f9f9;
+      transition: background-color 0.3s ease, color 0.3s ease;  
+}
+.create-group-btn:hover , .add-std-btn:hover{
+      color: #f9f9f9;
+      background-color: #00231F; 
+      cursor: pointer;
+}
+.delete-group-btn{
+      width: 30%;
+      height:100%;
+      margin-left: 2%;
+      font-size: 100%; 
+      border: 1px solid #ccc; 
+      border-radius: 10px;
+      background-color: #027e6f; 
+      text-align: center;
+      color: #f9f9f9;
+      transition: background-color 0.3s ease, color 0.3s ease;  
+}
+.delete-group-btn:hover {
+      background-color: #DC143C; 
+      cursor: pointer;
+  
+}
+  
+  
+  
+.Group-Selection {
+      width: 42.5px;
+      height: 42.5px;
+      margin-left: 2%;
+      font-size: 16px; 
+      border:5px solid #027e6f; 
+      border-radius: 5px;
+      background-color: #027e6f; 
+      text-align: center;
+      color: #f9f9f9;
+      /* appearance:none;  */
+      outline: none; 
+      transition: all 0.3s ease; 
+}
+    
+.Group-Selection:hover {
+      cursor: pointer;
+}
+
+.Table-Container{
+    max-height: 520px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: var(--dark);
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+    width: 5%;  
+}
+  
+table th, table td {
+    width: 20%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+table th {
+  background-color: var(--blue);
+  color: var(--light);
+  padding: 11px;
+  text-align: center;
+  font-size: large;
+}
+
+table td {
+  background-color: var(--light);
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: medium;
+}
+
+.View-Profile-btn{
+    background-color: #027e6f; 
+    text-align: center;
+    font-size: 100%; 
+    color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;  
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    width: 15%;
+    height:100%;
+
+}
+
+.View-Profile-btn:hover{
+    background-color: #00231F; 
+    cursor: pointer;
+}
+
+.Delete-std-btn , .Edit-std-btn{
+    background-color: #027e6f; 
+    text-align: center;
+    font-size: large; 
+    color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;  
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    width: 20%;
+    height:100%;
+
+}
+
+.Delete-std-btn:hover{
+    background-color: #DC143C; 
+    cursor: pointer;
+}
+
+.Edit-std-btn:hover{
+    background-color: #00231F; 
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+/* ///////////////////////////////////////////////////////////////////// */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 25%;
+    text-align: center;
+}
+
+.modal-content button {
+    margin: 10px;
+}
+
+#no-btn , #yes-btn , #save-btn ,#cancel-edit-btn , #cancel-add-btn , #add-save-btn{
+    background-color: #027e6f; 
+    text-align: center;
+    font-size: 100%; 
+    color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;  
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    width: 15%;
+    height:100%;
+
+}
+#yes-btn:hover{
+    background-color: #DC143C; 
+    cursor: pointer;
+}
+#no-btn:hover , #save-btn:hover ,#cancel-edit-btn:hover  , #cancel-add-btn:hover , #add-save-btn:hover{
+
+    background-color: #00231F; 
+    cursor: pointer;
+}
+
+/* ///////////////////////////////////////////////////////////////////// */
+
+@media (max-width: 1050px) {
+table th,table td {
+    text-align: center;
+    font-size: 50%;
+  }
+
+  /* main h2 {
+    font-size: 100%;
+} */
+}
+
+
+
+
+
+
