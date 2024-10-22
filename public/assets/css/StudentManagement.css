@@ -57,7 +57,7 @@
     width: 30%;
 }
 
-.create-group-btn , .edit-group-btn{
+.create-group-btn , .add-std-btn{
     width: 30%;
     height:80%;
     margin-left: 2%;
@@ -69,7 +69,7 @@
     color: #f9f9f9;
     transition: background-color 0.3s ease, color 0.3s ease;  
 }
-.create-group-btn:hover , .edit-group-btn:hover{
+.create-group-btn:hover , .add-std-btn:hover{
     color: #f9f9f9;
     background-color: #00231F; 
     cursor: pointer;
@@ -108,11 +108,16 @@
     /* appearance: none;  */
     outline: none; 
     transition: all 0.3s ease; 
-  }
+}
   
-  .Group-Selection:hover {
+.Group-Selection:hover {
     cursor: pointer;
-  }
+}
+
+.Table-Comtainer{
+    max-height: 360px;
+    overflow-y: auto;
+}
   
 table {
     width: 100%;
@@ -120,6 +125,7 @@ table {
     border: 1px solid #dddddd; 
     margin-bottom: 20px;
 }
+
 table th:nth-child(1), table td:nth-child(1) {
     width: 5%;  
 }
@@ -167,7 +173,7 @@ table td {
     transition: background-color 0.3s ease, color 0.3s ease;  
     border: 1px solid #ccc; 
     border-radius: 5px;
-    width: 15%;
+    width: 20%;
     height:100%;
 
 }
@@ -209,7 +215,7 @@ table td {
     margin: 10px;
 }
 
-#no-btn , #yes-btn , #save-btn ,#cancel-edit-btn{
+#no-btn , #yes-btn , #save-btn ,#cancel-edit-btn , #cancel-add-btn , #add-save-btn{
     background-color: #027e6f; 
     text-align: center;
     font-size: 100%; 
@@ -225,7 +231,8 @@ table td {
     background-color: #DC143C; 
     cursor: pointer;
 }
-#no-btn:hover , #save-btn:hover ,#cancel-edit-btn:hover{
+#no-btn:hover , #save-btn:hover ,#cancel-edit-btn:hover  , #cancel-add-btn:hover , #add-save-btn:hover{
+
     background-color: #00231F; 
     cursor: pointer;
 }
@@ -238,10 +245,6 @@ table th, table td {
     text-align: center;
     font-size: 50%;
 } 
-
-/* main h2 {
-    font-size: 100%;
-} */
 
 }
 
