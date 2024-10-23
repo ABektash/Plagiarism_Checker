@@ -4,23 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Dashboard</title>
+  
+    <title>Plagiarism Detection</title>
 
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/StudentManagement.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageGroups.css">
+
 </head>
 
-<body class="StudentManagementBody">
+<body>
+    <?php include 'inc/sidebar.php'; ?>
 
-    <?php include 'inc/header.php'; ?>
+    <section id="content">
+        <?php include 'inc/navbar.php'; ?>
 
-    <main class="StudentManagementMain">
-
-        <section class="Groups">
+        <main>
+            <div class="head-title">
+                <h1>Groups</h1>
+            </div>
             <div class="Group-Container">
                 <div class="Left-Group-Container">
-                    <h2>Group:</h2>
+                    <h2 class="Group-Selection-Title">Group:</h2>
 
                     <select name="Group Number" class="Group-Selection">
                         <option value="1">1</option>
@@ -36,41 +40,38 @@
                     <button class="delete-group-btn">Delete Group</button>
                 </div>
             </div>
-            <div class="Table-Container">           
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Student Name</th>
-                        <th>Email</th>
-                        <th>Profile</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
+
+            <div class="Table-Container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Profile</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
                         <td>03242</td>
                         <td>Ahmed Mohamed</td>
                         <td>ghazouly@gmail.com</td>
                         <td><button class="View-Profile-btn">View</button></td>
                         <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td>
-                    </tr>
-                    <tr>
+                        </tr>
+                        <tr>
                         <td>00106</td>
                         <td>Ammar Bektash</td>
                         <td>Abektash@gmail.com</td>
                         <td><button class="View-Profile-btn">View</button></td>
                         <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td>
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-        </section>
-
-    </main>
-
-    <?php include 'inc/footer.php'; ?>
+        </main>
+    </section>
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal">
@@ -222,41 +223,44 @@
             editModal.style.display = "none";   
         });
 
-        // Add Student Modal
+        // Add Student Modal functionality
         const addModal = document.getElementById("addModal");
+        const addSaveBtn = document.getElementById("add-save-btn");
+        const cancelAddBtn = document.getElementById("cancel-add-btn");
+
         const addNameInput = document.getElementById("addName");
         const addEmailInput = document.getElementById("addEmail");
-        const addSaveBtn = document.getElementById("add-save-btn");
-        const addCancelBtn = document.getElementById("cancel-add-btn");
 
         const addNameError = document.getElementById("addNameError");
         const addEmailError = document.getElementById("addEmailError");
         const duplicateEmailError = document.getElementById("duplicateEmailError");
 
+        // Show Add Student Modal
+        document.querySelector('.add-std-btn').addEventListener('click', function () {
+            addModal.style.display = "block";
+        });
+
+        // Cancel Add Student
+        cancelAddBtn.addEventListener('click', function () {
+            addModal.style.display = "none";
+        });
+
         // Function to check for duplicate emails
         function isDuplicateEmail(email) {
             const rows = document.querySelectorAll('table tbody tr');
+            
+            if (rows.length === 0) return false;  // No rows exist, so no duplicates
+
             for (let row of rows) {
-                if (row.cells[2].textContent === email) {
+                // Ensure row and cells exist before accessing cells[2]
+                if (row && row.cells[2].textContent === email) {
                     return true; // Duplicate email found
                 }
             }
             return false; // No duplicates
         }
 
-        // Add event listener to add student button
-        document.querySelector('.add-std-btn').addEventListener('click', function () {
-            // Reset the form
-            addNameInput.value = '';
-            addEmailInput.value = '';
-            addNameError.style.display = 'none';
-            addEmailError.style.display = 'none';
-            duplicateEmailError.style.display = 'none';
-
-            addModal.style.display = "block";  // Show the add modal
-        });
-
-        // When the user clicks on Add, validate inputs and add a new row to the table
+        // Add new student to the table
         addSaveBtn.addEventListener('click', function () {
             let isValid = true;
 
@@ -307,37 +311,26 @@
                 tableBody.appendChild(newRow);
 
                 // Add event listeners for the new edit and delete buttons
-                newRow.querySelector('.Edit-std-btn').addEventListener('click', function () {
-                    rowToEdit = newRow;  // Get the new row to edit
-                    editNameInput.value = newRow.cells[1].textContent;
-                    editEmailInput.value = newRow.cells[2].textContent;
-                    editModal.style.display = "block";  // Show the edit modal
-                });
+                const editBtn = newRow.querySelector('.Edit-std-btn');
+                const deleteBtn = newRow.querySelector('.Delete-std-btn');
 
-                newRow.querySelector('.Delete-std-btn').addEventListener('click', function () {
-                    rowToDelete = newRow;  // Get the new row to delete
-                    deleteModal.style.display = "block";  // Show the delete modal
-                });
+                if (editBtn) {
+                    editBtn.addEventListener('click', function () {
+                        rowToEdit = newRow;  // Get the new row to edit
+                        editNameInput.value = newRow.cells[1].textContent;
+                        editEmailInput.value = newRow.cells[2].textContent;
+                        editModal.style.display = "block";  // Show the edit modal
+                    });
+                }
+
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', function () {
+                        rowToDelete = newRow;  // Get the new row to delete
+                        deleteModal.style.display = "block";  // Show the delete modal
+                    });
+                }
 
                 addModal.style.display = "none";   
-            }
-        });
-
-        // Cancel add button
-        addCancelBtn.addEventListener('click', function () {
-            addModal.style.display = "none";  
-        });
-
-        // Close modals when clicking outside of them
-        window.addEventListener('click', function (event) {
-            if (event.target == deleteModal) {
-                deleteModal.style.display = "none";
-            }
-            if (event.target == editModal) {
-                editModal.style.display = "none";
-            }
-            if (event.target == addModal) {
-                addModal.style.display = "none";
             }
         });
     </script>

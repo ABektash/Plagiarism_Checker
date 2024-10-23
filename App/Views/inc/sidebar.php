@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="manageGroups">
                 <i class='bx bxs-group'></i>
                 <span class="text">Manage Groups</span>
             </a>

@@ -96,16 +96,16 @@
 
 
 .Group-Selection {
-    width: 45px;
-    height: 45px;
+    width: 42.5px;
+    height: 42.5px;
     margin-left: 2%;
     font-size: 16px; 
-    border: 1px solid #ccc; 
+    border:5px solid #027e6f; 
     border-radius: 5px;
     background-color: #027e6f; 
     text-align: center;
     color: #f9f9f9;
-    /* appearance: none;  */
+    /* appearance:none;  */
     outline: none; 
     transition: all 0.3s ease; 
 }
@@ -114,9 +114,10 @@
     cursor: pointer;
 }
 
-.Table-Comtainer{
+.Table-Container{
     max-height: 360px;
     overflow-y: auto;
+    width: 100%;
 }
   
 table {
@@ -150,7 +151,7 @@ table td {
 .View-Profile-btn{
     background-color: #027e6f; 
     text-align: center;
-    font-size: 16px; 
+    font-size: 100%; 
     color: #f9f9f9;
     transition: background-color 0.3s ease, color 0.3s ease;  
     border: 1px solid #ccc; 
@@ -168,7 +169,7 @@ table td {
 .Delete-std-btn , .Edit-std-btn{
     background-color: #027e6f; 
     text-align: center;
-    font-size: 100%; 
+    font-size: large; 
     color: #f9f9f9;
     transition: background-color 0.3s ease, color 0.3s ease;  
     border: 1px solid #ccc; 
@@ -243,7 +244,7 @@ table td {
 
 table th, table td {
     text-align: center;
-    font-size: 50%;
+    font-size: 100%;
 } 
 
 }
