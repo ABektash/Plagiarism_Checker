@@ -1,0 +1,53 @@
+.body {
+    margin-top: 20px;
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+.card-header {
+    background-color: #f7f7f7;
+    font-weight: 600;
+}
+.form-control, .btn {
+    border-radius: 8px;
+}
+/* Update button color to green */
+.btn-primary {
+    background-color: #027e6f;
+    border-color: #027e6f;
+}
+.btn-primary:hover {
+    background-color: #013016;
+    border-color: #013016;
+}
+.btn-primary:active, .btn-primary:focus {
+background-color: #027e6f; /* Keep the same green color */
+border-color: #027e6f; /* Keep the same green border */
+box-shadow: none; /* Remove box shadow on active */
+}
+.nav-link.active {
+    color: #027e6f;
+    border-bottom: 2px solid #027e6f;
+}
+.nav-link {
+    color: #333;
+    font-weight: 500;
+}
+.img-account-profile {
+    height: 10rem;
+    width: 10rem;
+    object-fit: cover;
+}
+.search-bar {
+    margin-bottom: 20px;
+}
+.search-bar input {
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+}

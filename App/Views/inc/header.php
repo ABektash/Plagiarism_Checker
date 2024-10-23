@@ -1,5 +1,7 @@
+<link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
+
 <div class="navbar">
-    <h1 style="color: #027e6f;">PLAGIARISM DETECTION</h1>
+    <h1 class="navheader">PLAGIARISM DETECTION</h1>
     <ul class="navbar-menu">
         <a href="dashboard" class="nav-link">Dashboard</a>
         <a href="manageAssignments" class="nav-link">Manage Assignments</a>

@@ -4,8 +4,6 @@
 
 <head>
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/home.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/LoginPopup.css">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
