@@ -1,13 +1,22 @@
 <?php 
+
+require_once MODELS.'User.php'; 
+ 
+
 class SignupController extends Controller
 {
+    private $db;
+
+    public function __construct()
+    {
+        require_once CONFIG.'dbh.inc.php';
+        $this->db = $conn; 
+    }
+
     public function index()
     {
         $this->view('signup');
     }
-
-
-
 
     public function submit()
     {
@@ -37,15 +46,23 @@ class SignupController extends Controller
             if (empty($_POST['confirmPassword'])) {
                 $errors['confirmPasswordError'] = "Confirming password is required";
             } elseif ($_POST['confirmPassword'] != $_POST['password']) {
-                $errors['confirmPasswordError'] = "Passwords doesn't match";
-            }
-
-            if (empty($_POST['accountType'])) {
-                $errors['accountTypeError'] = "Account type is required";
+                $errors['confirmPasswordError'] = "Passwords don't match";
             }
 
             if (empty($errors)) {
-                $this->view('home');
+                $user = new User($this->db); 
+
+                $user->first_name = $_POST['fname'];
+                $user->last_name = $_POST['lname'];
+                $user->email = $_POST['email'];
+                $user->password = $_POST['password'];
+
+                if ($user->create()) {
+                    $this->view('home');
+                } else {
+                    $errors['emailError'] = "Email already exists";
+                    $this->view('signup', $errors);
+                }
             } else {
                 $this->view('signup', $errors);
             }

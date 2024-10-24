@@ -29,10 +29,6 @@
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
                     <form>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username</label>
-                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" >
-                        </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputFirstName">First name</label>

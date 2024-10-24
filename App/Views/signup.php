@@ -33,16 +33,8 @@
                 <?php if (isset($confirmPasswordError)): ?>
                     <div class="error-message" id="confirmPassword-error"><?php echo $confirmPasswordError; ?></div>
                 <?php endif; ?>
-
-                <div class="form-group">
-                    <label for="accountType">Account Type</label>
-                    <select id="accountType" name="accountType" class="account-type">
-                        <option value="student" selected>Student</option>
-                        <option value="instructor">Instructor</option>
-                    </select>
-                </div>
-                <?php if (isset($accountTypeError)): ?>
-                    <div class="error-message" id="account-type-error"><?php echo $accountTypeError; ?></div>
+                <?php if (isset($generalError)): ?>
+                    <div class="error-message" id="confirmPassword-error"><?php echo $generalError; ?></div>
                 <?php endif; ?>
 
                 <input type="submit" name="submit" class="button" value="Signup">

@@ -1,6 +1,21 @@
-<?php 
+<?php
+
+
+require_once MODELS.'User.php'; 
+
+
 class LoginController extends Controller
 {
+
+    private $db;
+
+    public function __construct()
+    {
+        require_once CONFIG.'dbh.inc.php';
+        $this->db = $conn; 
+    }
+
+
     public function index()
     {
         $this->view('login');
@@ -9,8 +24,7 @@ class LoginController extends Controller
 
     public function submit()
     {
-        if(isset($_POST['submit']))
-        {
+        if (isset($_POST['submit'])) {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
@@ -28,51 +42,19 @@ class LoginController extends Controller
                 $errors['passwordError'] = "Password must be at least 6 characters long.";
             }
 
-            if (!empty($errors)) {
-                $this->view('login',$errors);
-            } else {
-                $this->view('home');
-            }
-        }
-        
-    }
-
-
-
-
-    public function signup()
-    {
-        $errors = [];
-
-        if (isset($_POST['submit'])) {
-            if (empty($_POST['fname'])) {
-                $errors['fnameError'] = "First name is required";
-            }
-
-            if (empty($_POST['lname'])) {
-                $errors['lnameError'] = "Last name is required";
-            }
-
-            if (empty($_POST['email'])) {
-                $errors['emailError'] = "Email is required";
-            } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $errors['emailError'] = "Invalid email format";
-            }
-
-            if (empty($_POST['password'])) {
-                $errors['passwordError'] = "Password is required";
-            } elseif (strlen($_POST['password']) < 6) {
-                $errors['passwordError'] = "Password must be at least 6 characters long";
-            }
-
-            if (empty($_POST['accountType'])) {
-                $errors['accountTypeError'] = "Account type is required";
-            }
-
-            if (empty($errors)) {
-                $this->view('home');
-            } else {
+            if (!empty($errors)) {    
                 $this->view('login', $errors);
+            } else {
+                $user = new User($this->db);
+                $login_result = $user->login($email, $password);
+
+                if ($login_result) {
+                    $_SESSION['user'] = $login_result;
+                    $this->view('dashboard');
+                } else {
+                    $errors['passwordError'] = "Invalid email or password.";
+                    $this->view('login', $errors);
+                }
             }
         }
     }
