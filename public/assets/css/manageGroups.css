@@ -57,22 +57,62 @@ body {
   max-height: calc(100vh - 56px);
   overflow-y: auto;
 }
+
 #content main .head-title {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  grid-gap: 16px;
-  flex-wrap: wrap;
+  width: 70%;
+  margin-bottom: 2%;
 }
-#content main .head-title h1  {
+#content main .head-title h2  {
   font-size: 36px;
   font-weight: 600;
-  margin-bottom: 10px;
   color: var(--dark);
 }
+
+.Group-Selection {
+  width: 42.5px;
+  height: 42.5px;
+  margin-left: 2%;
+  font-size: 16px; 
+  border:5px solid #027e6f; 
+  border-radius: 5px;
+  background-color: #027e6f; 
+  text-align: center;
+  color: #f9f9f9;
+  /* appearance:none;  */
+  outline: none; 
+  transition: all 0.3s ease; 
+}
+
+.Group-Selection:hover {
+  cursor: pointer;
+}
+
 .Group-Selection-Title{
     color: var(--dark);
 
+}
+
+
+.Instructor-Selection{
+  width: 15%;
+  height: 42.5px;
+  margin-left: 2%;
+  font-size: 16px; 
+  border:5px solid #027e6f; 
+  border-radius: 5px;
+  background-color: #027e6f; 
+  text-align: center;
+  color: #f9f9f9;
+  /* appearance:none;  */
+  outline: none; 
+  transition: all 0.3s ease; 
+}
+
+.Instructor-Selection:hover{
+  cursor: pointer;
 }
 .Group-Container {
     display: flex;
@@ -98,7 +138,7 @@ body {
       justify-content: center;
 }
   
-.create-group-btn , .add-std-btn{
+.create-group-btn , .add-std-btn , .add-instructor-btn{
       width: 30%;
       height:100%;
       margin-left: 2%;
@@ -110,12 +150,12 @@ body {
       color: #f9f9f9;
       transition: background-color 0.3s ease, color 0.3s ease;  
 }
-.create-group-btn:hover , .add-std-btn:hover{
+.create-group-btn:hover , .add-std-btn:hover , .add-instructor-btn:hover{
       color: #f9f9f9;
       background-color: #00231F; 
       cursor: pointer;
 }
-.delete-group-btn{
+.delete-group-btn , .remove-instructor-btn{
       width: 30%;
       height:100%;
       margin-left: 2%;
@@ -127,33 +167,12 @@ body {
       color: #f9f9f9;
       transition: background-color 0.3s ease, color 0.3s ease;  
 }
-.delete-group-btn:hover {
+.delete-group-btn:hover , .remove-instructor-btn:hover {
       background-color: #DC143C; 
       cursor: pointer;
   
 }
   
-  
-  
-.Group-Selection {
-      width: 42.5px;
-      height: 42.5px;
-      margin-left: 2%;
-      font-size: 16px; 
-      border:5px solid #027e6f; 
-      border-radius: 5px;
-      background-color: #027e6f; 
-      text-align: center;
-      color: #f9f9f9;
-      /* appearance:none;  */
-      outline: none; 
-      transition: all 0.3s ease; 
-}
-    
-.Group-Selection:hover {
-      cursor: pointer;
-}
-
 .Table-Container{
     max-height: 520px;
     overflow-y: auto;
@@ -270,7 +289,7 @@ table td {
     margin: 10px;
 }
 
-#no-btn , #yes-btn , #save-btn ,#cancel-edit-btn , #cancel-add-btn , #add-save-btn{
+#no-btn , #yes-btn ,#confirmRemoveInstructorBtn,#cancelRemoveInstructorBtn, #addInstructorSaveBtn , #cancelAddInstructorBtn , #save-btn ,#cancel-edit-btn , #cancel-add-btn , #add-save-btn{
     background-color: #027e6f; 
     text-align: center;
     font-size: 100%; 
@@ -282,11 +301,11 @@ table td {
     height:100%;
 
 }
-#yes-btn:hover{
+#yes-btn:hover , #confirmRemoveInstructorBtn:hover{
     background-color: #DC143C; 
     cursor: pointer;
 }
-#no-btn:hover , #save-btn:hover ,#cancel-edit-btn:hover  , #cancel-add-btn:hover , #add-save-btn:hover{
+#no-btn:hover ,#cancelRemoveInstructorBtn:hover , #addInstructorSaveBtn:hover , #cancelAddInstructorBtn:hover , #save-btn:hover ,#cancel-edit-btn:hover  , #cancel-add-btn:hover , #add-save-btn:hover{
 
     background-color: #00231F; 
     cursor: pointer;
