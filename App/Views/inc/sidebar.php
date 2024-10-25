@@ -25,7 +25,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="manageAssignmentsAdmin">
                 <i class='bx bxs-doughnut-chart'></i>
                 <span class="text">Manage Assignments</span>
             </a>
