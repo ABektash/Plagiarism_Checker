@@ -1,4 +1,18 @@
-#forum-container {
+.manageAssignmentsMain{
+    padding: 3%;
+    margin: 3%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body{
+    background-color: #f3f3f3;
+}
+
+
+
+#forum-container-EDIT {
     border: 2px solid #424242;
     background: #ffffff;
     padding: 20px;
@@ -9,6 +23,60 @@
     margin: 0 auto; 
     margin-top: 20px;
     box-shadow: 2px 2px;
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    right: 0;
+    z-index: 9999; /* Ensure it's above everything else */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
+}
+
+#forum-container-ADD {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    width: 80%; 
+    max-width: 800px; 
+    margin: 0 auto; 
+    margin-top: 20px;
+    box-shadow: 2px 2px;
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    right: 0;
+    z-index: 9999; /* Ensure it's above everything else */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
+}
+
+#pagination-controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+}
+
+.Choose-Group-Container{
+    margin-bottom: 2%;
+    font-size: 16px; 
+    outline: none; 
+    transition: all 0.3s ease;
+}
+.Choose-Group-Container .Group-Selection{
+    padding: 1%;
+    margin-top: 1%;
+}
+#group-filter{
+
 }
 
 #HeaderManage {
@@ -21,14 +89,18 @@
 }
 #HeaderManage{
     color: #027e6f;
+    margin: 0;
+    margin-bottom: 1rem;
 }
 
 input[type="text"], input[type="date"], textarea {
     width: 50%;
     padding: 10px;
-    margin: 10px 0;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
     box-sizing: border-box;
 }
+
 
 .delete-button{
     background-color: #4CAF50;
@@ -83,6 +155,23 @@ input[type="text"], input[type="date"], textarea {
     background-color: black;
 }
 
+.Add-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Add-button:hover {
+    background-color: black;
+}
+
 .file-upload {
     margin-top: 10px;
 }
@@ -92,14 +181,39 @@ input[type="text"], input[type="date"], textarea {
     margin-top: 10px;
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#close-btn {
+    background-color: rgb(211, 5, 5);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#close-btn:hover {
+    background-color:black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 #h2Assignments{
-    margin: 1rem;
-    margin-left: 12rem;
+    margin-top: 1%;
+    text-align: center;
     font-size: 2.2rem;
 }
 
 table {
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
     border: 1px solid #000000; 
     margin-bottom: 20px;
@@ -133,4 +247,29 @@ table td {
 }
 label{
     font-style: bold;
+}
+
+
+.search-bar{
+    display: flex;
+}
+
+.containerMA{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    
+}
+
+
+
+    
+
+
+
+
+@media only screen and (max-width: 767px) {
+    /* Your styles for phones */
+
+    
 }
