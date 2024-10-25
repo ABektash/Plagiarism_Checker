@@ -7,11 +7,6 @@ class View
     protected $view_file;
     protected $view_data;
 
-    /*
-     * defining view file and data was that comming 
-     * @param string $view  => name of file 
-     * @param array $data => data sent to the file 
-     */
     public function __construct($view,$data=[])
     {
         $this->view_file = $view;

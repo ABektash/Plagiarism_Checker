@@ -20,8 +20,8 @@
         // session_start();
         // $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-        //if ($user_role == 'student'): 
-         if ('student' == 'student'):
+        if ($user_role == 'student'): 
+         //if ('student' == 'student'):
         ?>
             <!-- Student Dashboard -->
             <section id="submissions">
@@ -88,8 +88,8 @@
 
         <?php
 
-         if ($user_role == 'instructor'):
-          //  if ('instructor' == 'instructor'):
+         //if ($user_role == 'instructor'):
+            if ('instructor' == 'instructor'):
         ?>
             <!-- Instructor Dashboard -->
             <section id="groups">

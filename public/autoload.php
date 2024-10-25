@@ -15,6 +15,7 @@ require_once(CONFIG . 'helpers.php');
 //include "../App/Config/dbh.inc.php";
 
 
+
 // autoload all classes 
 $modules = [ROOT_PATH, APP, CORE, VIEWS, CONTROLLERS, MODELS, CONFIG];
 set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $modules));

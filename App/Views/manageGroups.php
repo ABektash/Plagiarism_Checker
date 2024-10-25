@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
     <title>Plagiarism Detection</title>
 
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
@@ -17,38 +17,40 @@
 
     <section id="content">
         <?php include 'inc/navbar.php'; ?>
-
+      
         <main>
-            <div class="Group-Container">
-          
-          
-            <div class="Left-Group-Container">
-            <h2 class="Group-Selection-Title">Group:</h2>
-
-        <select name="Group Number" class="Group-Selection">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-        </select>
+        <div class="head-title">
+            <h1>Manage Groups</h1>
         </div>
-        <div class="Right-Group-Container">
+
+            <div class="Group-Container">
+                <div class="Left-Group-Container">
+                    <h2 class="Group-Selection-Title">Group:</h2>
+
+                    <select name="Group Number" class="Group-Selection">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div class="Right-Group-Container">
                     <button class="add-std-btn">Add Student</button>
                     <button class="create-group-btn">Add Group</button>
                     <button class="delete-group-btn">Delete Group</button>
                 </div>
 
-        </div>
-        <div class="Group-Container">
+            </div>
+            <div class="Group-Container">
                 <div class="Left-Group-Container">
-                <h2 class="Group-Selection-Title">Instructors:</h2>
+                    <h2 class="Group-Selection-Title">Instructors:</h2>
 
-                <select name="Instructor" class="Instructor-Selection">
-                <option value="JohnDoe">John Doe</option>
-                <option value="JaneSmith">Jane Smith</option>
-                <option value="MarkJohnson">Mark Johnson</option>
-                <option value="EmilyDavis">Emily Davis</option>
-                </select>
+                    <select name="Instructor" class="Instructor-Selection">
+                        <option value="JohnDoe">John Doe</option>
+                        <option value="JaneSmith">Jane Smith</option>
+                        <option value="MarkJohnson">Mark Johnson</option>
+                        <option value="EmilyDavis">Emily Davis</option>
+                    </select>
 
                 </div>
 
@@ -71,18 +73,18 @@
                     </thead>
                     <tbody>
                         <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><button class="View-Profile-btn">View</button></td>
-                        <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
+                            <td>03242</td>
+                            <td>Ahmed Mohamed</td>
+                            <td>ghazouly@gmail.com</td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
                         </tr>
                         <tr>
-                        <td>00106</td>
-                        <td>Ammar Bektash</td>
-                        <td>Abektash@gmail.com</td>
-                        <td><button class="View-Profile-btn">View</button></td>
-                        <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
+                            <td>00106</td>
+                            <td>Ammar Bektash</td>
+                            <td>Abektash@gmail.com</td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -92,29 +94,29 @@
 
 
     <!-- Add Instructor Modal -->
-<div id="addInstructorModal" class="modal">
-    <div class="modal-content">
-        <h2>Add Instructor</h2>
-        <form id="addInstructorForm">
-            <label for="instructorName">Name:</label>
-            <input type="text" id="instructorName" name="instructorName" required>
-            <p id="instructorNameError" style="color: red; display: none;">Please enter a valid name.</p> <!-- Name error message -->
-            <br>
-            <button type="button" id="addInstructorSaveBtn">Add</button>
-            <button type="button" id="cancelAddInstructorBtn">Cancel</button>
-        </form>
+    <div id="addInstructorModal" class="modal">
+        <div class="modal-content">
+            <h2>Add Instructor</h2>
+            <form id="addInstructorForm">
+                <label for="instructorName">Name:</label>
+                <input type="text" id="instructorName" name="instructorName" required>
+                <p id="instructorNameError" style="color: red; display: none;">Please enter a valid name.</p> <!-- Name error message -->
+                <br>
+                <button type="button" id="addInstructorSaveBtn">Add</button>
+                <button type="button" id="cancelAddInstructorBtn">Cancel</button>
+            </form>
+        </div>
     </div>
-</div>
 
 
-<!-- Remove Instructor Confirmation Modal -->
-<div id="removeInstructorModal" class="modal">
-    <div class="modal-content">
-        <p>Are you sure you want to remove this instructor?</p>
-        <button id="confirmRemoveInstructorBtn">Yes</button>
-        <button id="cancelRemoveInstructorBtn">No</button>
+    <!-- Remove Instructor Confirmation Modal -->
+    <div id="removeInstructorModal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to remove this instructor?</p>
+            <button id="confirmRemoveInstructorBtn">Yes</button>
+            <button id="cancelRemoveInstructorBtn">No</button>
+        </div>
     </div>
-</div>
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal">

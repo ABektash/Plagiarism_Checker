@@ -1,45 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-a {
-  text-decoration: none;
-}
-li {
-  list-style: none;
-}
-:root {
-  --poppins: "Poppins", sans-serif;
-  --lato: "Lato", sans-serif;
-
-  --light: #f9f9f9;
-  --blue: #027e6f;
-  --light-blue: #cfe8ff;
-  --grey: #eee;
-  --dark-grey: #aaaaaa;
-  --dark: #342e37;
-  --light-dark: #555555;
-  --red: #db504a;
-  --yellow: #ffce26;
-  --light-yellow: #fff2c6;
-  --orange: #fd7238;
-  --light-orange: #ffe0d3;
-}
-body.dark {
-  --light: #0c0c1e;
-  --grey: #060714;
-  --dark: #fbfbfb;
-}
-body {
-  font-family: Arial, sans-serif;
-  background: var(--grey);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
 #content {
   position: relative;
   width: calc(100% - 280px);
@@ -57,20 +15,19 @@ body {
   max-height: calc(100vh - 56px);
   overflow-y: auto;
 }
-
 #content main .head-title {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  width: 70%;
-  margin-bottom: 2%;
+  justify-content: space-between;
+  grid-gap: 16px;
+  flex-wrap: wrap;
 }
-#content main .head-title h2  {
+#content main .head-title h1 {
   font-size: 36px;
   font-weight: 600;
+  margin-bottom: 10px;
   color: var(--dark);
 }
-
 .Group-Selection {
   width: 42.5px;
   height: 42.5px;

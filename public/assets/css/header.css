@@ -10,6 +10,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: 2em;
     font-weight: bold;
+    margin-bottom: 0;
 }
 
 
@@ -20,8 +21,7 @@
     align-items: center;
     width: 80%;
     margin: auto;
-    line-height: 1.6;
-    
+    line-height: 1.2; 
 }
 
 .nav-link{

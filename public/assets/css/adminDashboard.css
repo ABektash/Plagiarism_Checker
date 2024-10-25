@@ -25,6 +25,7 @@ html {
   --dark-grey: #aaaaaa;
   --dark: #342e37;
   --light-dark: #555555;
+  --grid-line-color: rgba(85, 85, 85, 0.5);
   --red: #db504a;
   --yellow: #ffce26;
   --light-yellow: #fff2c6;
@@ -87,6 +88,12 @@ body {
   gap: 15px;
   flex-wrap: wrap;
 }
+.card canvas {
+  width: 100%;
+  height: 200px;
+  max-width: 100%;
+}
+
 .card {
   background-color: var(--light);
   border-radius: 10px;
@@ -155,3 +162,4 @@ body {
     min-width: 420px;
   }
 }
+

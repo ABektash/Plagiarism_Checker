@@ -10,9 +10,10 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/file.css"> -->
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/profile.css">
+
 
 
 </head>
@@ -43,9 +44,12 @@ if (session_status() == PHP_SESSION_NONE) {
                     <div class="col-lg-4 mt-n3 order-lg-2 order-1">
                         <div class="mt-n5">
                             <div class="d-flex align-items-center justify-content-center mb-2">
-                                <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;">
-                                    <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;">
-                                        <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt class="w-100 h-100">
+                                <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle"
+                                    style="width: 110px; height: 110px;">
+                                    <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden"
+                                        style="width: 100px; height: 100px;">
+                                        <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt
+                                            class="w-100 h-100">
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +76,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         </ul>
                     </div>
                 </div>
-                <<ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-light-info rounded-2" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-light-info rounded-2" id="pills-tab" role="tablist">
                     <?php
                         if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 4) {
 
@@ -147,6 +151,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
     </div>
+
 
     <?php include 'inc/footer.php'; ?>
 
