@@ -3,12 +3,13 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css"> 
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css"> 
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 <script>
-    document.getElementById('assignment-form').addEventListener('submit', function(event) {
+    document.getElementById('assignment-form').addEventListener('submit', function (event) {
         let isValid = true;
 
         // Clear previous errors
@@ -24,7 +25,7 @@
             document.getElementById('date-error').innerText = 'Due date cannot be in the past.';
             isValid = false;
         }
-       
+
 
         // Prevent form submission if invalid
         if (!isValid) {
@@ -43,7 +44,7 @@
     function openForumADD() {
         document.getElementById('forum-container-ADD').style.display = 'block';
         forum.style.animation = 'slideIn 0.5s forwards';
-        
+
     }
 
     function closeForumEdit() {
@@ -57,7 +58,7 @@
     function openForumEdit() {
         document.getElementById('forum-container-EDIT').style.display = 'block';
         forum.style.animation = 'slideIn 0.5s forwards';
-        
+
     }
 
     function filterTable() {
@@ -69,7 +70,8 @@
             let cells = rows[i].getElementsByTagName("td");
             let match = false;
 
-            for (let j = 0; j < cells.length; j++) {
+            // Check only the first two cells (columns)
+            for (let j = 0; j < 2 && j < cells.length; j++) {
                 if (cells[j].innerText.toUpperCase().includes(filter)) {
                     match = true;
                     break;
@@ -88,37 +90,38 @@
             row.remove();
         }
     }
-    
+
 
 
 </script>
+
 <body>
 
-    <?php include 'inc/header.php'; ?> 
+    <?php include 'inc/header.php'; ?>
 
     <h2 id="h2Assignments">Manage Assignments</h2>
     <main class="manageAssignmentsMain">
-    
-    <section>
-        
-    <div class = "containerMA">            
+
+        <section>
+
+            <div class="containerMA">
                 <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
-                <button type="submit" class="Add-button" onclick ="openForumADD()">Add Assignment</button>       
-    </div>
-    </section>
-    
-    <section>
-                <table id="assignment-table">
-                    <thead>
-                        <tr>
-                            <th>Assignment Title</th>
-                            <th>Group</th>
-                            <th>Due Date</th>
-                            <th>Edit Assignment</th>
-                            <th>Delete Assignment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <button type="submit" class="Add-button" onclick="openForumADD()">Add Assignment</button>
+            </div>
+        </section>
+
+        <section>
+            <table id="assignment-table">
+                <thead>
+                    <tr>
+                        <th>Assignment Title</th>
+                        <th>Group</th>
+                        <th>Due Date</th>
+                        <th>Edit Assignment</th>
+                        <th>Delete Assignment</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td>Essay on Climate Change</td>
                         <td>3</td>
@@ -261,8 +264,8 @@
                     </tr>
                 </tbody>
 
-                </table>
-            </section>
+            </table>
+        </section>
 
     </main>
 
@@ -272,29 +275,29 @@
 
 
     <div id="forum-container-ADD">
-    <div class="forum-post">
-    <div class="header-container">
-    <h1 id="HeaderManage">Add New Assignment</h1>
-    <button type ="reset" id ="close-btn" onclick="closeForumADD()">X</button>
-    </div>
-    <form id="assignment-form-Add">
-        <div class="post-title">
-            <label for="assignment-title">Assignment Title:</label><br>
-            <input type="text" id="assignment-title" name="assignment-title" required>
-        </div>
-        
-        <div class="post-content">
-            <label for="assignment-description">Description:</label><br>
-            <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
-        </div>
-        
-        <div class="post-details">
-            <label for="due-date">Due Date:</label><br>
-            <input type="date" id="due-date" name="due-date" required>
-            <div id="date-error" class="error"></div>
-        </div>
+        <div class="forum-post">
+            <div class="header-container">
+                <h1 id="HeaderManage">Add New Assignment</h1>
+                <button type="reset" id="close-btn" onclick="closeForumADD()">X</button>
+            </div>
+            <form id="assignment-form-Add">
+                <div class="post-title">
+                    <label for="assignment-title">Assignment Title:</label><br>
+                    <input type="text" id="assignment-title" name="assignment-title" required>
+                </div>
 
-        <div class="Choose-Group-Container">
+                <div class="post-content">
+                    <label for="assignment-description">Description:</label><br>
+                    <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
+                </div>
+
+                <div class="post-details">
+                    <label for="due-date">Due Date:</label><br>
+                    <input type="date" id="due-date" name="due-date" required>
+                    <div id="date-error" class="error"></div>
+                </div>
+
+                <div class="Choose-Group-Container">
                     <label>Group:</label>
 
                     <select name="Group Number" class="Group-Selection">
@@ -303,46 +306,46 @@
                         <option value="3">3</option>
                         <option value="4">4</option>
                     </select>
-        </div>
+                </div>
 
-        <div class="file-upload">
-            <label for="assignment-file">Upload Assignment (Optional):</label><br><br>
-            <input type="file" id="assignment-file" name="assignment-file">
-            <div id="file-error" class="error"></div>
-        </div>
+                <div class="file-upload">
+                    <label for="assignment-file">Upload Assignment (Optional):</label><br><br>
+                    <input type="file" id="assignment-file" name="assignment-file">
+                    <div id="file-error" class="error"></div>
+                </div>
 
-        <button type="submit" class="submit-button">Submit Assignment</button>
-    </form>
-    </div>
+                <button type="submit" class="submit-button">Submit Assignment</button>
+            </form>
+        </div>
     </div>
 
 
 
 
     <div id="forum-container-EDIT">
-    <div class="forum-post">
-    <div class="header-container">
-    <h1 id="HeaderManage">Edit Assignment</h1>
-    <button type ="reset" id ="close-btn" onclick="closeForumEdit()">X</button>
-    </div>
-    <form id="assignment-form-Edit">
-        <div class="post-title">
-            <label for="assignment-title">Assignment Title:</label><br>
-            <input type="text" id="assignment-title" name="assignment-title" required>
-        </div>
-        
-        <div class="post-content">
-            <label for="assignment-description">Description:</label><br>
-            <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
-        </div>
-        
-        <div class="post-details">
-            <label for="due-date">Due Date:</label><br>
-            <input type="date" id="due-date" name="due-date" required>
-            <div id="date-error" class="error"></div>
-        </div>
+        <div class="forum-post">
+            <div class="header-container">
+                <h1 id="HeaderManage">Edit Assignment</h1>
+                <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
+            </div>
+            <form id="assignment-form-Edit">
+                <div class="post-title">
+                    <label for="assignment-title">Assignment Title:</label><br>
+                    <input type="text" id="assignment-title" name="assignment-title" required>
+                </div>
 
-        <div class="Choose-Group-Container">
+                <div class="post-content">
+                    <label for="assignment-description">Description:</label><br>
+                    <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
+                </div>
+
+                <div class="post-details">
+                    <label for="due-date">Due Date:</label><br>
+                    <input type="date" id="due-date" name="due-date" required>
+                    <div id="date-error" class="error"></div>
+                </div>
+
+                <div class="Choose-Group-Container">
                     <label>Group:</label>
 
                     <select name="Group Number" class="Group-Selection">
@@ -351,19 +354,19 @@
                         <option value="3">3</option>
                         <option value="4">4</option>
                     </select>
-        </div>
+                </div>
 
-        <div class="file-upload">
-            <label for="assignment-file">Upload Assignment (Optional):</label><br><br>
-            <input type="file" id="assignment-file" name="assignment-file">
-            <div id="file-error" class="error"></div>
-        </div>
+                <div class="file-upload">
+                    <label for="assignment-file">Upload Assignment (Optional):</label><br><br>
+                    <input type="file" id="assignment-file" name="assignment-file">
+                    <div id="file-error" class="error"></div>
+                </div>
 
-        <button type="submit" class="edit-button">Edit Assignment</button>
-    </form>
+                <button type="submit" class="edit-button">Edit Assignment</button>
+            </form>
+        </div>
     </div>
-    </div>
-    
+
     <?php include 'inc/footer.php'; ?>
 
 </body>

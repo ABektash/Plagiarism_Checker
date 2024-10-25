@@ -68,7 +68,7 @@
                             <td>Essay on Climate Change</td>
                             <td class="similarity-progress">12%</td>
                             <td>2024-10-11</td>
-                            <td><a class="a-link" href="#">View Report</a></td>
+                            <td><a class="a-link" href="viewReport">View Report</a></td>
                         </tr>
                     </tbody>
                 </table>
