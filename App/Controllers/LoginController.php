@@ -50,7 +50,13 @@ class LoginController extends Controller
 
                 if ($login_result) {
                     $_SESSION['user'] = $login_result;
-                    $this->view('dashboard');
+                    if ($_SESSION['user']['UserType_id'] == 1){
+                        $this->view('adminDashboard');
+                    } elseif ($_SESSION['user']['UserType_id'] == 2 || $_SESSION['user']['UserType_id'] == 3){
+                        $this->view('dashboard');
+                    } else {
+                        $this->view('home');
+                    }
                 } else {
                     $errors['passwordError'] = "Invalid email or password.";
                     $this->view('login', $errors);

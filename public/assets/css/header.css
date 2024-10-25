@@ -90,6 +90,24 @@
     right: -8px;
 }
 
+.profile-photo {
+    width: 50px;  
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-photo img:hover {
+    cursor: pointer;
+}
+
 /* Responsive media queries */
 @media (max-width: 1050px) {
     .navbar .logo {

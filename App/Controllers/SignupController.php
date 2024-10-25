@@ -57,7 +57,7 @@ class SignupController extends Controller
                 $user->email = $_POST['email'];
                 $user->password = $_POST['password'];
 
-                if ($user->create()) {
+                if ($user->signup()) {
                     $this->view('home');
                 } else {
                     $errors['emailError'] = "Email already exists";

@@ -17,8 +17,8 @@
     <main>
         
         <?php
-        session_start();
-        $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
+        // session_start();
+        // $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
         //if ($user_role == 'student'): 
          if ('student' == 'student'):

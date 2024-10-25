@@ -52,3 +52,10 @@ box-shadow: none; /* Remove box shadow on active */
     padding: 10px;
     width: 100%;
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 0px; 
+    margin-bottom: 10px; 
+}
