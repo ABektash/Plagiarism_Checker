@@ -17,7 +17,6 @@
 	<section id="content">
 		<?php include 'inc/navbar.php'; ?>
 
-
 		<main>
 			<div class="head-title">
 				<h1>Dashboard</h1>
@@ -95,14 +94,14 @@
 						<i class='bx bx-upload'></i>
 						<h3>New Submissions</h3>
 						<p><strong>120</strong> pending reviews</p>
-						<a href="#" class="btn">View Submissions</a>
+						<a href="submissionsManagement" class="btn">View Submissions</a>
 					</div>
 
 					<div class="card">
 						<i class='bx bx-chart'></i>
 						<h3>Reports Generated</h3>
 						<p><strong>180</strong> plagiarism reports this week</p>
-						<a href="#" class="btn">View Reports</a>
+						<a href="submissionsManagement" class="btn">View Reports</a>
 					</div>
 
 					

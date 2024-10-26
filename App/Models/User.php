@@ -88,7 +88,19 @@ class User
         return false;
     }
 
+    public function getAllUsers()
+    {
+        $query = "SELECT * FROM " . $this->table_name;
 
+        $result = mysqli_query($this->conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $users;
+        }
+
+        return [];
+    }
 
 
     public function editUser($id, $first_name, $last_name, $email, $organization, $address, $phone_number, $birthday)
@@ -106,7 +118,7 @@ class User
         $result = mysqli_query($this->conn, $check_email_query);
 
         if (mysqli_num_rows($result) > 0) {
-            return false; 
+            return false;
         }
 
         $query = "UPDATE " . $this->table_name . " 
@@ -124,11 +136,27 @@ class User
                 'Address' => $address,
                 'PhoneNumber' => $phone_number,
                 'Birthday' => $birthday,
-                'UserType_id' => $_SESSION['user']['UserType_id'] 
+                'UserType_id' => $_SESSION['user']['UserType_id']
             ];
-            return true; 
+            return true;
         }
 
-        return false; 
+        return false;
+    }
+
+
+    public function getUserById($id)
+    {
+        $id = mysqli_real_escape_string($this->conn, $id);
+
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = '$id' LIMIT 1";
+
+        $result = mysqli_query($this->conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return mysqli_fetch_assoc($result);
+        }
+
+        return null;
     }
 }

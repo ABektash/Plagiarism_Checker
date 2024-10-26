@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css"> 
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
 
     <title>Plagiarism Detection</title>
 </head>
@@ -25,11 +25,11 @@
             </div>
 
             <section>
-        
-            <div class = "containerMA">            
-                        <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
-                        <button type="submit" class="Add-button" onclick ="openForumADD()">Add Assignment</button>       
-            </div>
+
+                <div class="containerMA">
+                    <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
+                    <button type="submit" class="Add-button" onclick="openForumADD()">Add Assignment</button>
+                </div>
             </section>
 
             <section>
@@ -191,27 +191,27 @@
 
 
             <div id="forum-container-ADD">
-            <div class="forum-post">
-            <div class="header-container">
-            <h1 id="HeaderManage">Add New Assignment</h1>
-            <button type ="reset" id ="close-btn" onclick="closeForumADD()">X</button>
-            </div>
-            <form id="assignment-form-Add">
-                <div class="post-title">
-                    <label for="assignment-title">Assignment Title:</label><br>
-                    <input type="text" id="assignment-title" name="assignment-title" required>
-                </div>
-                
-                <div class="post-content">
-                    <label for="assignment-description">Description:</label><br>
-                    <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
-                </div>
-                
-                <div class="post-details">
-                    <label for="due-date">Due Date:</label><br>
-                    <input type="date" id="due-date" name="due-date" required>
-                    <div id="date-error" class="error"></div>
-                </div>
+                <div class="forum-post">
+                    <div class="header-container">
+                        <h1 id="HeaderManage">Add New Assignment</h1>
+                        <button type="reset" id="close-btn" onclick="closeForumADD()">X</button>
+                    </div>
+                    <form id="assignment-form-Add">
+                        <div class="post-title">
+                            <label for="assignment-title">Assignment Title:</label><br>
+                            <input type="text" id="assignment-title" name="assignment-title" required>
+                        </div>
+
+                        <div class="post-content">
+                            <label for="assignment-description">Description:</label><br>
+                            <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
+                        </div>
+
+                        <div class="post-details">
+                            <label for="due-date">Due Date:</label><br>
+                            <input type="date" id="due-date" name="due-date" required>
+                            <div id="date-error" class="error"></div>
+                        </div>
 
                         <div class="Choose-Group-Container">
                             <label>Group:</label>
@@ -239,27 +239,27 @@
 
 
             <div id="forum-container-EDIT">
-            <div class="forum-post">
-            <div class="header-container">
-            <h1 id="HeaderManage">Edit Assignment</h1>
-            <button type ="reset" id ="close-btn" onclick="closeForumEdit()">X</button>
-            </div>
-            <form id="assignment-form-Edit">
-                <div class="post-title">
-                    <label for="assignment-title">Assignment Title:</label><br>
-                    <input type="text" id="assignment-title" name="assignment-title" required>
-                </div>
-                
-                <div class="post-content">
-                    <label for="assignment-description">Description:</label><br>
-                    <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
-                </div>
-                
-                <div class="post-details">
-                    <label for="due-date">Due Date:</label><br>
-                    <input type="date" id="due-date" name="due-date" required>
-                    <div id="date-error" class="error"></div>
-                </div>
+                <div class="forum-post">
+                    <div class="header-container">
+                        <h1 id="HeaderManage">Edit Assignment</h1>
+                        <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
+                    </div>
+                    <form id="assignment-form-Edit">
+                        <div class="post-title">
+                            <label for="assignment-title">Assignment Title:</label><br>
+                            <input type="text" id="assignment-title" name="assignment-title" required>
+                        </div>
+
+                        <div class="post-content">
+                            <label for="assignment-description">Description:</label><br>
+                            <textarea id="assignment-description" name="assignment-description" rows="5" required></textarea>
+                        </div>
+
+                        <div class="post-details">
+                            <label for="due-date">Due Date:</label><br>
+                            <input type="date" id="due-date" name="due-date" required>
+                            <div id="date-error" class="error"></div>
+                        </div>
 
                         <div class="Choose-Group-Container">
                             <label>Group:</label>

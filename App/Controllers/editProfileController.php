@@ -68,7 +68,7 @@ class EditProfileController extends Controller
             }
 
             if (empty($errors)) {
-                $user = new User($this->db);
+                $user = new User(db: $this->db);
 
                 $id = $_SESSION['user']['ID']; 
 
