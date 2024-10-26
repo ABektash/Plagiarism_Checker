@@ -52,7 +52,6 @@
                                 <option value="1">Admin</option>
                                 <option value="2">Instructor</option>
                                 <option value="3">Student</option>
-                                <option value="4">Visitor</option>
                             </select>
                         </td>
                         <td>
@@ -75,7 +74,6 @@
                                 <option value="1">Admin</option>
                                 <option value="2">Instructor</option>
                                 <option value="3">Student</option>
-                                <option value="4">Visitor</option>
                             </select>
                         </td>
                     </tr>
