@@ -22,6 +22,7 @@
             </div>
             <div class="containerMA">
                 <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
+                <button type="submit" class="Add-button" onclick="openForumADD()">Add user</button>
                 <select id="user-type-filter" onchange="filterTable()">
                     <option value="">All User Types</option>
                     <option value="1">Admin</option>
@@ -61,14 +62,14 @@
                                 <td><?= htmlspecialchars($row['Birthday']) ?></td>
                                 <td><?= htmlspecialchars($row['UserType_id']) ?></td>
                                 <td>
-                                    <a href="javascript:void(0);" onclick="openEditForm(<?= htmlspecialchars(json_encode($row)) ?>)">
+                                    <a class="a-link" href="<?= url('adminProfile/index/' . htmlspecialchars($row['ID'])) ?>">
+                                        <i class='bx bxs-user'></i>
+                                    </a> |
+                                    <a class="a-link" href="javascript:void(0);" onclick="openEditForm(<?= htmlspecialchars(json_encode($row)) ?>)">
                                         <i class='bx bx-edit'></i>
-                                    </a> |
-                                    <a class="a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
+                                    </a>|
+                                    <a class="delete-a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
                                         <i class='bx bx-trash'></i>
-                                    </a> |
-                                    <a href="<?= url('adminProfile/index/' . htmlspecialchars($row['ID'])) ?>" >
-                                        <i class='bx bxs-user' ></i>
                                     </a>
                                 </td>
 
@@ -77,7 +78,7 @@
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="9">No users found.</td>
+                            <td colspan="11">No users found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -87,32 +88,40 @@
                 <div class="popup-content">
                     <span class="close" onclick="closeEditForm()">&times;</span>
                     <h2>Edit User</h2>
-                    <form action="editUser.php" method="POST">
+                    <form id="editForm" action="" method="">
                         <input type="hidden" name="ID" id="editID">
 
                         <label for="editFirstName">First Name</label>
                         <input type="text" name="FirstName" id="editFirstName" required>
+                        <div class="error-message" id="fname-error"></div>
 
                         <label for="editLastName">Last Name</label>
                         <input type="text" name="LastName" id="editLastName" required>
+                        <div class="error-message" id="lname-error"></div>
 
                         <label for="editEmail">Email</label>
                         <input type="email" name="Email" id="editEmail" required>
+                        <div class="error-message" id="email-error"></div>
 
                         <label for="editOrganization">Organization</label>
                         <input type="text" name="Organization" id="editOrganization">
+                        <div class="error-message" id="organizationName-error"></div>
 
                         <label for="editAddress">Address</label>
                         <input type="text" name="Address" id="editAddress">
+                        <div class="error-message" id="address-error"></div>
 
                         <label for="editPhoneNumber">Phone Number</label>
                         <input type="text" name="PhoneNumber" id="editPhoneNumber">
+                        <div class="error-message" id="phone-error"></div>
 
                         <label for="editBirthday">Birthday</label>
                         <input type="date" name="Birthday" id="editBirthday">
+                        <div class="error-message" id="birthday-error"></div>
 
                         <label for="editPassword">Password</label>
                         <input type="text" name="Password" id="editPassword" required>
+                        <div class="error-message" id="password-error"></div>
 
                         <label for="editUserType">User Type</label>
                         <select name="UserType_id" id="editUserType" required>
@@ -121,9 +130,11 @@
                             <option value="3">Student</option>
                             <option value="4">Visitor</option>
                         </select>
+                        <div class="error-message" id="userType-error"></div>
 
                         <button type="submit">Save Changes</button>
                     </form>
+
                 </div>
             </div>
 

@@ -215,7 +215,7 @@ input[type="text"], input[type="date"], textarea {
 }
 
 .Add-button:hover {
-    background-color: black;
+    background-color:  #02a793;
 }
 
 .file-upload {

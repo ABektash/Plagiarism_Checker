@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
 
-<div class='footer' id='footer'>
+<footer class='footer' id='footer'>
     <div class="footer-content">
         <div class="footer-content-left">
             <h2>PLAGIARISM DETECTION</h2>
@@ -28,4 +28,4 @@
     </div>
     <hr />
     <p class='footer-copyright'>Copyright 2024 © plagiarismdetection.com - All Right Reserved.</p>
-</div>
+</footer>

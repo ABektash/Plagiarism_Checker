@@ -29,7 +29,6 @@
   color: var(--dark);
 }
 
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -39,10 +38,11 @@ table {
 
 table th,
 table td {
-  width: 10%;
+  width: fit-content;
+  min-width: 100px;
   padding: 12px;
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
 }
 
 table th {
@@ -55,13 +55,18 @@ table td {
   font-size: medium;
 }
 
-.a-link {
-  color: #007bff;
+.a-link,
+.delete-a-link {
+  color:var(--blue);
   text-decoration: none;
+  width:  10%;
 }
 
 .a-link:hover {
-  text-decoration: underline;
+  color:  #02a793;
+}
+.delete-a-link:hover{
+color: red;
 }
 
 .popup-form {
@@ -143,6 +148,30 @@ table td {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}
+
+#user-type-filter,.Add-button {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#user-type-filter:hover {
+  background-color:  #02a793;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 0px; 
+  margin-bottom: 10px; 
 }
 
 

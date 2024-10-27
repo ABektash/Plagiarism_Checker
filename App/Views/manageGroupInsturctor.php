@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor Dashboard</title>
-    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/StudentManagement.css">
+
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageGroupInsturctor.css">
 </head>
 
 <body class="StudentManagementBody">
@@ -28,11 +28,11 @@
                     </select>
                 </div>
 
-                <div class="Right-Group-Container">
+                <!-- <div class="Right-Group-Container">
                     <button class="add-std-btn">Add Student</button>
                     <button class="create-group-btn">Add Group</button>
                     <button class="delete-group-btn">Delete Group</button>
-                </div>
+                </div> -->
             </div>
             <div class="Table-Container">
                 <table>
@@ -42,7 +42,7 @@
                             <th>Student Name</th>
                             <th>Email</th>
                             <th>Profile</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -50,15 +50,36 @@
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
-                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-trash'></i></button></td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                         <tr>
                             <td>00106</td>
                             <td>Ammar Bektash</td>
                             <td>Abektash@gmail.com</td>
-                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
-                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-edit'></i></button></td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>03242</td>
+                            <td>Ahmed Mohamed</td>
+                            <td>ghazouly@gmail.com</td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>00106</td>
+                            <td>Ammar Bektash</td>
+                            <td>Abektash@gmail.com</td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
+                        </tr>
+                        <tr>
+                            <td>03242</td>
+                            <td>Ahmed Mohamed</td>
+                            <td>ghazouly@gmail.com</td>
+                            <td><button class="View-Profile-btn">View</button></td>
+                            <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -66,11 +87,7 @@
 
         </section>
 
-    </main>
-
-    <?php include 'inc/footer.php'; ?>
-
-    <!-- Delete Confirmation Modal -->
+         <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
             <p>Are you sure you want to delete this student?</p>
@@ -117,9 +134,14 @@
             </form>
         </div>
     </div>
+    </main>
+
+   
+
+    <?php include 'inc/footer.php'; ?>
 
 </body>
 
-<script src="/Plagiarism_Checker/public\assets\js\studentManagement.js"></script>
+<script src="/Plagiarism_Checker/public\assets\js\manageStudent.js"></script>
 
 </html>

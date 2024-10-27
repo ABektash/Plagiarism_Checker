@@ -7,38 +7,38 @@
     </a>
 
     <ul class="side-menu top">
-        <li class="active" data-page="adminDashboard">
-            <a href="<?php url('adminDashboard/index'); ?>">
+        <li data-page="adminDashboard">
+            <a href="<?php url('adminDashboard'); ?>">
                 <i class='bx bxs-dashboard'></i>
                 <span class="text">Dashboard</span>
             </a>
         </li>
-        <li class="active" data-page="manageUsers">
-            <a href="<?php url('manageUsers/index'); ?>">
+        <li data-page="manageUsers">
+            <a href="<?php url('manageUsers'); ?>">
                 <i class='bx bxs-shopping-bag-alt'></i>
                 <span class="text">Manage Users</span>
             </a>
         </li>
-        <li class="active" data-page="manageGroups">
-            <a href="<?php url('manageGroups/index'); ?>">
+        <li data-page="manageGroups">
+            <a href="<?php url('manageGroups'); ?>">
                 <i class='bx bxs-group'></i>
                 <span class="text">Manage Groups</span>
             </a>
         </li>
-        <li class="active" data-page="manageAssignmentsAdmin">
-            <a href="<?php url('manageAssignmentsAdmin/index'); ?>">
+        <li data-page="manageAssignmentsAdmin">
+            <a href="<?php url('manageAssignmentsAdmin'); ?>">
                 <i class='bx bxs-doughnut-chart'></i>
                 <span class="text">Manage Assignments</span>
             </a>
         </li>
-        <li class="active" data-page="submissionsManagement">
-            <a href="<?php url('submissionsManagement/index'); ?>">
+        <li data-page="manageSubmissions">
+            <a href="<?php url('manageSubmissions'); ?>">
                 <i class='bx bxs-file'></i>
                 <span class="text">Manage Submissions</span>
             </a>
         </li>
-        <li class="active" data-page="managePermissions">
-            <a href="<?php url('managePermissions/index'); ?>">
+        <li data-page="managePermissions">
+            <a href="<?php url('managePermissions'); ?>">
                 <i class='bx bxs-message-dots'></i>
                 <span class="text">Manage Permissions</span>
             </a>

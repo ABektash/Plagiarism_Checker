@@ -74,7 +74,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div>
                     <div class="col-lg-4 order-last">
                         <ul class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-start my-3 gap-3">
-                            <li><button class="btn btn-primary" onclick="window.location.href='<?php url('editProfile/index'); ?>'">Edit profile</button></li>
+                            <!-- <li><button class="btn btn-primary" onclick="window.location.href='<?php url('editProfile/index'); ?>'">Edit profile</button></li> -->
                             <li><button class="btn btn-primary" onclick="history.back()">Back</button></li>
                         </ul>
                     </div>

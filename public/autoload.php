@@ -12,7 +12,6 @@ define("UPLOADS", ROOT_PATH . 'public' . DS . 'uploads' . DS);
 // configuration files 
 require_once(CONFIG . 'config.php');
 require_once(CONFIG . 'helpers.php');
-//include "../App/Config/dbh.inc.php";
 
 
 

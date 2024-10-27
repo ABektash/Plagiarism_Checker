@@ -3,8 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
+
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewReport.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -27,7 +26,7 @@
 
             <div class="post-content">
                 <label for="assignment-description">Description:</label><br><br>
-                <div class="grade-container">
+                <div class="grade-container" style="margin-top: 0;">
                     <h5 style="font-size: 1.5rem;">In this essay, you will explore the impact of artificial intelligence
                         (AI) on the field of modern medicine. AI is rapidly transforming healthcare, from diagnostic
                         tools to personalized treatment plans and patient care automation. Your task is to analyze the

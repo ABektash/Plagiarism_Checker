@@ -69,7 +69,6 @@ select::-webkit-scrollbar-thumb:hover {
   text-align: center;
   border: 1px solid var(--blue);
   background-color: var(--light);
-
 }
 
 
@@ -82,7 +81,11 @@ select::-webkit-scrollbar-thumb:hover {
   font-size: 16px;
 }
 .form-container select {
-  width: 100%;
+
+  width: 100%;         
+  max-width: 100%;      
+  min-width: 200px;  
+  
   background-color: var(--light);
   color: var(--dark);
   height: auto;
@@ -101,6 +104,7 @@ select::-webkit-scrollbar-thumb:hover {
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
+  position: relative;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
@@ -114,6 +118,28 @@ select::-webkit-scrollbar-thumb:hover {
   #content {
     width: calc(100% - 60px);
     left: 200px;
+  }
+  .form-container tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--blue);
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .form-container th,
+  .form-container td {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px 10px;
+  }
+  
+  .form-container th {
+    font-weight: bold;
+    background-color: var(--blue);
+    color: white;
+    padding-top: 10px;
   }
 }
 

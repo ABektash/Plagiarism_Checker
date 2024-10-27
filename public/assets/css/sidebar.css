@@ -131,6 +131,9 @@ body {
   white-space: nowrap;
   overflow-x: hidden;
 }
+#sidebar ul {
+  padding-left: 0;
+}
 #sidebar .side-menu.top li.active a {
   color: var(--blue);
 }

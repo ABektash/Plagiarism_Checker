@@ -81,7 +81,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                    <input class="form-control" id="inputBirthday" name="birthday" type="text" value="<?php echo $_SESSION['user']['Birthday'] ?? ''; ?>" placeholder="MM/DD/YYYY">
+                                    <?php if ($_SESSION['user']['Birthday'] == "0000-00-00") $_SESSION['user']['Birthday'] = "";?>
+                                    <input class="form-control" id="inputBirthday" name="birthday" type="text" value="<?php echo $_SESSION['user']['Birthday']?? ''; ?>" placeholder="MM/DD/YYYY">
                                     <?php if (isset($birthdayError)): ?>
                                         <div class="error-message" id="birthday-error"><?php echo $birthdayError; ?></div>
                                     <?php endif; ?>

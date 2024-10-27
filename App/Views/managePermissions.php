@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <select id="leftValues" name="availablePages[]" size="6" multiple>
+                            <select id="leftValues" name="availablePages[]" size="5" multiple>
                                 <option value="">All User Types</option>
                                 <option value="1">Admin</option>
                                 <option value="2">Instructor</option>
@@ -59,10 +59,11 @@
                             <button type="button" onclick="moveToChosen()"> &gt; </button>
                         </td>
                         <td>
-                            <select id="rightValues" name="chosenPages[]" size="6" multiple>
+                            <select id="rightValues" name="chosenPages[]" size="5" multiple>
                                 <?php foreach ($pages as $page): ?>
                                     <option value=""><?php echo $page ?></option>
                                 <?php endforeach; ?>
+                                
                             </select>
                         </td>
                     </tr>

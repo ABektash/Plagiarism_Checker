@@ -16,12 +16,6 @@ function closeEditForm() {
   document.getElementById("editFormPopup").style.display = "none";
 }
 
-window.onclick = function (event) {
-  if (event.target == document.getElementById("editFormPopup")) {
-    closeEditForm();
-  }
-};
-
 function filterTable() {
   const filter = document.getElementById("search-bar").value.toUpperCase();
   const userTypeFilter = document.getElementById("user-type-filter").value;
@@ -51,3 +45,66 @@ function filterTable() {
     rows[i].style.display = match ? "" : "none";
   }
 }
+
+
+
+
+
+document.getElementById('editForm').addEventListener('submit', function (event) {
+  event.preventDefault(); 
+
+  let formData = new FormData(this);
+
+  fetch('/Plagiarism_Checker/App/Views/editUserValidation.php', {
+      method: 'POST',
+      body: formData
+  })
+  .then(response => response.json()) 
+  .then(data => {
+      document.getElementById('fname-error').textContent = '';
+      document.getElementById('lname-error').textContent = '';
+      document.getElementById('email-error').textContent = '';
+      document.getElementById('organizationName-error').textContent = '';
+      document.getElementById('address-error').textContent = '';
+      document.getElementById('phone-error').textContent = '';
+      document.getElementById('birthday-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      document.getElementById('userType-error').textContent = '';
+
+      if (data.errors) {
+          if (data.errors.firstNameError) {
+              document.getElementById('fname-error').textContent = data.errors.firstNameError;
+          }
+          if (data.errors.lastNameError) {
+              document.getElementById('lname-error').textContent = data.errors.lastNameError;
+          }
+          if (data.errors.emailError) {
+              document.getElementById('email-error').textContent = data.errors.emailError;
+          }
+          if (data.errors.organizationNameError) {
+              document.getElementById('organizationName-error').textContent = data.errors.organizationNameError;
+          }
+          if (data.errors.addressError) {
+              document.getElementById('address-error').textContent = data.errors.addressError;
+          }
+          if (data.errors.phoneError) {
+              document.getElementById('phone-error').textContent = data.errors.phoneError;
+          }
+          if (data.errors.birthdayError) {
+              document.getElementById('birthday-error').textContent = data.errors.birthdayError;
+          }
+          if (data.errors.passwordError) {
+              document.getElementById('password-error').textContent = data.errors.passwordError;
+          }
+          if (data.errors.userTypeError) {
+              document.getElementById('userType-error').textContent = data.errors.userTypeError;
+          }
+      } else if (data.success) {
+          closeEditForm(); 
+          location.reload(); 
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+});

@@ -58,21 +58,21 @@
 						<i class='bx bx-group'></i>
 						<h3>Groups</h3>
 						<p><strong>6</strong> total groups</p>
-						<a href="manageGroups" class="btn">Manage Students</a>
+						<a href="<?php url('manageGroups'); ?>" class="btn">Manage Students</a>
 					</div>
 
 					<div class="card">
 						<i class='bx bx-chalkboard'></i>
 						<h3>Instructors</h3>
 						<p><strong>50</strong> total instructors</p>
-						<a href="manageUsers" class="btn">Manage Instructors</a>
+						<a href="<?php url('manageUsers'); ?>" class="btn">Manage Instructors</a>
 					</div>
 
 					<div class="card">
 						<i class='bx bx-group'></i>
 						<h3>Students</h3>
 						<p><strong>200</strong> total students</p>
-						<a href="manageUsers" class="btn">Manage Students</a>
+						<a href="<?php url('manageUsers'); ?>" class="btn">Manage Students</a>
 					</div>
 
 
@@ -87,21 +87,21 @@
 						<i class='bx bx-task'></i>
 						<h3>Assignments</h3>
 						<p><strong>23</strong> active assignments</p>
-						<a href="manageAssignmentsAdmin" class="btn">View Assignments</a>
+						<a href="<?php url('manageAssignmentsAdmin'); ?>" class="btn">View Assignments</a>
 					</div>
 
 					<div class="card">
 						<i class='bx bx-upload'></i>
 						<h3>New Submissions</h3>
 						<p><strong>120</strong> pending reviews</p>
-						<a href="submissionsManagement" class="btn">View Submissions</a>
+						<a href="<?php url('submissionsManagement'); ?>" class="btn">View Submissions</a>
 					</div>
 
 					<div class="card">
 						<i class='bx bx-chart'></i>
 						<h3>Reports Generated</h3>
 						<p><strong>180</strong> plagiarism reports this week</p>
-						<a href="submissionsManagement" class="btn">View Reports</a>
+						<a href=" <?php url('submissionsManagement'); ?>" class="btn">View Reports</a>
 					</div>
 
 					

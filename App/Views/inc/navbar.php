@@ -10,7 +10,7 @@
 				</div> -->
     </form>
     <input type="checkbox" id="switch-mode" hidden>
-    <label for="switch-mode" class="switch-mode"></label>
+    <!-- <label for="switch-mode" class="switch-mode"></label>      dark mode button -->
     <a href="<?php url('adminProfile/index'); ?>" class="profile">
         <!-- waiting for the session later !!! -->
         <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg">

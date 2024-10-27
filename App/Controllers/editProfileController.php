@@ -57,13 +57,11 @@ class EditProfileController extends Controller
 
             $birthday = $_POST['birthday'];
             if (!empty($birthday) && $birthday != "0000-00-00") {
-                $birthdayDate = DateTime::createFromFormat('m/d/Y', $birthday);
-                $currentDate = new DateTime();
-
-                if (!$birthdayDate || $birthdayDate->format('m/d/Y') !== $birthday) {
+                $date = DateTime::createFromFormat('m/d/Y', $birthday); 
+                if ($date) {
+                    $birthday = $date->format('Y-m-d'); 
+                } else {
                     $errors['birthdayError'] = "Invalid birthday format. Use MM/DD/YYYY";
-                } elseif ($birthdayDate >= $currentDate) {
-                    $errors['birthdayError'] = "Birthday must be before the current date";
                 }
             }
 
@@ -91,4 +89,7 @@ class EditProfileController extends Controller
             }
         }
     }
+
+
+
 }

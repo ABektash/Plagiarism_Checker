@@ -234,7 +234,19 @@ table td {
     cursor: pointer;
 }
 
+.a-link,
+.delete-a-link {
+  color:var(--blue);
+  text-decoration: none;
+  width:  10%;
+}
 
+.a-link:hover {
+  color:  #02a793;
+}
+.delete-a-link:hover{
+color: red;
+}
 
 
 

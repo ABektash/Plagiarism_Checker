@@ -103,7 +103,7 @@ class User
     }
 
 
-    public function editUser($id, $first_name, $last_name, $email, $organization, $address, $phone_number, $birthday)
+    public function editUser($id, $first_name, $last_name, $email, $organization, $address, $phone_number, $birthday, $password = null, $userTypeID = null)
     {
         $first_name = mysqli_real_escape_string($this->conn, $first_name);
         $last_name = mysqli_real_escape_string($this->conn, $last_name);
@@ -122,9 +122,20 @@ class User
         }
 
         $query = "UPDATE " . $this->table_name . " 
-                  SET FirstName = '$first_name', LastName = '$last_name', Email = '$email', Organization = '$organization',
-                      Address = '$address', PhoneNumber = '$phone_number', Birthday = '$birthday' 
-                  WHERE id = '$id'";
+              SET FirstName = '$first_name', LastName = '$last_name', Email = '$email', Organization = '$organization',
+                  Address = '$address', PhoneNumber = '$phone_number', Birthday = '$birthday'";
+
+        if ($password !== null) {
+            $password = mysqli_real_escape_string($this->conn, $password);
+            $query .= ", Password = '$password'";
+        }
+
+        if ($userTypeID !== null) {
+            $userTypeID = mysqli_real_escape_string($this->conn, $userTypeID);
+            $query .= ", UserType_id = '$userTypeID'";
+        }
+
+        $query .= " WHERE id = '$id'";
 
         if (mysqli_query($this->conn, $query)) {
             $_SESSION['user'] = [
@@ -136,13 +147,15 @@ class User
                 'Address' => $address,
                 'PhoneNumber' => $phone_number,
                 'Birthday' => $birthday,
-                'UserType_id' => $_SESSION['user']['UserType_id']
+                'Password' => $password !== null ? $password : $_SESSION['user']['Password'],
+                'UserType_id' => $userTypeID !== null ? $userTypeID : $_SESSION['user']['UserType_id']
             ];
             return true;
         }
 
         return false;
     }
+
 
 
     public function getUserById($id)

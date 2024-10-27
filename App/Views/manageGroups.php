@@ -17,11 +17,11 @@
 
     <section id="content">
         <?php include 'inc/navbar.php'; ?>
-      
+
         <main>
-        <div class="head-title">
-            <h1>Manage Groups</h1>
-        </div>
+            <div class="head-title">
+                <h1>Manage Groups</h1>
+            </div>
 
             <div class="Group-Container">
                 <div class="Left-Group-Container">
@@ -76,15 +76,21 @@
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn" ><i class='bx bx-user'></i></button></td>
-                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-trash'></i></button></td>
+                            <td><a class="a-link" href="<?= url('adminProfile/index/' . htmlspecialchars($row['ID'])) ?>">
+                                    <i class='bx bxs-user'></i>
+                                </a></td>
+                            <td><a class="delete-a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
+                                    <i class='bx bx-trash'></i></td>
                         </tr>
                         <tr>
                             <td>00106</td>
                             <td>Ammar Bektash</td>
                             <td>Abektash@gmail.com</td>
-                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
-                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-trash'></i></button></td>
+                            <td><a class="a-link" href="<?= url('adminProfile/index/' . htmlspecialchars($row['ID'])) ?>">
+                                    <i class='bx bxs-user'></i>
+                                </a></td>
+                            <td><a class="delete-a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
+                                    <i class='bx bx-trash'></i></td>
                         </tr>
                     </tbody>
                 </table>
