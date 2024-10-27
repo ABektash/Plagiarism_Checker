@@ -2,12 +2,14 @@
 
 require_once MODELS.'UserType.php'; 
 require_once MODELS.'UserTypePage.php';
+require_once MODELS.'Page.php';
 
 class ManagePermissionsController extends Controller
 {
 
     private $userTypeModel;
     private $userTypePageModel;
+    private $pageModel;
     private $db;
 
     public function __construct()
@@ -17,24 +19,27 @@ class ManagePermissionsController extends Controller
     }
     public function index()
     {
-        $this->view('managePermissions');
+        $this->userTypePageModel = new UserTypePage($this->db);
+        $this->pageModel = new Page($this->db);
+        
+        $pageIds = $this->userTypePageModel->getPagesByUserType(4);
+        
+        $friendlyNames = [];
+        
+        foreach ($pageIds as $page) {
+            $friendlyName = $this->pageModel->getFriendlyNameById($page); 
+            if ($friendlyName) {
+                $friendlyNames[] = $friendlyName;
+            }
+        }
+        
+        $data["pages"] = $friendlyNames;
+
+        $this->view('managePermissions', $data);
     }
 
 
     public function submit() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->userTypeModel = new UserType($this->db);
-            $this->userTypePageModel = new UserTypePage($this->db);
-            $userTypeID = intval($_POST['userTypeID']);
-            $chosenPages = $_POST['chosenPages'] ?? []; 
-
-            $this->userTypePageModel->deleteByUserTypeID($userTypeID);
-
-            foreach ($chosenPages as $pageID) {
-                $this->userTypePageModel->create($userTypeID, intval($pageID));
-            }
-
-            $this->view('managePermissions');
-        }
+        
     }
 }

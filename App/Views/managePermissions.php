@@ -60,20 +60,9 @@
                         </td>
                         <td>
                             <select id="rightValues" name="chosenPages[]" size="6" multiple>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
-                                <option value="4">Visitor</option>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
-                                <option value="4">Visitor</option>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
+                                <?php foreach ($pages as $page): ?>
+                                    <option value=""><?php echo $page ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </td>
                     </tr>
