@@ -46,7 +46,7 @@
                             <td>History Assignment</td>
                             <td>2024-10-12</td>
                             <td>Pending</td>
-                            <td><a class="a-link" href="#">Submit</a></td>
+                            <td><a class="a-link" href="submit">Submit</a></td>
                         </tr>
                     </tbody>
                 </table>
