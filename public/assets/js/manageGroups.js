@@ -166,10 +166,10 @@
                 <td>${newId}</td>
                 <td>${addNameInput.value.trim()}</td>
                 <td>${addEmailInput.value.trim()}</td>
-                <td><button class="View-Profile-btn">View</button></td>
+                <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                 <td>
-                    <button class="Edit-std-btn">Edit</button>
-                    <button class="Delete-std-btn">Remove</button>
+                    <button class="Edit-std-btn"><i class='bx bx-edit'></i></button>
+                    <button class="Delete-std-btn"><i class='bx bx-trash'></i></button>
                 </td>
             `;
 

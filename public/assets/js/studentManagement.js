@@ -175,10 +175,10 @@ addSaveBtn.addEventListener("click", function () {
                     <td>${newId}</td>
                     <td>${addNameInput.value}</td>
                     <td>${addEmailInput.value}</td>
-                    <td><button class="View-Profile-btn">View</button></td>
+                    <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                     <td>
-                        <button class="Edit-std-btn">Edit</button>
-                        <button class="Delete-std-btn">Delete</button>
+                        <button class="Edit-std-btn"><i class='bx bx-edit'></i></button>
+                        <button class="Delete-std-btn"><i class='bx bx-trash'></i></button>
                     </td>
                 `;
 

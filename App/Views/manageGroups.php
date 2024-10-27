@@ -76,15 +76,15 @@
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
-                            <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
+                            <td><button class="View-Profile-btn" ><i class='bx bx-user'></i></button></td>
+                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-trash'></i></button></td>
                         </tr>
                         <tr>
                             <td>00106</td>
                             <td>Ammar Bektash</td>
                             <td>Abektash@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
-                            <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Remove</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
+                            <td><button class="Edit-std-btn"><i class='bx bx-edit'></i></button> <button class="Delete-std-btn"><i class='bx bx-trash'></i></button></td>
                         </tr>
                     </tbody>
                 </table>
