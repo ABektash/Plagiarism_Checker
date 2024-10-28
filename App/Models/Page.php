@@ -30,5 +30,28 @@ class Page {
 
         return null; 
     }
+
+    public function getPageById($pageId) {
+        $pageId = intval($pageId);
+    
+        if ($pageId <= 0) {
+            return null;
+        }
+    
+        $query = "SELECT id, FriendlyName, FileName FROM pages WHERE id = $pageId";
+        $result = $this->db->query($query);
+    
+        if ($row = $result->fetch_assoc()) {
+            return [
+                'id' => $row['id'],
+                'friendlyName' => $row['FriendlyName'],
+                'fileName' => $row['FileName'],
+            ];
+        }
+    
+        return null;
+    }
+    
+    
 }
 ?>

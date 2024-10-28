@@ -17,5 +17,15 @@ class UserTypePage {
 
         return $pages;
     }
+
+    public function deletePagesByUserType($userTypeID) {
+        $sql = "DELETE FROM usertype_pages WHERE UserTypeID = $userTypeID";
+        $this->db->query($sql);
+    }
+
+    public function addPageToUserType($userTypeID, $pageId) {
+        $sql = "INSERT INTO usertype_pages (UserTypeID, PageID) VALUES ($userTypeID, $pageId)";
+        $this->db->query($sql);
+    }
 }
 ?>

@@ -1,35 +1,56 @@
 function handleUserTypeChange() {
     var userType = document.getElementById("user-type-filter").value;
+    document.getElementById("userTypeID").value = userType;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/Plagiarism_Checker/App/Views/fetchPages.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);
-
-            var availablePages = document.getElementById("leftValues");
-            availablePages.innerHTML = ''; 
-            response.availablePages.forEach(function (page) {
-                var option = document.createElement("option");
-                option.value = page.id;
-                option.text = page.FreindlyName;
-                availablePages.add(option);
-            });
-
-            var chosenPages = document.getElementById("rightValues");
-            chosenPages.innerHTML = ''; 
-
-            Object.values(response.chosenPages).forEach(function (page) {
-                var option = document.createElement("option");
-                option.value = page.id;
-                option.text = page.FreindlyName;
-                chosenPages.add(option);
-            });
+    fetch("/Plagiarism_Checker/App/Controllers/fetchPages.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "userType=" + encodeURIComponent(userType),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    };
+        return response.json();
+    })
+    .then(response => {
+        var availablePages = document.getElementById("leftValues");
+        availablePages.innerHTML = ''; 
+        console.log(response);
+        response.availablePages.forEach(function (page) {
+            var option = document.createElement("option");
+            option.value = page.id;
+            option.text = page.FreindlyName; 
+            availablePages.add(option);
+        });
 
-    xhr.send("userType=" + userType);
+        var chosenPages = document.getElementById("rightValues");
+        chosenPages.innerHTML = ''; 
+
+        Object.values(response.chosenPages).forEach(function (page) {
+            var option = document.createElement("option");
+            option.value = page.id;
+            option.text = page.FreindlyName; 
+            chosenPages.add(option);
+        });
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+
+
+
+
+function selectAllChosenPages() {
+    var chosenPages = document.getElementById("rightValues");
+
+    for (var i = 0; i < chosenPages.options.length; i++) {
+        chosenPages.options[i].selected = true;
+    }
 }
 
 

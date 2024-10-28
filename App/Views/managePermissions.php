@@ -20,8 +20,8 @@
             <div class="head-title">
                 <h1>Manage Permissions</h1>
             </div>
-            <form class="form-container" action="updatePermissions.php" method="post">
-                <input type="hidden" name="userTypeID" id="userTypeID" value="">
+            <form class="form-container" action="<?php url('managePermissions/submit'); ?>" method="post" onsubmit="selectAllChosenPages()">
+                <input type="hidden" name="userTypeID" id="userTypeID" value="4">
                 <table>
                     <tr>
                         <th>Available Pages</th>
@@ -38,20 +38,11 @@
                     <tr>
                         <td>
                             <select id="leftValues" name="availablePages[]" size="5" multiple>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
-                                <option value="4">Visitor</option>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
-                                <option value="4">Visitor</option>
-                                <option value="">All User Types</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Student</option>
+                                <?php foreach ($availablePages as $page): ?>
+                                    <?php if (!in_array($page['id'], array_column($chosenPages, 'id'))): ?>
+                                        <option value="<?php echo $page['id']; ?>"><?php echo $page['friendlyName']; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </select>
                         </td>
                         <td>
@@ -60,16 +51,20 @@
                         </td>
                         <td>
                             <select id="rightValues" name="chosenPages[]" size="5" multiple>
-                                <?php foreach ($pages as $page): ?>
-                                    <option value=""><?php echo $page ?></option>
+                                <?php foreach ($chosenPages as $page): ?>
+                                    <option value="<?php echo $page['id']; ?>"><?php echo $page['friendlyName']; ?></option>
                                 <?php endforeach; ?>
-                                
                             </select>
                         </td>
                     </tr>
                 </table>
                 <button type="submit">Save Permissions</button>
             </form>
+            <?php
+            if (isset($result)) {
+                echo $result;
+            }
+            ?>
         </main>
     </section>
 

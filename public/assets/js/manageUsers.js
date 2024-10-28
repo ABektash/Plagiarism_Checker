@@ -55,7 +55,7 @@ document.getElementById('editForm').addEventListener('submit', function (event) 
 
   let formData = new FormData(this);
 
-  fetch('/Plagiarism_Checker/App/Views/editUserValidation.php', {
+  fetch('/Plagiarism_Checker/App/Controllers/editUserValidation.php', {
       method: 'POST',
       body: formData
   })

@@ -78,25 +78,30 @@ if (session_status() == PHP_SESSION_NONE) {
                 </div>
                 <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-light-info rounded-2" id="pills-tab" role="tablist">
                     <?php
-                        if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 4) {
-
-                        } elseif ($_SESSION['user']['UserType_id'] == 2) {
-                            echo '<li class="nav-item" role="presentation">';
-                            echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="false">';
-                            echo '<i class="fa fa-check-square me-2 fs-6"></i>';
-                            echo '<span class="d-none d-md-block">Assignments</span>';
-                            echo '</button>';
-                            echo '</li>';
-                        } elseif ($_SESSION['user']['UserType_id'] == 3) {
-                            echo '<li class="nav-item" role="presentation">';
-                            echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="false">';
-                            echo '<i class="fa fa-check-square me-2 fs-6"></i>';
-                            echo '<span class="d-none d-md-block">Assignments Submitted</span>';
-                            echo '</button>';
-                            echo '</li>';
-                        }
+                    if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 4) {
+                    } elseif ($_SESSION['user']['UserType_id'] == 2) {
+                        echo '<li class="nav-item" role="presentation">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="false">';
+                        echo '<i class="fa fa-check-square me-2 fs-6"></i>';
+                        echo '<span class="d-none d-md-block">Assignments</span>';
+                        echo '</button>';
+                        echo '</li>';
+                        echo '<li class="nav-item" role="presentation">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
+                        echo '<i class="fa fa-comments me-2 fs-6"></i>';
+                        echo '<span class="d-none d-md-block">Discussion Forums</span>';
+                        echo '</button>';
+                        echo '</li>';
+                    } elseif ($_SESSION['user']['UserType_id'] == 3) {
+                        echo '<li class="nav-item" role="presentation">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="false">';
+                        echo '<i class="fa fa-check-square me-2 fs-6"></i>';
+                        echo '<span class="d-none d-md-block">Assignments Submitted</span>';
+                        echo '</button>';
+                        echo '</li>';
+                    }
                     ?>
-                    </ul>
+                </ul>
 
             </div>
         </div>
@@ -107,7 +112,6 @@ if (session_status() == PHP_SESSION_NONE) {
             $userType = $_SESSION['user']['UserType_id'];
 
             if ($userType == 1 || $userType == 4) {
-
             } elseif ($userType == 2) {
             ?>
                 <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
@@ -123,6 +127,41 @@ if (session_status() == PHP_SESSION_NONE) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-discussion-forums" role="tabpanel" aria-labelledby="pills-discussion-forums-tab">
+                    <h3 class="mb-3 fw-semibold">Discussion Forums</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Discussion Topic</h5> 
+                                    <span class="badge bg-secondary">Unread</span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p> 
+                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p> 
+                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p> 
+                                    <a href="#" class="btn btn-primary">View Discussion</a> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Discussion Topic</h5> 
+                                    <span class="badge bg-secondary">Unread</span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p> 
+                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p> 
+                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p> 
+                                    <a href="#" class="btn btn-primary">View Discussion</a> 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more discussion topics as needed -->
                     </div>
                 </div>
             <?php
