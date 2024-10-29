@@ -50,7 +50,7 @@ class ChangePasswordController extends Controller
 
                 if ($user->editUser($_SESSION['user']['ID'], $_SESSION['user']['FirstName'], $_SESSION['user']['LastName'], $_SESSION['user']['Email'], 
                 $_SESSION['user']['Organization'], $_SESSION['user']['Address'], $_SESSION['user']['PhoneNumber'], $_SESSION['user']['Birthday'], $_POST['password'])) {
-                    $this->view('profile');
+                    $this->view('editProfile');
                 } else {
                     $errors['confirmPasswordError'] = "Something went wrong!";
                     $this->view('changePassword', $errors);

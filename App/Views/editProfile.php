@@ -24,7 +24,7 @@
                     <div class="card-body text-center">
                         <img class="img-account-profile rounded-circle mb-2" src="/Plagiarism_Checker/public/assets/images/editPassword.jpg" alt="Profile Image">
                         <div class="small font-italic text-muted mb-4"></div>
-                        <button class="btn btn-primary" type="button">Change Password</button>
+                        <button class="btn btn-primary" type="button" onclick="window.location.href='<?php url('ChangePassword/index'); ?>'">Change Password</button>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
                                     <?php if ($_SESSION['user']['Birthday'] == "0000-00-00") $_SESSION['user']['Birthday'] = "";?>
-                                    <input class="form-control" id="inputBirthday" name="birthday" type="text" value="<?php echo $_SESSION['user']['Birthday']?? ''; ?>" placeholder="MM/DD/YYYY">
+                                    <input class="form-control" id="inputBirthday" name="birthday" type="text" value="<?php echo $_SESSION['user']['Birthday']?? ''; ?>" placeholder="YYYY-MM-DD">
                                     <?php if (isset($birthdayError)): ?>
                                         <div class="error-message" id="birthday-error"><?php echo $birthdayError; ?></div>
                                     <?php endif; ?>

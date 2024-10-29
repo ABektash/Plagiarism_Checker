@@ -33,6 +33,8 @@ document
     if (!isValid) {
       event.preventDefault();
     }
+    closeForumADD();
+    closeForumEdit();
   });
 
 function closeForumADD() {

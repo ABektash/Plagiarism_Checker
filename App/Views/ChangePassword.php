@@ -34,7 +34,7 @@
 
 
             <br>
-            <a class="back-link" href="<?php url('profile') ?>">Back to profile</a>
+            <a class="back-link" href="<?php url('editProfile') ?>">Back to profile</a>
         </div>
     </div>
 </body>

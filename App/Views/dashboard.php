@@ -20,15 +20,48 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
     <main>
-        
+
         <?php
         // session_start();
         // $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-        if ($_SESSION['user']['UserType_id'] == 3): 
-         //if ('student' == 'student'):
+        if ($_SESSION['user']['UserType_id'] == 3):
+            //if ('student' == 'student'):
         ?>
             <!-- Student Dashboard -->
+            <section id="assignments">
+                <h2>Assignments due</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Essay on Climate Change</td>
+                            <td>2024-10-10</td>
+                            <td>Reviewed</td>
+                            <td><a class="a-link" href="<?php url('submit/index'); ?>">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>History Assignment</td>
+                            <td>2024-10-12</td>
+                            <td>Pending</td>
+                            <td><a class="a-link" href="<?php url('submit/index'); ?>">View</a></td>
+
+
+
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
             <section id="submissions">
                 <h2>My Submissions</h2>
                 <table>
@@ -45,13 +78,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Essay on Climate Change</td>
                             <td>2024-10-10</td>
                             <td>Reviewed</td>
-                            <td><a class="a-link" href="#">View</a></td>
+                            <td><a class="a-link" href="<?php url('viewReport/index'); ?>">View</a></td>
                         </tr>
                         <tr>
                             <td>History Assignment</td>
                             <td>2024-10-12</td>
                             <td>Pending</td>
-                            <td><a class="a-link" href="submit">Submit</a></td>
+                            <td><a class="a-link" href="<?php url('viewReport/index'); ?>"onclick="return false;" style="color: grey;">View</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -73,7 +106,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Essay on Climate Change</td>
                             <td class="similarity-progress">12%</td>
                             <td>2024-10-11</td>
-                            <td><a class="a-link" href="viewReport">View Report</a></td>
+                            <td><a class="a-link" href="<?php url('viewReport/index'); ?>">View Report</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -93,8 +126,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <?php
 
-         //if ($user_role == 'instructor'):
-            if ($_SESSION['user']['UserType_id'] == 2):
+        //if ($user_role == 'instructor'):
+        if ($_SESSION['user']['UserType_id'] == 2):
         ?>
             <!-- Instructor Dashboard -->
             <section id="groups">
@@ -113,13 +146,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Group A</td>
                             <td>30</td>
                             <td>28</td>
-                            <td><a class="a-link" href="#">View</a></td>
+                            <td><a class="a-link" href="<?php url('manageGroupInstructor/index'); ?>">View</a></td>
                         </tr>
                         <tr>
                             <td>Group B</td>
                             <td>25</td>
                             <td>20</td>
-                            <td><a class="a-link" href="#">View</a></td>
+                            <td><a class="a-link" href="<?php url('manageGroupInstructor/index'); ?>">View</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,14 +176,14 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Essay on Climate Change</td>
                             <td>2024-10-10</td>
                             <td>Pending</td>
-                            <td><a class="a-link" href="#">Review</a></td>
+                            <td><a class="a-link" href="<?php url('viewEssay/index'); ?>">Review</a></td>
                         </tr>
                         <tr>
                             <td>Jane Smith</td>
                             <td>History Assignment</td>
                             <td>2024-10-12</td>
                             <td>Reviewed</td>
-                            <td><a class="a-link" href="#">View</a></td>
+                            <td><a class="a-link" href="<?php url('viewEssay/index'); ?>">View</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -174,7 +207,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Essay on Climate Change</td>
                             <td>12%</td>
                             <td>2024-10-11</td>
-                            <td><a class="a-link" href="#">View Report</a></td>
+                            <td><a class="a-link" href="<?php url('viewReportInstructor/index'); ?>">View Report</a></td>
                         </tr>
                     </tbody>
                 </table>

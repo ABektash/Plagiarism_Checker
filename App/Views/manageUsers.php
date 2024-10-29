@@ -20,7 +20,7 @@
             <div class="head-title">
                 <h1>Manage Users</h1>
             </div>
-            
+
             <div class="Group-Container">
                 <div class="Left-Group-Container">
                     <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
@@ -76,7 +76,7 @@
                                     <a class="a-link" href="javascript:void(0);" onclick="openEditForm(<?= htmlspecialchars(json_encode($row)) ?>)">
                                         <i class='bx bx-edit'></i>
                                     </a>|
-                                    <a class="a-link delete-a-link" href="javascript:void(0);" onclick="confirmDeletion(<?= htmlspecialchars($row['ID']) ?>)">
+                                    <a class="delete-a-link" href="javascript:void(0);" onclick="confirmDeletion(<?= htmlspecialchars($row['ID']) ?>)">
                                         <i class='bx bx-trash'></i>
                                     </a>
                                 </td>
@@ -91,10 +91,10 @@
                     <?php endif; ?>
                 </tbody>
             </table>
-            <?php 
-                if(isset($deleteError)){
-                    echo "$deleteError";
-                }
+            <?php
+            if (isset($deleteError)) {
+                echo "$deleteError";
+            }
             ?>
 
             <div id="editFormPopup" class="popup-form">
@@ -218,20 +218,22 @@
 <script>
     function confirmDeletion(userID) {
         if (confirm('Are you sure you want to delete this user with ID ' + userID + '?')) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '<?php url('manageUsers/delete'); ?>';
+            if (userID != 1) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '<?php url('manageUsers/delete'); ?>';
 
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'userID';
-            input.value = userID;
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'userID';
+                input.value = userID;
 
-            form.appendChild(input);
+                form.appendChild(input);
 
-            document.body.appendChild(form);
+                document.body.appendChild(form);
 
-            form.submit();
+                form.submit();
+            }
         }
     }
 </script>

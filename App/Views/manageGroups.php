@@ -112,7 +112,7 @@
                     <form id="addInstructorForm">
                         <label for="instructorName">Name:</label>
                         <input type="text" id="instructorName" name="instructorName" required>
-                        <p id="instructorNameError" >Please enter a valid name.</p> <!-- Name error message -->
+                        <p id="instructorNameError">Please enter a valid name.</p> <!-- Name error message -->
                         <br>
                         <button type="button" id="addInstructorSaveBtn">Add</button>
                         <button type="button" id="cancelAddInstructorBtn">Cancel</button>
@@ -146,7 +146,7 @@
                     <form id="editForm">
                         <label for="editName">Name:</label>
                         <input type="text" id="editName" name="editName" required>
-                        <p id="nameError" >Please enter a valid name.</p> <!-- Name error message -->
+                        <p id="nameError">Please enter a valid name.</p> <!-- Name error message -->
                         <br>
                         <label for="editEmail">Email:</label>
                         <input type="email" id="editEmail" name="editEmail" required>
@@ -165,7 +165,7 @@
                     <form id="addForm">
                         <label for="addEmail">Email:</label>
                         <input type="email" id="addEmail" name="addEmail" required>
-                        <p id="addEmailError" >Please enter a valid email address.</p> <!-- Email error message -->
+                        <p id="addEmailError">Please enter a valid email address.</p> <!-- Email error message -->
                         <p id="duplicateEmailError">This email already exists.</p> <!-- Duplicate email error message -->
                         <br>
                         <button type="button" id="add-save-btn">Add</button>

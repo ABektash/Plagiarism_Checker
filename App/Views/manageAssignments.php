@@ -4,25 +4,29 @@
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css"> 
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
 </head>
+
 <body>
 
     <?php include 'inc/header.php'; ?>
 
-    <h2 id="h2Assignments">Manage Assignments</h2>
+    <div class="Group-Container">
+            <div class="Left-Group-Container">
+                <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
+            </div>
+
+            <div class="Right-Group-Container">
+                <button type="submit" class="Add-button" onclick="openForumADD()">Add Assignment</button>
+
+            </div>
+        </div>
+        
     <main class="manageAssignmentsMain">
 
         <section>
-
-            <div class="containerMA">
-                <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
-                <button type="submit" class="Add-button" onclick="openForumADD()">Add Assignment</button>
-            </div>
-        </section>
-
-        <section>
-            <table id="assignment-table">
+            <table>
                 <thead>
                     <tr>
                         <th>Assignment Title</th>
@@ -37,141 +41,141 @@
                         <td>Essay on Climate Change</td>
                         <td>3</td>
                         <td>2024-12-01</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Introduction to Machine Learning</td>
                         <td>5</td>
                         <td>2024-11-20</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Research Paper on AI Ethics</td>
                         <td>2</td>
                         <td>2024-11-15</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>History of Renaissance Art</td>
                         <td>4</td>
                         <td>2024-12-10</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Essay on Climate Change</td>
                         <td>3</td>
                         <td>2024-12-01</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Introduction to Machine Learning</td>
                         <td>5</td>
                         <td>2024-11-20</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Research Paper on AI Ethics</td>
                         <td>2</td>
                         <td>2024-11-15</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>History of Renaissance Art</td>
                         <td>4</td>
                         <td>2024-12-10</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Essay on Climate Change</td>
                         <td>3</td>
                         <td>2024-12-01</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Introduction to Machine Learning</td>
                         <td>5</td>
                         <td>2024-11-20</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Research Paper on AI Ethics</td>
                         <td>2</td>
                         <td>2024-11-15</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>History of Renaissance Art</td>
                         <td>4</td>
                         <td>2024-12-10</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Essay on Climate Change</td>
                         <td>3</td>
                         <td>2024-12-01</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Introduction to Machine Learning</td>
                         <td>5</td>
                         <td>2024-11-20</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Research Paper on AI Ethics</td>
                         <td>2</td>
                         <td>2024-11-15</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>History of Renaissance Art</td>
                         <td>4</td>
                         <td>2024-12-10</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Essay on Climate Change</td>
                         <td>3</td>
                         <td>2024-12-01</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Introduction to Machine Learning</td>
                         <td>5</td>
                         <td>2024-11-20</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>Research Paper on AI Ethics</td>
                         <td>2</td>
                         <td>2024-11-15</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>History of Renaissance Art</td>
                         <td>4</td>
                         <td>2024-12-10</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                        <td><a class="delete-a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-trash'></i></a></td>
                     </tr>
                 </tbody>
 
@@ -180,18 +184,13 @@
 
     </main>
 
-
-
-
-
-
     <div id="forum-container-ADD">
         <div class="forum-post">
             <div class="header-container">
                 <h1 id="HeaderManage">Add New Assignment</h1>
                 <button type="reset" id="close-btn" onclick="closeForumADD()">X</button>
             </div>
-            <form id="assignment-form-Add">
+            <form id="assignment-form-Add" method="post">
                 <div class="post-title">
                     <label for="assignment-title">Assignment Title:</label><br>
                     <input type="text" id="assignment-title" name="assignment-title" required>
@@ -239,7 +238,7 @@
                 <h1 id="HeaderManage">Edit Assignment</h1>
                 <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
             </div>
-            <form id="assignment-form-Edit">
+            <form id="assignment-form-Edit" method="post">
                 <div class="post-title">
                     <label for="assignment-title">Assignment Title:</label><br>
                     <input type="text" id="assignment-title" name="assignment-title" required>
@@ -282,6 +281,7 @@
 
 </body>
 
+<script src="/Plagiarism_Checker/public/assets/js/manageAssignments.js"></script>
 
 
 </html>

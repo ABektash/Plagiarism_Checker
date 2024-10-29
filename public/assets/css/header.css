@@ -3,7 +3,6 @@
 * {
   font-family: "Outfit", sans-serif;
   scroll-behavior: smooth;
-  box-sizing: border-box;
 }
 
 .navheader {
@@ -12,10 +11,6 @@
   font-size: 2em;
   font-weight: bold;
   margin-bottom: 0;
-}
-
-.navheader:hover {
-  cursor: pointer;
 }
 
 .navbar {
@@ -94,21 +89,15 @@
   right: -8px;
 }
 
-/* .profile-photo {
+.profile-photo {
   width: 50px;
   height: 50px; 
-  border-radius: 50%;
   overflow: visible;
   position: relative;
-} */
-
-.profile-photo {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative; 
   border-radius: 50%;
-  overflow: visible;
   max-width:  50px;
   max-height: 50px; 
 }
@@ -135,19 +124,7 @@
 
 .profile-photo.active .notification-dot {
   display: block;
-}
-
-
-/* .profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.profile-photo img:hover {
-  cursor: pointer;
-} */
+} 
 
 .logout-icon i {
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -162,293 +139,45 @@
 }
 
 .popup {
-  display: none;
+  display: none; 
   position: fixed;
-  z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000; 
+  inset: 0; 
+  padding-top: 10vh;
+  background-color: rgba(0, 0, 0, 0.6); 
+  transition: opacity 0.3s ease-in-out; 
 }
 
 .popup-content {
-  background-color: white;
+  background-color: #f9f9f9;
+  color: #342e37;
   margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 25%;
+  padding: 25px;
+  border: 1px solid #eee;
+  border-radius: 8px; 
+  width: 90%; 
+  max-width: 350px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .popup-content button {
-  background-color: #027e6f;
-  text-align: center;
-  font-size: 100%;
   margin: 10px;
-  color: #f9f9f9;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: auto;
-  height: auto;
-}
-
-.popup-content button:hover {
-  background-color: #00231f;
-  cursor: pointer;
-}
-
-/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
-
-/* Responsive media queries */
-@media (max-width: 1050px) {
-  .navbar .logo {
-    width: 140px;
-  }
-
-  .navbar-menu {
-    gap: 20px;
-    font-size: 17px;
-  }
-
-  .navbar-right {
-    gap: 30px;
-  }
-
-  .navbar-right img {
-    width: 22px;
-  }
-
-  .navbar-right button {
-    padding: 8px 25px;
-  }
-}
-
-@media (max-width: 900px) {
-  .navbar .logo {
-    width: 120px;
-  }
-
-  .navbar-menu {
-    gap: 15px;
-    font-size: 16px;
-  }
-
-  .navbar-right {
-    gap: 20px;
-  }
-
-  .navbar-right img {
-    width: 20px;
-  }
-
-  .navbar-right button {
-    padding: 7px 20px;
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 750px) {
-  .navbar-menu {
-    display: none;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
-
-* {
-  font-family: "Outfit", sans-serif;
-  scroll-behavior: smooth;
-}
-
-.navheader {
-  color: #027e6f;
-  font-family: "Outfit", sans-serif;
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 0;
-}
-
-.navbar {
-  padding: 20px 0px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 80%;
-  margin: auto;
-  line-height: 1.2;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: inherit;
-  margin-bottom: 2px;
-}
-
-.navbar .logo {
-  width: 150px;
-}
-
-.navbar-menu {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  color: #49557e;
-  font-size: 18px;
-  margin-bottom: 0;
-  padding-left: 0;
-}
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.navbar button {
-  background: transparent;
+  padding: 12px 18px;
+  background-color:#027e6f;
+  color: white;
   font-size: 16px;
-  color: #00231f;
-  border: 1px solid #00231f;
-  padding: 10px 30px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.3s;
-  line-height: 1.6;
-}
-
-.navbar button:hover {
-  background-color: #027e6f;
-  color: whitesmoke;
-}
-
-.navbar .active {
-  padding-bottom: 2px;
-  border-bottom: 2px solid #49557e;
-}
-
-.navbar li {
-  cursor: pointer;
-}
-
-.navbar-search-icon {
-  position: relative;
-}
-
-.navbar-search-icon .dot {
-  position: absolute;
-  min-width: 10px;
-  min-height: 10px;
-  background-color: tomato;
+  border: none;
   border-radius: 5px;
-  top: -8px;
-  right: -8px;
-}
-
-.profile-photo {
-  width: 50px;
-  height: 50px; 
-  border-radius: 50%;
-  overflow: visible;
-  position: relative;
-}
-
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.profile-photo img:hover {
   cursor: pointer;
-}
-
-/* .profile-photo i { 
- transition: background-color 0.3s ease, color 0.3s ease;
-
-}
-
-.profile-photo i:hover {
-  cursor: pointer;
-  color: #027e6f;
-
-} */
-
-.notification-dot {
-  position: absolute;
-  top: 4%;
-  right: 0px;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
-  display: none;
-}
-
-.profile-photo.active .notification-dot {
-  display: block;
-} 
-.profile-photo.active .notification-dot {
-  display: block;
-} 
-
-.logout-icon i {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-.logout-icon i:hover {
-  cursor: pointer;
-  color: #dc143c;
-}
-
-.popup {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.popup-content {
-  background-color: white;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 25%;
-  text-align: center;
-}
-
-.popup-content button {
-  background-color: #027e6f;
-  text-align: center;
-  font-size: 100%;
-  margin: 10px;
-  color: #f9f9f9;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: auto;
-  height: auto;
+  width: max-content;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .popup-content button:hover {
-  background-color: #00231f;
-  cursor: pointer;
+  background-color: #02a793;
+  font-weight: 600; 
 }
 
 /* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
@@ -474,6 +203,9 @@
 
   .navbar-right button {
     padding: 8px 25px;
+  }
+  .navheader {
+    font-size: 1em;
   }
 }
 
@@ -503,7 +235,15 @@
 
 @media (max-width: 750px) {
   .navbar-menu {
-    display: none;
+    gap: 15px;
+    font-size: 8px;  
+    text-align: center;
+
+  }
+  .navbar-right {
+    gap: 15px;
+    padding-left: 10px;
+
   }
 }
 

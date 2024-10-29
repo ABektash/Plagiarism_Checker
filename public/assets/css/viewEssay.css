@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    width: 100%;
+    padding: 2%;
+}
+
+.GOBACK {
+    background-color: #027e6f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-left: 2%;
+}
+
+
+.StudentManagementBody {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    color: #333;
+    line-height: 1.6;
+}
+
+.StudentManagementMain {
+    padding: 2%;
+    margin: 2%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.StudentManagementMain h2 {
+    margin-bottom: 20px;
+    color: #027e6f;
+}
+
+.student-name {
+    color: #333;
+}
+
+.Group-Container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Left-Group-Container {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+}
+
+.Right-Group-Container {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+}
+
+.download-essay-btn, .view-report-btn {
+    width: 15%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #027e6f;
+    color: #fff;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-left: 85%;
+}
+
+.download-essay-btn:hover, .view-report-btn:hover {
+    background-color: #00231F;
+    color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+    .view-report-btn, .download-essay-btn {
+        width: 25%; 
+        font-size: 90%; 
+        padding: 8px 16px;
+        margin-left: 70%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .view-report-btn, .download-essay-btn {
+        width: 40%; 
+        font-size: 80%;
+        padding: 6px 12px;
+        margin-left: 60%; 
+    }
+}

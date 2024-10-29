@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <input type="checkbox" id="switch-mode" hidden>
 
     <!-- dark mode button -->
-    <label for="switch-mode" class="switch-mode"></label>    
+    <!-- <label for="switch-mode" class="switch-mode"></label>     -->
 
     <a href="<?php url('adminProfile/index/' . $_SESSION['user']['ID']); ?>" class="profile">
         <!-- waiting for the session later !!! -->

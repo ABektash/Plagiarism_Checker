@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <h1 class="navheader" onclick="window.location.href='<?php url('home/index'); ?>'">PLAGIARISM DETECTION</h1>
 
 <ul class="navbar-menu">
-    <?php if (isset($_SESSION['pages'])): ?>
+    <?php if (isset($_SESSION['pages']) && $_SESSION["user"]["UserType_id"] != 1): ?>
         <?php if (in_array('Dashboard', $_SESSION['pages'])): ?>
             <a href="<?php url('dashboard/index'); ?>" class="nav-link">Dashboard</a>
         <?php endif; ?>

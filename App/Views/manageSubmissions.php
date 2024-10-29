@@ -23,7 +23,7 @@
             </div>
             <div class="Group-Container">
                 <div class="Left-Group-Container">
-                    <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
+                <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
                 </div>
             </div>
 
@@ -36,80 +36,81 @@
                         <th>Submission Date</th>
                         <th>Plagiarism Report</th>
                         <th>Feedback Discussion</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>3</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)"> <i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                 </tbody>
 
@@ -119,5 +120,8 @@
     </section>
 
 </body>
+<script src="/Plagiarism_Checker/public\assets\js\manageSubmissions.js"></script>
+
+
 
 </html>

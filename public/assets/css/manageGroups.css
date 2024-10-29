@@ -106,17 +106,7 @@ table td {
   background-color: var(--light);
 }
 
-.View-Profile-btn {
-  background-color: #027e6f;
-  text-align: center;
-  font-size: 100%;
-  color: #f9f9f9;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 15%;
-  height: 100%;
-}
+
 .delete-group-btn,
 .remove-instructor-btn,
 .create-group-btn,

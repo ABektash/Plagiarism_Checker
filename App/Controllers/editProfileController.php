@@ -46,32 +46,35 @@ class EditProfileController extends Controller
                 $errors['organizationNameError'] = "Organization name is too long";
             }
 
-            
+
             $address = $_POST['address'];
 
-            
+
             $phone = $_POST['phone'];
             if (!empty($phone)) {
                 if (!preg_match('/^(010|011|012|015)[0-9]{8}$/', $phone)) {
                     $errors['phoneError'] = "Invalid phone number";
                 }
             }
-        
+
 
             $birthday = $_POST['birthday'];
             if (!empty($birthday) && $birthday != "0000-00-00") {
-                $date = DateTime::createFromFormat('m/d/Y', $birthday); 
-                if ($date) {
-                    $birthday = $date->format('Y-m-d'); 
+                $date = DateTime::createFromFormat('Y-m-d', $birthday);
+                if ($date && $date->format('Y-m-d') === $birthday) {
+                    $currentDate = new DateTime();
+                    if ($date > $currentDate) {
+                        $errors['birthdayError'] = "Birthday cannot be in the future.";
+                    }
                 } else {
-                    $errors['birthdayError'] = "Invalid birthday format. Use MM/DD/YYYY";
+                    $errors['birthdayError'] = "Invalid birthday format. Use YYYY-MM-DD";
                 }
             }
 
             if (empty($errors)) {
                 $user = new User(db: $this->db);
 
-                $id = $_SESSION['user']['ID']; 
+                $id = $_SESSION['user']['ID'];
 
                 $user->first_name = $_POST['firstName'];
                 $user->last_name = $_POST['lastName'];
@@ -92,7 +95,4 @@ class EditProfileController extends Controller
             }
         }
     }
-
-
-
 }

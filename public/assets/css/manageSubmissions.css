@@ -61,7 +61,7 @@ table td {
 
 
 
-.a-link {
+.a-link,.delete-a-link {
   color: var(--blue);
   text-decoration: none;
   width: 10%;
@@ -70,7 +70,9 @@ table td {
 .a-link:hover {
   color: #02a793;
 }
-
+.delete-a-link:hover{
+  color: red;
+  }
 
 .Group-Container {
   display: flex;

@@ -1,36 +1,5 @@
-#content {
-  position: relative;
-  width: calc(100% - 280px);
-  left: 280px;
-  transition: 0.3s ease;
-}
-#sidebar.hide ~ #content {
-  width: calc(100% - 60px);
-  left: 60px;
-}
-#content main {
-  width: 100%;
-  padding: 36px 24px;
-  font-family: var(--poppins);
-  max-height: calc(100vh - 56px);
-  overflow-y: auto;
-}
-#content main .head-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  grid-gap: 16px;
-  flex-wrap: wrap;
-}
-#content main .head-title h1 {
-  font-size: 36px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: var(--dark);
-}
 
 .manageAssignmentsMain {
-  padding: 3%;
   margin: 3%;
   background-color: #ffffff;
   border-radius: 8px;
@@ -156,7 +125,7 @@ textarea {
   margin-top: 1rem;
 }
 .edit-button:hover {
-  background-color: black;
+  background-color: #02a793;
   color: white;
 }
 
@@ -175,7 +144,7 @@ textarea {
 }
 
 .submit-button:hover {
-  background-color: black;
+  background-color:  #02a793;
 }
 
 .file-upload {
@@ -203,7 +172,7 @@ textarea {
 }
 
 #close-btn:hover {
-  background-color: black;
+  background-color:  #02a793;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -217,6 +186,18 @@ textarea {
   font-size: 2.2rem;
 }
 
+tr:first-child td {
+  border-top: none;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+td:first-child {
+  border-left: none;
+}
+td:last-child {
+  border-right: none;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -229,12 +210,12 @@ table {
 table th,
 table td {
   padding: 12px;
-  border: 0px solid #dddddd;
+  border: 0.5px solid #dddddd;
   text-align: center;
 }
 
 table th {
-  background-color: var(--blue);
+  background-color: #027e6f;
   font-size: medium;
   text-align: center;
   color: white;
@@ -242,17 +223,20 @@ table th {
 
 table td {
   font-size: medium;
-  color: var(--dark);
-  background-color: var(--light);
+  color: #342e37;
+  background-color: #f3f3f3;
 }
 
-.a-link {
+.a-link,.delete-a-link {
   color: #05a895;
   text-decoration: none;
+  width: 10%;
 }
-
 .a-link:hover {
-  text-decoration: underline;
+  color: #02a793;
+}
+.delete-a-link:hover {
+  color: red;
 }
 label {
   font-style: bold;
@@ -271,7 +255,10 @@ label {
   width: max-content;
 }
 .Add-button:hover {
-  background-color: #0056b3;
+  background-color: #02a793;
+}
+#user-type-filter:hover {
+  background-color: #02a793;
 }
 
 .search-bar {
@@ -285,12 +272,14 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
   gap: 20px;
-  background-color: #fff;
+  background-color: #f3f3f3;
+  margin: 3%;
+  border-radius: 8px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .Left-Group-Container {

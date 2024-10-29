@@ -15,6 +15,43 @@
   // const editNameInput = document.getElementById("editName");
   // const editEmailInput = document.getElementById("editEmail");
 
+  (() => {
+    let rowToDelete;
+    const deleteButtons = document.querySelectorAll(".delete-a-link");
+    const deleteModal = document.getElementById("deleteModal");
+    const yesBtn = document.getElementById("yes-btn");
+    const noBtn = document.getElementById("no-btn");
+  
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", function (event) {
+        event.preventDefault();  // Prevents immediate navigation
+        rowToDelete = button.closest("tr");  // Save the row to delete
+        deleteModal.style.display = "block"; // Show the delete confirmation modal
+      });
+    });
+  
+    // Confirm delete action
+    yesBtn.addEventListener("click", function () {
+      if (rowToDelete) {
+        rowToDelete.remove(); // Remove the row from the table
+        deleteModal.style.display = "none"; // Hide the modal after deletion
+      }
+    });
+  
+    // Cancel delete action
+    noBtn.addEventListener("click", function () {
+      deleteModal.style.display = "none"; // Hide the modal without deletion
+    });
+  
+    // Close modal when clicking outside of it
+    window.addEventListener("click", (event) => {
+      if (event.target === deleteModal) {
+        deleteModal.style.display = "none";
+      }
+    });
+  })();
+  
+
   const nameError = document.getElementById("nameError");
   const emailError = document.getElementById("emailError");
 
