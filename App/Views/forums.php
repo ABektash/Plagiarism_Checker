@@ -7,15 +7,19 @@
     <title>Fourms</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/fourms.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/forums.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
 </head>
 
 <body>
     <?php include 'inc/header.php'; ?>
+
+
+    <main class="chatMain">
     <div id="chatContainer">
-        <div id="contactList">
+        <!-- <div id="contactList">
             <div class="contact">
                 <span class="contactName">Chat 1</span>
                 <span class="contactStatus">Just now</span>
@@ -24,8 +28,8 @@
                 <span class="contactName">Chat 2</span>
                 <span class="contactStatus">Typing...</span>
             </div>
-            <!-- Add more contacts dynamically here -->
-        </div>
+           // Add more contacts dynamically here 
+        </div> -->
         <div id="chatSection">
             <div id="chatHeader">
                 <h2>Chat 1</h2>
@@ -39,11 +43,16 @@
             </div>
             <div id="chatInput">
                 <input type="text" id="messageTextBox" placeholder="Type a message...">
-                <button id="sendMessage" class="mdi mdi-chat"></button>
+                <button id="sendMessage"><i class="fa-solid fa-circle-right fa-lg"></i></button>
             </div>
         </div>
     </div>
+    </main>
+
+
     <?php include 'inc/footer.php'; ?>
+
+    
     <script>
         class Message {
     constructor(parent, content, username, imageSrc = null) {

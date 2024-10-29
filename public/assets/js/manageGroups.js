@@ -1,19 +1,19 @@
 (() => {
   let rowToDelete;
-  let rowToEdit;
+  // let rowToEdit;
   let instructorToRemove;
 
   const deleteButtons = document.querySelectorAll(".Delete-std-btn");
-  const editButtons = document.querySelectorAll(".Edit-std-btn");
+  // const editButtons = document.querySelectorAll(".Edit-std-btn");
   const deleteModal = document.getElementById("deleteModal");
-  const editModal = document.getElementById("editModal");
+  // const editModal = document.getElementById("editModal");
   const yesBtn = document.getElementById("yes-btn");
   const noBtn = document.getElementById("no-btn");
   const saveBtn = document.getElementById("save-btn");
-  const cancelEditBtn = document.getElementById("cancel-edit-btn");
+  // const cancelEditBtn = document.getElementById("cancel-edit-btn");
 
-  const editNameInput = document.getElementById("editName");
-  const editEmailInput = document.getElementById("editEmail");
+  // const editNameInput = document.getElementById("editName");
+  // const editEmailInput = document.getElementById("editEmail");
 
   const nameError = document.getElementById("nameError");
   const emailError = document.getElementById("emailError");
@@ -40,48 +40,48 @@
     deleteModal.style.display = "none";
   });
 
-  editButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      rowToEdit = button.closest("tr");
+  // editButtons.forEach((button) => {
+  //   button.addEventListener("click", function () {
+  //     rowToEdit = button.closest("tr");
 
-      editNameInput.value = rowToEdit.cells[1].textContent;
-      editEmailInput.value = rowToEdit.cells[2].textContent;
+  //     editNameInput.value = rowToEdit.cells[1].textContent;
+  //     editEmailInput.value = rowToEdit.cells[2].textContent;
 
-      nameError.style.display = "none";
-      emailError.style.display = "none";
+  //     nameError.style.display = "none";
+  //     emailError.style.display = "none";
 
-      editModal.style.display = "block";
-    });
-  });
+  //     editModal.style.display = "block";
+  //   });
+  // });
 
-  saveBtn.addEventListener("click", function () {
-    let isValid = true;
+  // saveBtn.addEventListener("click", function () {
+  //   let isValid = true;
 
-    if (!validateName(editNameInput.value.trim())) {
-      nameError.style.display = "block";
-      nameError.textContent = "Please enter a valid name.";
-      isValid = false;
-    } else {
-      nameError.style.display = "none";
-    }
+  //   if (!validateName(editNameInput.value.trim())) {
+  //     nameError.style.display = "block";
+  //     nameError.textContent = "Please enter a valid name.";
+  //     isValid = false;
+  //   } else {
+  //     nameError.style.display = "none";
+  //   }
 
-    if (!validateEmail(editEmailInput.value.trim())) {
-      emailError.style.display = "block";
-      isValid = false;
-    } else {
-      emailError.style.display = "none";
-    }
+  //   if (!validateEmail(editEmailInput.value.trim())) {
+  //     emailError.style.display = "block";
+  //     isValid = false;
+  //   } else {
+  //     emailError.style.display = "none";
+  //   }
 
-    if (isValid) {
-      rowToEdit.cells[1].textContent = editNameInput.value;
-      rowToEdit.cells[2].textContent = editEmailInput.value;
-      editModal.style.display = "none";
-    }
-  });
+  //   if (isValid) {
+  //     rowToEdit.cells[1].textContent = editNameInput.value;
+  //     rowToEdit.cells[2].textContent = editEmailInput.value;
+  //     editModal.style.display = "none";
+  //   }
+  // });
 
-  cancelEditBtn.addEventListener("click", function () {
-    editModal.style.display = "none";
-  });
+  // cancelEditBtn.addEventListener("click", function () {
+  //   editModal.style.display = "none";
+  // });
 
   const addModal = document.getElementById("addModal");
   const addSaveBtn = document.getElementById("add-save-btn");
@@ -145,21 +145,20 @@
                 <td>${addEmailInput.value.trim()}</td>
                 <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                 <td>
-                    <button class="Edit-std-btn"><i class='bx bx-edit'></i></button>
                     <button class="Delete-std-btn"><i class='bx bx-trash'></i></button>
                 </td>
             `;
 
       tableBody.appendChild(newRow);
 
-      newRow
-        .querySelector(".Edit-std-btn")
-        .addEventListener("click", function () {
-          rowToEdit = newRow;
-          editNameInput.value = newRow.cells[1].textContent;
-          editEmailInput.value = newRow.cells[2].textContent;
-          editModal.style.display = "block";
-        });
+      // newRow
+      //   .querySelector(".Edit-std-btn")
+      //   .addEventListener("click", function () {
+      //     rowToEdit = newRow;
+      //     editNameInput.value = newRow.cells[1].textContent;
+      //     editEmailInput.value = newRow.cells[2].textContent;
+      //     editModal.style.display = "block";
+      //   });
 
       newRow
         .querySelector(".Delete-std-btn")

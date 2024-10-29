@@ -211,6 +211,22 @@ table td {
     cursor: pointer;
 }
 
+.View-Profile-btn{
+  background-color: #027e6f; 
+  text-align: center;
+  font-size: 100%; 
+  color: #f9f9f9;
+  transition: background-color 0.3s ease, color 0.3s ease;  
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  width: 12%;
+  height:100%;
+
+}
+
+
+
+
 .Delete-std-btn , .Edit-std-btn{
     background-color: #027e6f; 
     text-align: center;
