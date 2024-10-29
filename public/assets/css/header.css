@@ -91,7 +91,7 @@
 
 .profile-photo {
   width: 50px;
-  height: 50px;
+  height: 50px; 
   border-radius: 50%;
   overflow: visible;
   position: relative;
@@ -108,6 +108,17 @@
   cursor: pointer;
 }
 
+/* .profile-photo i { 
+ transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.profile-photo i:hover {
+  cursor: pointer;
+  color: #027e6f;
+
+} */
+
 .notification-dot {
   position: absolute;
   top: 4%;
@@ -121,7 +132,10 @@
 
 .profile-photo.active .notification-dot {
   display: block;
-}
+} 
+.profile-photo.active .notification-dot {
+  display: block;
+} 
 
 .logout-icon i {
   transition: background-color 0.3s ease, color 0.3s ease;

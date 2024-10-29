@@ -27,6 +27,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="profile-photo">
                 <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt="Profile Photo" onclick="window.location.href='<?php url('profile/index'); ?>'">
                 <span class="notification-dot"></span>
+                <!-- <i class="fa-solid fa-user fa-xl"></i> -->
             </div>
 
 

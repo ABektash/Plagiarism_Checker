@@ -7,6 +7,8 @@
     <title>Instructor Dashboard</title>
 
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageGroupInsturctor.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
+
 </head>
 
 <body class="StudentManagementBody">
@@ -50,35 +52,35 @@
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                             <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                         <tr>
                             <td>00106</td>
                             <td>Ammar Bektash</td>
                             <td>Abektash@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                             <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                         <tr>
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                             <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                         <tr>
                             <td>00106</td>
                             <td>Ammar Bektash</td>
                             <td>Abektash@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                             <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                         <tr>
                             <td>03242</td>
                             <td>Ahmed Mohamed</td>
                             <td>ghazouly@gmail.com</td>
-                            <td><button class="View-Profile-btn">View</button></td>
+                            <td><button class="View-Profile-btn"><i class='bx bx-user'></i></button></td>
                             <!-- <td><button class="Edit-std-btn">Edit</button> <button class="Delete-std-btn">Delete</button></td> -->
                         </tr>
                     </tbody>
