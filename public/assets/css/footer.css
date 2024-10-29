@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .footer {
@@ -78,6 +79,10 @@
   background-color: grey;
   border: none;
   opacity: 1;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 750px) {

@@ -165,6 +165,10 @@ body {
   left: calc(100% - (25px - 4px) - 2px);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 @media screen and (max-width: 576px) {
   #content nav form .form-input input {
     display: none;

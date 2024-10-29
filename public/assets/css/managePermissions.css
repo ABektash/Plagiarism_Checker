@@ -124,7 +124,6 @@ select::-webkit-scrollbar-thumb:hover {
     flex-direction: column;
     border: 1px solid var(--blue);
     margin-bottom: 10px;
-    padding: 10px;
   }
   
   .form-container th,

@@ -76,3 +76,30 @@ function moveToAvailable() {
         leftValues.appendChild(option);
     });
 }
+
+
+function detectDevTools() {
+    let devtoolsOpen = false;
+    const threshold = 160;
+  
+    const checkDevTools = () => {
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      devtoolsOpen = widthThreshold || heightThreshold;
+  
+      if (devtoolsOpen) {
+        document.getElementById('arrow-btn-1').innerHTML = '&#x25B2;';
+        document.getElementById('arrow-btn-2').innerHTML = '&#x25BC;'; 
+      } else {
+        // Revert back to left and right arrows when DevTools are closed
+        document.getElementById('arrow-btn-1').innerHTML = '&lt;'; 
+        document.getElementById('arrow-btn-2').innerHTML = '&gt;'; 
+      }
+    };
+  
+    window.addEventListener('resize', checkDevTools);
+    checkDevTools(); // Initial check on load
+  }
+  
+  detectDevTools();
+  

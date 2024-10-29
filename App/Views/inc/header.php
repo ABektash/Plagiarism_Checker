@@ -25,9 +25,9 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php else: ?>
 
             <div class="profile-photo">
-                <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt="Profile Photo" onclick="window.location.href='<?php url('profile/index'); ?>'">
+                <!-- <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt="Profile Photo" onclick="window.location.href='<?php url('profile/index'); ?>'"> -->
+                <i alt="Profile Photo" class="fa-solid fa-user fa-xl" id="profile-icon" onclick="window.location.href='<?php url('profile/index'); ?>'"></i> 
                 <span class="notification-dot"></span>
-                <!-- <i class="fa-solid fa-user fa-xl"></i> -->
             </div>
 
 
@@ -46,5 +46,5 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php endif; ?>
     </div>
 </div>
-
+ 
 <script src="/Plagiarism_Checker/public\assets\js\header.js"></script>
