@@ -3,6 +3,8 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require_once MODELS.'Page.php'; 
+require_once MODELS.'UserTypePage.php'; 
 
 class User
 {
@@ -24,8 +26,7 @@ class User
         $this->conn = $db;
     }
 
-    public function signup()
-    {
+    public function signup() {
         $first_name = mysqli_real_escape_string($this->conn, $this->first_name);
         $last_name = mysqli_real_escape_string($this->conn, $this->last_name);
         $email = mysqli_real_escape_string($this->conn, $this->email);
@@ -35,21 +36,21 @@ class User
         $phone_number = mysqli_real_escape_string($this->conn, $this->phone_number);
         $birthday = mysqli_real_escape_string($this->conn, $this->birthday);
         $user_type_id = 4;
-
+    
         $check_email_query = "SELECT Email FROM " . $this->table_name . " WHERE Email = '$email'";
         $result = mysqli_query($this->conn, $check_email_query);
-
+    
         if (mysqli_num_rows($result) > 0) {
             return false;
         }
-
+    
         $query = "INSERT INTO " . $this->table_name . " 
                   (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
                   VALUES ('$first_name', '$last_name', '$email', '$password', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
-
+    
         if (mysqli_query($this->conn, $query)) {
             $user_id = mysqli_insert_id($this->conn);
-
+    
             $_SESSION['user'] = [
                 'ID' => $user_id,
                 'FirstName' => $first_name,
@@ -61,11 +62,15 @@ class User
                 'Birthday' => $birthday,
                 'UserType_id' => $user_type_id
             ];
+    
+            
+    
             return true;
         }
-
+    
         return false;
     }
+    
 
 
     public function addUser(){
@@ -99,26 +104,40 @@ class User
     }
 
 
-    public function login($email, $password)
-    {
+    public function login($email, $password) {
         $email = mysqli_real_escape_string($this->conn, $email);
         $password = mysqli_real_escape_string($this->conn, $password);
-
+    
         $query = "SELECT * FROM " . $this->table_name . " WHERE Email = '$email' LIMIT 1";
         $result = mysqli_query($this->conn, $query);
-
+    
         if (mysqli_num_rows($result) > 0) {
             $user_data = mysqli_fetch_assoc($result);
-
+    
             if ($password === $user_data['Password']) {
+                $_SESSION['user'] = [
+                    'ID' => $user_data['ID'],
+                    'FirstName' => $user_data['FirstName'],
+                    'LastName' => $user_data['LastName'],
+                    'Email' => $user_data['Email'],
+                    'Organization' => $user_data['Organization'],
+                    'Address' => $user_data['Address'],
+                    'PhoneNumber' => $user_data['PhoneNumber'],
+                    'Birthday' => $user_data['Birthday'],
+                    'UserType_id' => $user_data['UserType_id']
+                ];
+    
+                
+    
                 return $user_data;
             } else {
                 return false;
             }
         }
-
+    
         return false;
     }
+    
 
     public function getAllUsers()
     {

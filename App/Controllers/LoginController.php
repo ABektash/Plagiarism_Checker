@@ -1,8 +1,9 @@
 <?php
 
 
-require_once MODELS.'User.php'; 
-
+require_once MODELS . 'User.php';
+require_once MODELS.'Page.php'; 
+require_once MODELS.'UserTypePage.php';
 
 class LoginController extends Controller
 {
@@ -11,8 +12,8 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG.'dbh.inc.php';
-        $this->db = $conn; 
+        require_once CONFIG . 'dbh.inc.php';
+        $this->db = $conn;
     }
 
 
@@ -42,7 +43,7 @@ class LoginController extends Controller
                 $errors['passwordError'] = "Password must be at least 6 characters long.";
             }
 
-            if (!empty($errors)) {    
+            if (!empty($errors)) {
                 $this->view('login', $errors);
             } else {
                 $user = new User($this->db);
@@ -50,9 +51,20 @@ class LoginController extends Controller
 
                 if ($login_result) {
                     $_SESSION['user'] = $login_result;
-                    if ($_SESSION['user']['UserType_id'] == 1){
+                    $userTypePageModel = new UserTypePage($this->db);
+                    $pageModel = new Page($this->db);
+                    $allowedPageIds = $userTypePageModel->getPagesByUserType($_SESSION['user']['UserType_id']);
+                    $_SESSION['pages'] = [];
+
+                    foreach ($allowedPageIds as $pageId) {
+                        $friendlyName = $pageModel->getFriendlyNameById($pageId);
+                        if ($friendlyName) {
+                            $_SESSION['pages'][] = $friendlyName;
+                        }
+                    }
+                    if ($_SESSION['user']['UserType_id'] == 1) {
                         $this->view('adminDashboard');
-                    } elseif ($_SESSION['user']['UserType_id'] == 2 || $_SESSION['user']['UserType_id'] == 3){
+                    } elseif ($_SESSION['user']['UserType_id'] == 2 || $_SESSION['user']['UserType_id'] == 3) {
                         $this->view('dashboard');
                     } else {
                         $this->view('home');

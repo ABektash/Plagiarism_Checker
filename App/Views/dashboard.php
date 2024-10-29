@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
 </head>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 
 <body>
     <?php include 'inc/header.php'; ?>
@@ -20,7 +25,7 @@
         // session_start();
         // $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 
-        if ($user_role == 'student'): 
+        if ($_SESSION['user']['UserType_id'] == 3): 
          //if ('student' == 'student'):
         ?>
             <!-- Student Dashboard -->
@@ -89,7 +94,7 @@
         <?php
 
          //if ($user_role == 'instructor'):
-            if ('instructor' == 'instructor'):
+            if ($_SESSION['user']['UserType_id'] == 2):
         ?>
             <!-- Instructor Dashboard -->
             <section id="groups">

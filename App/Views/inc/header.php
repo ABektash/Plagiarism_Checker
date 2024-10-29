@@ -8,15 +8,23 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 
 <div class="navbar">
-    <h1 class="navheader">PLAGIARISM DETECTION</h1>
+<h1 class="navheader" onclick="window.location.href='<?php url('home/index'); ?>'">PLAGIARISM DETECTION</h1>
 
-    <ul class="navbar-menu">
-        <?php if (isset($_SESSION['user']['UserType_id']) && $_SESSION['user']['UserType_id'] == 2): ?>
+<ul class="navbar-menu">
+    <?php if (isset($_SESSION['pages'])): ?>
+        <?php if (in_array('Dashboard', $_SESSION['pages'])): ?>
             <a href="<?php url('dashboard/index'); ?>" class="nav-link">Dashboard</a>
+        <?php endif; ?>
+
+        <?php if (in_array('Manage Assignments', $_SESSION['pages'])): ?>
             <a href="<?php url('manageAssignments/index'); ?>" class="nav-link">Manage Assignments</a>
+        <?php endif; ?>
+
+        <?php if (in_array('My Groups', $_SESSION['pages'])): ?>
             <a href="<?php url('manageGroupInsturctor/index'); ?>" class="nav-link">My Groups</a>
         <?php endif; ?>
-    </ul>
+    <?php endif; ?>
+</ul>
 
     <div class="navbar-right">
         <?php if (!isset($_SESSION['user'])): ?>

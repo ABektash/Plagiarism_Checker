@@ -1,7 +1,8 @@
-<?php 
+<?php
 
-require_once MODELS.'User.php'; 
- 
+require_once MODELS . 'User.php';
+require_once MODELS.'Page.php'; 
+require_once MODELS.'UserTypePage.php';
 
 class SignupController extends Controller
 {
@@ -9,8 +10,8 @@ class SignupController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG.'dbh.inc.php';
-        $this->db = $conn; 
+        require_once CONFIG . 'dbh.inc.php';
+        $this->db = $conn;
     }
 
     public function index()
@@ -50,12 +51,24 @@ class SignupController extends Controller
             }
 
             if (empty($errors)) {
-                $user = new User($this->db); 
+                $user = new User($this->db);
 
                 $user->first_name = $_POST['fname'];
                 $user->last_name = $_POST['lname'];
                 $user->email = $_POST['email'];
                 $user->password = $_POST['password'];
+                $userTypePageModel = new UserTypePage($this->db);
+                $pageModel = new Page($this->db);
+
+                $allowedPageIds = $userTypePageModel->getPagesByUserType(4);
+                $_SESSION['pages'] = [];
+
+                foreach ($allowedPageIds as $pageId) {
+                    $friendlyName = $pageModel->getFriendlyNameById($pageId);
+                    if ($friendlyName) {
+                        $_SESSION['pages'][] = $friendlyName;
+                    }
+                }
 
                 if ($user->signup()) {
                     $this->view('home');
