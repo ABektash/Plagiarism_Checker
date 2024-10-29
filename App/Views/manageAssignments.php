@@ -282,6 +282,6 @@
 
 </body>
 
-<script src="/Plagiarism_Checker/public\assets\js\manageAssignment.js"></script>
+
 
 </html>

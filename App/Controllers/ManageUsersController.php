@@ -19,6 +19,24 @@ class ManageUsersController extends Controller
     }
 
 
+    public function delete() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['userID'])) {
+            $userID = $_POST['userID'];
+            $user = new User($this->db);
+
+            $result = $user->deleteUser($userID);
+            $users = $user->getAllUsers();
+            $data = ['users' => $users];
+            if ($result) {
+                $this->view('manageUsers', $data);
+            } else {
+                $data["deleteError"] = "Couldn't delete user!";
+                $this->view('manageUsers', $data);
+            }
+        }
+    }
+
+
 
     public function submit()
     {

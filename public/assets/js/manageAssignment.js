@@ -18,6 +18,17 @@ document
       isValid = false;
     }
 
+    // Validate file format (only PDF)
+    const fileInput = document.getElementById("assignment-file");
+    const filePath = fileInput.value;
+    const allowedExtension = /(\.pdf)$/i;
+
+    if (!allowedExtension.test(filePath)) {
+      document.getElementById("file-error").innerText =
+        "Only PDF files are allowed.";
+      isValid = false;
+    }
+
     // Prevent form submission if invalid
     if (!isValid) {
       event.preventDefault();

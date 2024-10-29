@@ -28,11 +28,259 @@
   margin-bottom: 10px;
   color: var(--dark);
 }
+
+
+.Group-Container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  gap: 20px;
+  background-color: var(--light);
+  overflow: hidden;
+}
+
+.Left-Group-Container {
+  display: flex;
+  width: 30%;
+  font-size: small;
+}
+
+.Right-Group-Container {
+  display: flex;
+  width: 30%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  font-size: small;
+
+}
+
+
+
+
+.Group-Selection,.Instructor-Selection {
+  width: max-content;
+  display: flex;
+  margin-left: 2%;
+  border: 5px solid #027e6f;
+  border-radius: 5px;
+  background-color: var(--blue);
+  text-align: center;
+  color: white;
+  /* appearance:none;  */
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.Group-Selection:hover {
+  cursor: pointer;
+}
+
+.Group-Selection-Title, .Insturctor-Selection-Title {
+  color: var(--dark);
+}
+
+
+.Instructor-Selection:hover {
+  cursor: pointer;
+}
+
+
+.delete-group-btn,
+.remove-instructor-btn,
+.create-group-btn,
+.add-std-btn,
+.add-instructor-btn {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: max-content;
+  font-size: small;
+  width: 100%;
+}
+.create-group-btn:hover,
+.add-std-btn:hover,
+.add-instructor-btn:hover {
+  background-color:#02a793;;
+  cursor: pointer;
+}
+
+.delete-group-btn:hover,
+.remove-instructor-btn:hover {
+  background-color: #dc143c;
+  cursor: pointer;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 10px; 
+  overflow: hidden; 
+  border-spacing: 0; 
+}
+
+table th, 
+table td {
+  padding: 12px;
+  border: 0px solid #dddddd;
+  text-align: center;
+}
+
+table th {
+  background-color: var(--blue);
+  font-size: medium;
+  text-align: center;
+  color: white;
+}
+
+table td {
+  font-size: medium;
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+
+
+
+.View-Profile-btn {
+  background-color: #027e6f;
+  text-align: center;
+  font-size: 100%;
+  color: #f9f9f9;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 15%;
+  height: 100%;
+}
+
+.View-Profile-btn:hover {
+  background-color: #00231f;
+  cursor: pointer;
+}
+
+.Delete-std-btn,
+.Edit-std-btn {
+  background-color: #027e6f;
+  text-align: center;
+  font-size: large;
+  color: #f9f9f9;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 20%;
+  height: 100%;
+}
+
+.Delete-std-btn:hover {
+  background-color: #dc143c;
+  cursor: pointer;
+}
+
+.Edit-std-btn:hover {
+  background-color: #00231f;
+  cursor: pointer;
+}
+
+.a-link,
+.delete-a-link {
+  color: var(--blue);
+  text-decoration: none;
+  width: 10%;
+}
+
+.a-link:hover {
+  color: #02a793;
+}
+.delete-a-link:hover {
+  color: red;
+}
+
+
+
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  text-align: center;
+}
+
+.modal-content button {
+  margin: 10px;
+}
+
+#no-btn,
+#yes-btn,
+#confirmRemoveInstructorBtn,
+#cancelRemoveInstructorBtn,
+#addInstructorSaveBtn,
+#cancelAddInstructorBtn,
+#save-btn,
+#cancel-edit-btn,
+#cancel-add-btn,
+#add-save-btn {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: auto;
+  border-radius: 5px;
+  cursor: pointer;
+  width: max-content;
+}
+#yes-btn:hover,
+#confirmRemoveInstructorBtn:hover {
+  background-color: #dc143c;
+  cursor: pointer;
+}
+#no-btn:hover,
+#cancelRemoveInstructorBtn:hover,
+#addInstructorSaveBtn:hover,
+#cancelAddInstructorBtn:hover,
+#save-btn:hover,
+#cancel-edit-btn:hover,
+#cancel-add-btn:hover,
+#add-save-btn:hover {
+  background-color: #00231f;
+  cursor: pointer;
+}
+
+/* ///////////////////////////////////////////////////////////////////// */
+
+
+
 @media screen and (max-width: 768px) {
   #content {
     width: calc(100% - 60px);
     left: 200px;
   }
+  
 }
 
 @media screen and (max-width: 576px) {
@@ -48,274 +296,39 @@
   #content main .table-data .todo .todo-list {
     min-width: 420px;
   }
-}
-.Group-Selection {
-  width: 42.5px;
-  height: 42.5px;
-  margin-left: 2%;
-  font-size: 16px; 
-  border:5px solid #027e6f; 
-  border-radius: 5px;
-  background-color: #027e6f; 
-  text-align: center;
-  color: #f9f9f9;
-  /* appearance:none;  */
-  outline: none; 
-  transition: all 0.3s ease; 
-}
-
-.Group-Selection:hover {
-  cursor: pointer;
-}
-
-.Group-Selection-Title{
-    color: var(--dark);
-
-}
-
-
-.Instructor-Selection{
-  width: 15%;
-  height: 42.5px;
-  margin-left: 2%;
-  font-size: 16px; 
-  border:5px solid #027e6f; 
-  border-radius: 5px;
-  background-color: #027e6f; 
-  text-align: center;
-  color: #f9f9f9;
-  /* appearance:none;  */
-  outline: none; 
-  transition: all 0.3s ease; 
-}
-
-.Instructor-Selection:hover{
-  cursor: pointer;
-}
-.Group-Container {
-    display: flex;
-    justify-content: space-between; 
-    margin-bottom: 20px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-
-    /* gap: 20px;  */
+  .popup-content {
+    width: 70%;
+    max-width: 80%;
+    margin: 10% auto;
   }
-  
-.Left-Group-Container{
-      display: flex;
-      flex-direction: row;
-      width: 70%;
 }
-  
-.Right-Group-Container{
-      display: flex;
-      flex-direction: row;
-      width: 30%;
-      justify-content: center;
-}
-  
-.create-group-btn , .add-std-btn , .add-instructor-btn{
-      width: 30%;
-      height:100%;
-      margin-left: 2%;
-      font-size: 100%; 
-      border: 1px solid #ccc; 
-      border-radius: 10px;
-      background-color: #027e6f; 
-      text-align: center;
-      color: #f9f9f9;
-      transition: background-color 0.3s ease, color 0.3s ease;  
-}
-.create-group-btn:hover , .add-std-btn:hover , .add-instructor-btn:hover{
-      color: #f9f9f9;
-      background-color: #00231F; 
-      cursor: pointer;
-}
-.delete-group-btn , .remove-instructor-btn{
-      width: 30%;
-      height:100%;
-      margin-left: 2%;
-      font-size: 100%; 
-      border: 1px solid #ccc; 
-      border-radius: 10px;
-      background-color: #027e6f; 
-      text-align: center;
-      color: #f9f9f9;
-      transition: background-color 0.3s ease, color 0.3s ease;  
-}
-.delete-group-btn:hover , .remove-instructor-btn:hover {
-      background-color: #DC143C; 
-      cursor: pointer;
-  
-}
-  
-.Table-Container{
-    max-height: 520px;
-    overflow-y: auto;
-    width: 100%;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: var(--dark);
-}
-
-table th:nth-child(1), table td:nth-child(1) {
-    width: 5%;  
-}
-  
-table th, table td {
-    width: 20%;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
-    text-align: center;
-}
-
-table th {
-  background-color: var(--blue);
-  color: var(--light);
-  padding: 11px;
-  text-align: center;
-  font-size: large;
-}
-
-table td {
-  background-color: var(--light);
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: medium;
-}
-
-.View-Profile-btn{
-    background-color: #027e6f; 
-    text-align: center;
-    font-size: 100%; 
-    color: #f9f9f9;
-    transition: background-color 0.3s ease, color 0.3s ease;  
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    width: 15%;
-    height:100%;
-
-}
-
-.View-Profile-btn:hover{
-    background-color: #00231F; 
-    cursor: pointer;
-}
-
-.Delete-std-btn , .Edit-std-btn{
-    background-color: #027e6f; 
-    text-align: center;
-    font-size: large; 
-    color: #f9f9f9;
-    transition: background-color 0.3s ease, color 0.3s ease;  
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    width: 20%;
-    height:100%;
-
-}
-
-.Delete-std-btn:hover{
-    background-color: #DC143C; 
-    cursor: pointer;
-}
-
-.Edit-std-btn:hover{
-    background-color: #00231F; 
-    cursor: pointer;
-}
-
-.a-link,
-.delete-a-link {
-  color:var(--blue);
-  text-decoration: none;
-  width:  10%;
-}
-
-.a-link:hover {
-  color:  #02a793;
-}
-.delete-a-link:hover{
-color: red;
-}
-
-
-
-
-
-/* ///////////////////////////////////////////////////////////////////// */
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: white;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 25%;
-    text-align: center;
-}
-
-.modal-content button {
-    margin: 10px;
-}
-
-#no-btn , #yes-btn ,#confirmRemoveInstructorBtn,#cancelRemoveInstructorBtn, #addInstructorSaveBtn , #cancelAddInstructorBtn , #save-btn ,#cancel-edit-btn , #cancel-add-btn , #add-save-btn{
-    background-color: #027e6f; 
-    text-align: center;
-    font-size: 100%; 
-    color: #f9f9f9;
-    transition: background-color 0.3s ease, color 0.3s ease;  
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    width: 15%;
-    height:100%;
-
-}
-#yes-btn:hover , #confirmRemoveInstructorBtn:hover{
-    background-color: #DC143C; 
-    cursor: pointer;
-}
-#no-btn:hover ,#cancelRemoveInstructorBtn:hover , #addInstructorSaveBtn:hover , #cancelAddInstructorBtn:hover , #save-btn:hover ,#cancel-edit-btn:hover  , #cancel-add-btn:hover , #add-save-btn:hover{
-
-    background-color: #00231F; 
-    cursor: pointer;
-}
-
-/* ///////////////////////////////////////////////////////////////////// */
 
 @media (max-width: 1050px) {
-table th,table td {
+  .Left-Group-Container {
+    display: grid;
+  }
+  table {
+    width: 100%; 
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
     text-align: center;
-    font-size: 50%;
+    font-size: 40%;
+  }
+  .Right-Group-Container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px; 
   }
 
-  /* main h2 {
-    font-size: 100%;
-} */
+  .Right-Group-Container .Add-button,
+  .Right-Group-Container #user-type-filter {
+    font-size: 10px; 
+    width: 100%; 
+    max-width: 200px; 
+  }
+ 
 }
-
-
-
-
-
-

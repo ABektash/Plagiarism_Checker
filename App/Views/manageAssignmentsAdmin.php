@@ -23,171 +23,170 @@
             <div class="head-title">
                 <h1>Manage Assignments</h1>
             </div>
+            <div class="Group-Container">
+                <div class="Left-Group-Container">
+                    <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
+                </div>
 
-            <section>
-
-                <div class="containerMA">
-                    <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
+                <div class="Right-Group-Container">
                     <button type="submit" class="Add-button" onclick="openForumADD()">Add Assignment</button>
                 </div>
-            </section>
+            </div>
 
-            <section>
-                <table id="assignment-table">
-                    <thead>
-                        <tr>
-                            <th>Assignment Title</th>
-                            <th>Group</th>
-                            <th>Due Date</th>
-                            <th>Edit Assignment</th>
-                            <th>Delete Assignment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Essay on Climate Change</td>
-                            <td>3</td>
-                            <td>2024-12-01</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Introduction to Machine Learning</td>
-                            <td>5</td>
-                            <td>2024-11-20</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Research Paper on AI Ethics</td>
-                            <td>2</td>
-                            <td>2024-11-15</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>History of Renaissance Art</td>
-                            <td>4</td>
-                            <td>2024-12-10</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Essay on Climate Change</td>
-                            <td>3</td>
-                            <td>2024-12-01</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Introduction to Machine Learning</td>
-                            <td>5</td>
-                            <td>2024-11-20</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Research Paper on AI Ethics</td>
-                            <td>2</td>
-                            <td>2024-11-15</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>History of Renaissance Art</td>
-                            <td>4</td>
-                            <td>2024-12-10</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Essay on Climate Change</td>
-                            <td>3</td>
-                            <td>2024-12-01</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Introduction to Machine Learning</td>
-                            <td>5</td>
-                            <td>2024-11-20</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Research Paper on AI Ethics</td>
-                            <td>2</td>
-                            <td>2024-11-15</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>History of Renaissance Art</td>
-                            <td>4</td>
-                            <td>2024-12-10</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Essay on Climate Change</td>
-                            <td>3</td>
-                            <td>2024-12-01</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Introduction to Machine Learning</td>
-                            <td>5</td>
-                            <td>2024-11-20</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Research Paper on AI Ethics</td>
-                            <td>2</td>
-                            <td>2024-11-15</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>History of Renaissance Art</td>
-                            <td>4</td>
-                            <td>2024-12-10</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Essay on Climate Change</td>
-                            <td>3</td>
-                            <td>2024-12-01</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Introduction to Machine Learning</td>
-                            <td>5</td>
-                            <td>2024-11-20</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>Research Paper on AI Ethics</td>
-                            <td>2</td>
-                            <td>2024-11-15</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                        <tr>
-                            <td>History of Renaissance Art</td>
-                            <td>4</td>
-                            <td>2024-12-10</td>
-                            <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
-                            <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
-                        </tr>
-                    </tbody>
+            <table id="assignment-table">
+                <thead>
+                    <tr>
+                        <th>Assignment Title</th>
+                        <th>Group</th>
+                        <th>Due Date</th>
+                        <th>Edit Assignment</th>
+                        <th>Delete Assignment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Essay on Climate Change</td>
+                        <td>3</td>
+                        <td>2024-12-01</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to Machine Learning</td>
+                        <td>5</td>
+                        <td>2024-11-20</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Research Paper on AI Ethics</td>
+                        <td>2</td>
+                        <td>2024-11-15</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>History of Renaissance Art</td>
+                        <td>4</td>
+                        <td>2024-12-10</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Essay on Climate Change</td>
+                        <td>3</td>
+                        <td>2024-12-01</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to Machine Learning</td>
+                        <td>5</td>
+                        <td>2024-11-20</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Research Paper on AI Ethics</td>
+                        <td>2</td>
+                        <td>2024-11-15</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>History of Renaissance Art</td>
+                        <td>4</td>
+                        <td>2024-12-10</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Essay on Climate Change</td>
+                        <td>3</td>
+                        <td>2024-12-01</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to Machine Learning</td>
+                        <td>5</td>
+                        <td>2024-11-20</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Research Paper on AI Ethics</td>
+                        <td>2</td>
+                        <td>2024-11-15</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>History of Renaissance Art</td>
+                        <td>4</td>
+                        <td>2024-12-10</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Essay on Climate Change</td>
+                        <td>3</td>
+                        <td>2024-12-01</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to Machine Learning</td>
+                        <td>5</td>
+                        <td>2024-11-20</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Research Paper on AI Ethics</td>
+                        <td>2</td>
+                        <td>2024-11-15</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>History of Renaissance Art</td>
+                        <td>4</td>
+                        <td>2024-12-10</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Essay on Climate Change</td>
+                        <td>3</td>
+                        <td>2024-12-01</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to Machine Learning</td>
+                        <td>5</td>
+                        <td>2024-11-20</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>Research Paper on AI Ethics</td>
+                        <td>2</td>
+                        <td>2024-11-15</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                    <tr>
+                        <td>History of Renaissance Art</td>
+                        <td>4</td>
+                        <td>2024-12-10</td>
+                        <td><a class="a-link" href="#" onclick="openForumEdit(this)">Edit</a></td>
+                        <td><a class="a-link" href="#" onclick="deleteAssignment(this)">Delete Permanently</a></td>
+                    </tr>
+                </tbody>
 
-                </table>
-            </section>
+            </table>
 
 
             <div id="forum-container-ADD">

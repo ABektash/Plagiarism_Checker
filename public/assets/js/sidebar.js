@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
+function confirmLogout() {
+    return confirm("Are you sure you want to logout?");
+}
 // document.addEventListener("DOMContentLoaded", function () {
 //     const pathSegments = window.location.pathname.split("/"); 
 

@@ -38,7 +38,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div id="popup" class="popup">
                 <div class="popup-content">
                     <p>Are you sure you want to logout?</p>
-                    <button onclick="confirmLogout()">Yes</button>
+                    <button onclick="window.location.href='<?php url('logout/index'); ?>'">Yes</button>
                     <button onclick="closePopup()">No</button>
                 </div>
             </div>

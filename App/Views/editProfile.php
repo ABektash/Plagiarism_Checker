@@ -12,18 +12,19 @@
 ?>
 
 <body class="body">
+<?php include 'inc/header.php'; ?>
     <div class="container-xl px-4 mt-4">
 
-        <br><br><br><br><br><br>
+        <br><br><br><br>
 
         <div class="row">
             <div class="col-xl-4">
                 <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Profile Picture</div>
+                    <div class="card-header"></div>
                     <div class="card-body text-center">
-                        <img class="img-account-profile rounded-circle mb-2" src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt="Profile Image">
+                        <img class="img-account-profile rounded-circle mb-2" src="/Plagiarism_Checker/public/assets/images/editPassword.jpg" alt="Profile Image">
                         <div class="small font-italic text-muted mb-4"></div>
-                        <button class="btn btn-primary" type="button">Upload new image</button>
+                        <button class="btn btn-primary" type="button">Change Password</button>
                     </div>
                 </div>
             </div>
@@ -97,6 +98,7 @@
             </div>
         </div>
     </div>
+    <?php include 'inc/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -2,6 +2,7 @@
 require_once '../Models/User.php';
 require_once '../Config/dbh.inc.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $errors = [];
     if (empty($_POST['FirstName'])) {
         $errors['firstNameError'] = "First name is required";
@@ -54,8 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($errors)) {
         $user = new User($conn);
-        $id = $_POST['ID'];
-
         $user->first_name = $_POST['FirstName'];
         $user->last_name = $_POST['LastName'];
         $user->email = $_POST['Email'];
@@ -66,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->user_type_id = $UserType_id;
         $user->password = $password;
 
-        if ($user->editUser($id, $user->first_name, $user->last_name, $user->email, $user->organization, $user->address, $user->phone_number, $user->birthday, $user->password, $user->user_type_id)) {
+        if ($user->addUser()) {
             echo json_encode(['success' => true]);
         } else {
             $errors['emailError'] = "Email already exists or failed to edit user.";

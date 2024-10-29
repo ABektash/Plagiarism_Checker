@@ -20,17 +20,25 @@
             <div class="head-title">
                 <h1>Manage Users</h1>
             </div>
-            <div class="containerMA">
-                <input type="text" placeholder="Search.." class="search-bar" id="search-bar" onkeyup="filterTable()">
-                <button type="submit" class="Add-button" onclick="openForumADD()">Add user</button>
-                <select id="user-type-filter" onchange="filterTable()">
-                    <option value="">All User Types</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Instructor</option>
-                    <option value="3">Student</option>
-                    <option value="4">Visitor</option>
-                </select>
+            
+            <div class="Group-Container">
+                <div class="Left-Group-Container">
+                    <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
+                </div>
+
+                <div class="Right-Group-Container">
+                    <button type="submit" class="Add-button" onclick="openAddForm()">Add User</button>
+                    <select id="user-type-filter" onchange="filterTable()">
+                        <option value="">All User Types</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Instructor</option>
+                        <option value="3">Student</option>
+                        <option value="4">Visitor</option>
+                    </select>
+                </div>
             </div>
+
+
             <table id="users-table">
                 <thead>
                     <tr>
@@ -68,7 +76,7 @@
                                     <a class="a-link" href="javascript:void(0);" onclick="openEditForm(<?= htmlspecialchars(json_encode($row)) ?>)">
                                         <i class='bx bx-edit'></i>
                                     </a>|
-                                    <a class="delete-a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
+                                    <a class="a-link delete-a-link" href="javascript:void(0);" onclick="confirmDeletion(<?= htmlspecialchars($row['ID']) ?>)">
                                         <i class='bx bx-trash'></i>
                                     </a>
                                 </td>
@@ -83,6 +91,11 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+            <?php 
+                if(isset($deleteError)){
+                    echo "$deleteError";
+                }
+            ?>
 
             <div id="editFormPopup" class="popup-form">
                 <div class="popup-content">
@@ -138,11 +151,89 @@
                 </div>
             </div>
 
+
+
+
+            <div id="addFormPopup" class="popup-form">
+                <div class="popup-content">
+                    <span class="close" onclick="closeAddForm()">&times;</span>
+                    <h2>Add User</h2>
+                    <form id="addForm" action="" method="">
+                        <input type="hidden" name="ID" id="addID">
+
+                        <label for="addFirstName">First Name</label>
+                        <input type="text" name="FirstName" id="addFirstName" required>
+                        <div class="error-message" id="fname-error"></div>
+
+                        <label for="addLastName">Last Name</label>
+                        <input type="text" name="LastName" id="addLastName" required>
+                        <div class="error-message" id="lname-error"></div>
+
+                        <label for="addEmail">Email</label>
+                        <input type="email" name="Email" id="addEmail" required>
+                        <div class="error-message" id="email-error"></div>
+
+                        <label for="addOrganization">Organization</label>
+                        <input type="text" name="Organization" id="addOrganization">
+                        <div class="error-message" id="organizationName-error"></div>
+
+                        <label for="addAddress">Address</label>
+                        <input type="text" name="Address" id="addAddress">
+                        <div class="error-message" id="address-error"></div>
+
+                        <label for="addPhoneNumber">Phone Number</label>
+                        <input type="text" name="PhoneNumber" id="addPhoneNumber">
+                        <div class="error-message" id="phone-error"></div>
+
+                        <label for="addBirthday">Birthday</label>
+                        <input type="date" name="Birthday" id="addBirthday">
+                        <div class="error-message" id="birthday-error"></div>
+
+                        <label for="addPassword">Password</label>
+                        <input type="text" name="Password" id="addPassword" required>
+                        <div class="error-message" id="password-error"></div>
+
+                        <label for="addUserType">User Type</label>
+                        <select name="UserType_id" id="addUserType" required>
+                            <option value="1">Admin</option>
+                            <option value="2">Instructor</option>
+                            <option value="3">Student</option>
+                            <option value="4" selected>Visitor</option>
+                        </select>
+
+                        <div class="error-message" id="userType-error"></div>
+
+                        <button type="submit">Save User</button>
+                    </form>
+
+                </div>
+            </div>
+
         </main>
     </section>
 
 </body>
 
 <script src="/Plagiarism_Checker/public/assets/js/manageUsers.js"></script>
+<script>
+    function confirmDeletion(userID) {
+        if (confirm('Are you sure you want to delete this user with ID ' + userID + '?')) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '<?php url('manageUsers/delete'); ?>';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'userID';
+            input.value = userID;
+
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        }
+    }
+</script>
 
 </html>

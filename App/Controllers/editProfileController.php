@@ -51,9 +51,12 @@ class EditProfileController extends Controller
 
             
             $phone = $_POST['phone'];
-            if (!empty($phone) && !ctype_digit($phone)) {
-                $errors['phoneError'] = "Phone number must contain only numbers";
+            if (!empty($phone)) {
+                if (!preg_match('/^(010|011|012|015)[0-9]{8}$/', $phone)) {
+                    $errors['phoneError'] = "Invalid phone number";
+                }
             }
+        
 
             $birthday = $_POST['birthday'];
             if (!empty($birthday) && $birthday != "0000-00-00") {
