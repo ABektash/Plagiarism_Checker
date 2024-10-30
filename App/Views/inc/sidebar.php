@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </a>
     <ul class="side-menu top">
         <?php if (isset($_SESSION['pages'])): ?>
-            <?php if (in_array('Dashboard', $_SESSION['pages'])): ?>
+            <?php if (in_array('Admin Dashboard', $_SESSION['pages'])): ?>
                 <li data-page="adminDashboard">
                     <a href="<?php url('adminDashboard'); ?>">
                         <i class='bx bxs-dashboard'></i>

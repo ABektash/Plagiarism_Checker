@@ -26,7 +26,7 @@
     <main class="manageAssignmentsMain">
 
         <section>
-            <table>
+            <table id="assignment-table">
                 <thead>
                     <tr>
                         <th>Assignment Title</th>

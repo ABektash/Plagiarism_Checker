@@ -106,35 +106,35 @@
 
                         <label for="editFirstName">First Name</label>
                         <input type="text" name="FirstName" id="editFirstName" required>
-                        <div class="error-message" id="fname-error"></div>
+                        <div class="error-message" id="edit-fname-error"></div>
 
                         <label for="editLastName">Last Name</label>
                         <input type="text" name="LastName" id="editLastName" required>
-                        <div class="error-message" id="lname-error"></div>
+                        <div class="error-message" id="edit-lname-error"></div>
 
                         <label for="editEmail">Email</label>
                         <input type="email" name="Email" id="editEmail" required>
-                        <div class="error-message" id="email-error"></div>
+                        <div class="error-message" id="edit-email-error"></div>
 
                         <label for="editOrganization">Organization</label>
                         <input type="text" name="Organization" id="editOrganization">
-                        <div class="error-message" id="organizationName-error"></div>
+                        <div class="error-message" id="edit-organizationName-error"></div>
 
                         <label for="editAddress">Address</label>
                         <input type="text" name="Address" id="editAddress">
-                        <div class="error-message" id="address-error"></div>
+                        <div class="error-message" id="edit-address-error"></div>
 
                         <label for="editPhoneNumber">Phone Number</label>
                         <input type="text" name="PhoneNumber" id="editPhoneNumber">
-                        <div class="error-message" id="phone-error"></div>
+                        <div class="error-message" id="edit-phone-error"></div>
 
                         <label for="editBirthday">Birthday</label>
                         <input type="date" name="Birthday" id="editBirthday">
-                        <div class="error-message" id="birthday-error"></div>
+                        <div class="error-message" id="edit-birthday-error"></div>
 
                         <label for="editPassword">Password</label>
                         <input type="text" name="Password" id="editPassword" required>
-                        <div class="error-message" id="password-error"></div>
+                        <div class="error-message" id="edit-password-error"></div>
 
                         <label for="editUserType">User Type</label>
                         <select name="UserType_id" id="editUserType" required>
@@ -143,7 +143,7 @@
                             <option value="3">Student</option>
                             <option value="4">Visitor</option>
                         </select>
-                        <div class="error-message" id="userType-error"></div>
+                        <div class="error-message" id="edit-userType-error"></div>
 
                         <button type="submit">Save Changes</button>
                     </form>
@@ -163,35 +163,35 @@
 
                         <label for="addFirstName">First Name</label>
                         <input type="text" name="FirstName" id="addFirstName" required>
-                        <div class="error-message" id="fname-error"></div>
+                        <div class="error-message" id="add-fname-error"></div>
 
                         <label for="addLastName">Last Name</label>
                         <input type="text" name="LastName" id="addLastName" required>
-                        <div class="error-message" id="lname-error"></div>
+                        <div class="error-message" id="add-lname-error"></div>
 
                         <label for="addEmail">Email</label>
                         <input type="email" name="Email" id="addEmail" required>
-                        <div class="error-message" id="email-error"></div>
+                        <div class="error-message" id="add-email-error"></div>
 
                         <label for="addOrganization">Organization</label>
                         <input type="text" name="Organization" id="addOrganization">
-                        <div class="error-message" id="organizationName-error"></div>
+                        <div class="error-message" id="add-organizationName-error"></div>
 
                         <label for="addAddress">Address</label>
                         <input type="text" name="Address" id="addAddress">
-                        <div class="error-message" id="address-error"></div>
+                        <div class="error-message" id="add-address-error"></div>
 
                         <label for="addPhoneNumber">Phone Number</label>
                         <input type="text" name="PhoneNumber" id="addPhoneNumber">
-                        <div class="error-message" id="phone-error"></div>
+                        <div class="error-message" id="add-phone-error"></div>
 
                         <label for="addBirthday">Birthday</label>
                         <input type="date" name="Birthday" id="addBirthday">
-                        <div class="error-message" id="birthday-error"></div>
+                        <div class="error-message" id="add-birthday-error"></div>
 
                         <label for="addPassword">Password</label>
                         <input type="text" name="Password" id="addPassword" required>
-                        <div class="error-message" id="password-error"></div>
+                        <div class="error-message" id="add-password-error"></div>
 
                         <label for="addUserType">User Type</label>
                         <select name="UserType_id" id="addUserType" required>
@@ -201,7 +201,7 @@
                             <option value="4" selected>Visitor</option>
                         </select>
 
-                        <div class="error-message" id="userType-error"></div>
+                        <div class="error-message" id="add-userType-error"></div>
 
                         <button type="submit">Save User</button>
                     </form>

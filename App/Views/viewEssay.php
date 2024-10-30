@@ -9,11 +9,22 @@
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewEssay.css">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
 </head>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$userType = $_SESSION['user']['UserType_id'];
+?>
 
 <body class="StudentManagementBody">
 
     <?php include 'inc/header.php'; ?>
-    <button onclick="window.location.href='<?php url('dashboard/index'); ?>'" class="GOBACK">Go Back</button>
+
+    <?php if ($userType != 1) { ?>
+        <button onclick="window.location.href='<?php echo url('dashboard/index'); ?>'" class="GOBACK">Go Back</button>
+    <?php } else { ?>
+        <button onclick="window.location.href='<?php echo url('manageSubmissions/index'); ?>'" class="GOBACK">Go Back</button>
+    <?php } ?>
 
 
     <main class="StudentManagementMain">
@@ -23,11 +34,11 @@
             <h4>Essay</h4>
 
             <p>Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
-            Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
-          Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
-          Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
-          Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
-          Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
+                Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
+                Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
+                Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
+                Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
+                Our Plagiarism Detection System is designed to uphold academic standards by identifying instances of copied content in student submissions. With robust algorithms and comprehensive reporting features, we assist educators in fostering originality and providing constructive feedback to students, helping them enhance their writing skills and understand the importance of academic integrity.
             </p>
 
             <a class="view-report-btn" href="<?php url('viewReportInstructor/index'); ?>">View Plagiarism Report</a>

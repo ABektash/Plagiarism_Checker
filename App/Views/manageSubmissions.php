@@ -43,73 +43,73 @@
                     <tr>
                         <td>3</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
                         <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-upload'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
                         <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="#" onclick=""><i class='bx bx-message'></i></a></td>
+                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
+                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
                         <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
                     </tr>
                 </tbody>

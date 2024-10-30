@@ -146,13 +146,13 @@ if (session_status() == PHP_SESSION_NONE) {
                             <td>Group A</td>
                             <td>30</td>
                             <td>28</td>
-                            <td><a class="a-link" href="<?php url('manageGroupInstructor/index'); ?>">View</a></td>
+                            <td><a class="a-link" href="<?php url('manageGroupInsturctor/index'); ?>">View</a></td>
                         </tr>
                         <tr>
                             <td>Group B</td>
                             <td>25</td>
                             <td>20</td>
-                            <td><a class="a-link" href="<?php url('manageGroupInstructor/index'); ?>">View</a></td>
+                            <td><a class="a-link" href="<?php url('manageGroupInsturctor/index'); ?>">View</a></td>
                         </tr>
                     </tbody>
                 </table>

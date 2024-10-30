@@ -12,7 +12,7 @@
             <h1>404</h1>
             <h2>Oops! Page Not Found</h2>
             <p>We're sorry, but the page you're looking for doesn't exist or may have been moved.</p>
-            <a href="home" class="back-home">Go Back Home</a>
+            <a href="<?php url('home/index'); ?>" class="back-home">Go Back Home</a>
         </div>
     </div>
 </body>

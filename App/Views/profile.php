@@ -87,11 +87,11 @@ if (session_status() == PHP_SESSION_NONE) {
                         echo '</button>';
                         echo '</li>';
                         echo '<li class="nav-item" role="presentation">';
-                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
-                        echo '<i class="fa fa-comments me-2 fs-6"></i>';
-                        echo '<span class="d-none d-md-block">Discussion Forums</span>';
-                        echo '</button>';
-                        echo '</li>';
+        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
+        echo '<i class="fa fa-comments me-2 fs-6"></i>';
+        echo '<span class="d-none d-md-block">Discussion Forums</span>';
+        echo '</button>';
+        echo '</li>';
                     } elseif ($_SESSION['user']['UserType_id'] == 3) {
                         echo '<li class="nav-item" role="presentation">';
                         echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="false">';
@@ -135,14 +135,14 @@ if (session_status() == PHP_SESSION_NONE) {
                         <div class="col-md-4 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Discussion Topic</h5> 
+                                    <h5 class="mb-0">Discussion Topic</h5>
                                     <span class="badge bg-secondary">Unread</span>
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p> 
-                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p> 
-                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p> 
-                                    <a href="#" class="btn btn-primary">View Discussion</a> 
+                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p>
+                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p>
+                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p>
+                                    <a href="#" class="btn btn-primary">View Discussion</a>
                                 </div>
                             </div>
                         </div>
@@ -150,14 +150,14 @@ if (session_status() == PHP_SESSION_NONE) {
                         <div class="col-md-4 mb-4">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Discussion Topic</h5> 
+                                    <h5 class="mb-0">Discussion Topic</h5>
                                     <span class="badge bg-secondary">Unread</span>
                                 </div>
                                 <div class="card-body">
-                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p> 
-                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p> 
-                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p> 
-                                    <a href="#" class="btn btn-primary">View Discussion</a> 
+                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p>
+                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p>
+                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p>
+                                    <a href="#" class="btn btn-primary">View Discussion</a>
                                 </div>
                             </div>
                         </div>

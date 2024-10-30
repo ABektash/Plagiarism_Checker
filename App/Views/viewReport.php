@@ -8,12 +8,23 @@
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewReport.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$userType = $_SESSION['user']['UserType_id'];
+?>
 
 <body>
 
     <?php include 'inc/header.php'; ?>
+    
+    <?php if ($userType != 1) { ?>
+        <button onclick="window.location.href='<?php echo url('dashboard/index'); ?>'" class="GOBACK">Go Back</button>
+    <?php } else { ?>
+        <button onclick="window.location.href='<?php echo url('manageSubmissions/index'); ?>'" class="GOBACK">Go Back</button>
+    <?php } ?>
 
-    <button onclick="history.back()" class="GOBACK">Go Back</button>
 
 
     <main class="manageAssignmentsMain">
@@ -39,7 +50,7 @@
                     <h1>Your Grade: 93/100</h1>
                 </div>
                 <div>
-                    <button href="#" class="GOBACK">Contact Intructor</button>
+                    <button onclick="window.location.href='<?php url('forums/index'); ?>'" class="GOBACK">Contact Intructor</button>
                 </div>
             </div>
             <div class="textContainer">
