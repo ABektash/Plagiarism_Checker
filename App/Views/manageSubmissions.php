@@ -23,7 +23,7 @@
             </div>
             <div class="Group-Container">
                 <div class="Left-Group-Container">
-                <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
+                    <input type="text" placeholder="Search..." class="search-bar" id="search-bar" onkeyup="filterTable()" />
                 </div>
             </div>
 
@@ -40,79 +40,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>3</td>
-                        <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Essay on Climate Change</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Research Paper on AI Ethics</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Introduction to Machine Learning</td>
-                        <td><a class="a-link" href="<?php url('viewEssay/index'); ?>" onclick=""><i class='bx bx-upload'></i></a></td>
-                        <td>2024-10-27 15:30:00</td>
-                        <td><a class="a-link" href="<?php url('viewReport/index'); ?>" onclick=""><i class='bx bx-file'></i></a></td>
-                        <td><a class="a-link" href="<?php url('forums/index'); ?>" onclick=""><i class='bx bx-message'></i></a></td>
-                        <td><a class="a-link delete-a-link" href="#" onclick=""><i class='bx bx-trash'></i></a></td>
-                    </tr>
+                    <?php if (!empty($submissions)): ?>
+                        <?php foreach ($submissions as $submission): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($submission['studentID']) ?></td>
+                                <td><?= htmlspecialchars($submission['assignmentTitle']) ?></td>
+                                <td><a class="a-link" href="<?php url('viewEssay/index/' . $submission['assignmentID']); ?>"><i class='bx bx-upload'></i></a></td>
+                                <td><?= htmlspecialchars($submission['submissionDate']) ?></td>
+                                <td><a class="a-link" href="<?php url('viewReport/index/' . $submission['assignmentID']); ?>"><i class='bx bx-file'></i></a></td>
+                                <td><a class="a-link" href="<?php url('forums/index/' . $submission['assignmentID']); ?>"><i class='bx bx-message'></i></a></td>
+                                <td><a class="a-link delete-a-link" href="#" onclick="confirmDeletion(<?= $submission['submissionID'] ?>)"><i class='bx bx-trash'></i></a></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="7" class="text-center">No submissions found.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
+
 
             </table>
         </main>
@@ -121,7 +67,26 @@
 
 </body>
 <script src="/Plagiarism_Checker/public\assets\js\manageSubmissions.js"></script>
+<script>
+    function confirmDeletion(submissionID) {
+        if (confirm('Are you sure you want to delete this submission with ID ' + submissionID + '?')) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '<?php url('manageSubmissions/delete'); ?>';
 
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'submissionID';
+                input.value = submissionID;
+
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+    }
+</script>
 
 
 </html>

@@ -29,16 +29,31 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="row align-items-center">
                     <div class="col-lg-4 order-lg-1 order-2">
                         <div class="d-flex align-items-center justify-content-around m-4">
-                            <div class="text-center">
-                                <i class="fa fa-user fs-6 d-block mb-2"></i>
-                                <h4 class="mb-0 fw-semibold lh-1">3</h4>
-                                <p class="mb-0 fs-4">Groups</p>
-                            </div>
-                            <div class="text-center">
-                                <i class="fa fa-check fs-6 d-block mb-2"></i>
-                                <h4 class="mb-0 fw-semibold lh-1">6</h4>
-                                <p class="mb-0 fs-4">Assignments done</p>
-                            </div>
+                            <?php
+                            if ($_SESSION['user']['UserType_id'] == 2) {
+                                echo '<div class="text-center">';
+                                echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
+                                echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
+                                echo '<p class="mb-0 fs-4">Groups</p>';
+                                echo '</div>';
+                                echo '<div class="text-center">';
+                                echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
+                                echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
+                                echo '<p class="mb-0 fs-4">Assignments made</p>';
+                                echo '</div>';
+                            } elseif ($_SESSION['user']['UserType_id'] == 3) {
+                                echo '<div class="text-center">';
+                                echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
+                                echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
+                                echo '<p class="mb-0 fs-4">Groups</p>';
+                                echo '</div>';
+                                echo '<div class="text-center">';
+                                echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
+                                echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
+                                echo '<p class="mb-0 fs-4">Assignments done</p>';
+                                echo '</div>';
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="col-lg-4 mt-n3 order-lg-2 order-1">
@@ -79,22 +94,23 @@ if (session_status() == PHP_SESSION_NONE) {
                 <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-light-info rounded-2" id="pills-tab" role="tablist">
                     <?php
                     if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 4) {
+                        // No specific tabs for these users
                     } elseif ($_SESSION['user']['UserType_id'] == 2) {
                         echo '<li class="nav-item" role="presentation">';
-                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="false">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="true">';
                         echo '<i class="fa fa-check-square me-2 fs-6"></i>';
                         echo '<span class="d-none d-md-block">Assignments</span>';
                         echo '</button>';
                         echo '</li>';
                         echo '<li class="nav-item" role="presentation">';
-        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
-        echo '<i class="fa fa-comments me-2 fs-6"></i>';
-        echo '<span class="d-none d-md-block">Discussion Forums</span>';
-        echo '</button>';
-        echo '</li>';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
+                        echo '<i class="fa fa-comments me-2 fs-6"></i>';
+                        echo '<span class="d-none d-md-block">Discussion Forums</span>';
+                        echo '</button>';
+                        echo '</li>';
                     } elseif ($_SESSION['user']['UserType_id'] == 3) {
                         echo '<li class="nav-item" role="presentation">';
-                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="false">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="true">';
                         echo '<i class="fa fa-check-square me-2 fs-6"></i>';
                         echo '<span class="d-none d-md-block">Assignments Submitted</span>';
                         echo '</button>';
@@ -102,6 +118,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     }
                     ?>
                 </ul>
+
 
             </div>
         </div>
@@ -111,8 +128,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php
             $userType = $_SESSION['user']['UserType_id'];
 
-            if ($userType == 1 || $userType == 4) {
-            } elseif ($userType == 2) {
+            if ($userType == 2) {
             ?>
                 <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
                     <h3 class="mb-3 fw-semibold">Assignments Made</h3>
