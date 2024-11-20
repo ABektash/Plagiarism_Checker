@@ -26,13 +26,16 @@
             <div class="Group-Container">
                 <div class="Left-Group-Container">
                     <h2 class="Group-Selection-Title">Group:</h2>
-
-                    <select name="Group Number" class="Group-Selection">
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <select name="Group Number" class="Group-Selection"  id="groupSelection">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
                     </select>
+
+
+                    
                 </div>
                 <div class="Right-Group-Container">
                     <button class="add-std-btn">Add Student</button>
@@ -61,8 +64,8 @@
                 </div>
             </div>
 
-
-            <table class="Group-table">
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <table class="Group-table"  id="studentsTable">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -73,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td>03242</td>
                         <td>Ahmed Mohamed</td>
                         <td>ghazouly@gmail.com</td>
@@ -92,7 +95,7 @@
                             </a></td>
                         <td><a class="delete-a-link" href="deleteUser.php?id=<?= htmlspecialchars($row['ID']) ?>" onclick="return confirm('Are you sure you want to delete this user with ID <?= htmlspecialchars($row['ID']) ?>?');">
                                 <i class='bx bx-trash'></i></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
 
@@ -183,6 +186,46 @@
 
 
     <script src="/Plagiarism_Checker/public/assets/js/manageGroups.js"></script>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- <script>
+document.getElementById('groupSelection').addEventListener('change', function () {
+    const groupID = this.value;
+
+    // Perform an AJAX request
+    fetch(`yourControllerPath/manageGroups/getStudentsByGroup/${groupID}`)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector('#studentsTable tbody');
+            tableBody.innerHTML = ''; // Clear the table
+
+            if (data.length > 0) {
+                data.forEach(student => {
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>${student.student_id}</td>
+                            <td>${student.student_name}</td>
+                            <td>${student.student_email}</td>
+                            <td><a class="a-link" href="adminProfile/index/${student.student_id}">
+                                    <i class='bx bxs-user'></i>
+                                </a></td>
+                            <td><a class="delete-a-link" href="deleteUser.php?id=${student.student_id}" 
+                                   onclick="return confirm('Are you sure you want to delete this user with ID ${student.student_id}?');">
+                                    <i class='bx bx-trash'></i>
+                                </a></td>
+                        </tr>`;
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="5">No students found for this group.</td></tr>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+});
+</script> -->
+
+
 </body>
 
 </html>

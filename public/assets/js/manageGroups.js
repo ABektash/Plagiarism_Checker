@@ -77,6 +77,58 @@
     deleteModal.style.display = "none";
   });
 
+  // <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  document.addEventListener('DOMContentLoaded', function () {
+    const groupSelection = document.getElementById('groupSelection');
+
+    if (groupSelection) {
+        // Function to fetch and update the student table
+        const updateStudentTable = (groupID) => {
+            fetch(`/Plagiarism_Checker/public/manageGroups/getStudentsByGroup/${groupID}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#studentsTable tbody');
+                    tableBody.innerHTML = ''; // Clear the table
+
+                    if (data.length > 0) {
+                        data.forEach(student => {
+                            tableBody.innerHTML += `
+                                <tr>
+                                    <td>${student.student_id}</td>
+                                    <td>${student.student_name}</td>
+                                    <td>${student.student_email}</td>
+                                    <td><a class="a-link" href="/Plagiarism_Checker/adminProfile/index/${student.student_id}">
+                                            <i class='bx bxs-user'></i>
+                                        </a></td>
+                                    <td><a class="delete-a-link" href="/Plagiarism_Checker/deleteUser.php?id=${student.student_id}" 
+                                           onclick="return confirm('Are you sure you want to delete this user with ID ${student.student_id}?');">
+                                            <i class='bx bx-trash'></i>
+                                        </a></td>
+                                </tr>`;
+                        });
+                    } else {
+                        tableBody.innerHTML = '<tr><td colspan="5">No students found for this group.</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        };
+
+        // Fetch and display data for the default selection
+        updateStudentTable(groupSelection.value);
+
+        // Add event listener for when the selection changes
+        groupSelection.addEventListener('change', function () {
+            updateStudentTable(this.value);
+        });
+    }
+});
+
+
+  // <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
   // editButtons.forEach((button) => {
   //   button.addEventListener("click", function () {
   //     rowToEdit = button.closest("tr");
@@ -287,3 +339,39 @@
     removeInstructorModal.style.display = "none";
   });
 })();
+
+
+// <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+// document.getElementById('groupSelection').addEventListener('change', function () {
+//   const groupID = this.value;
+
+//   fetch(`/Plagiarism_Checker/manageGroups/getStudentsByGroup/${groupID}`)
+//       .then(response => response.json())
+//       .then(data => {
+//           const tableBody = document.querySelector('#studentsTable tbody');
+//           tableBody.innerHTML = ''; // Clear the table
+
+//           if (data.length > 0) {
+//               data.forEach(student => {
+//                   tableBody.innerHTML += `
+//                       <tr>
+//                           <td>${student.student_id}</td>
+//                           <td>${student.student_name}</td>
+//                           <td>${student.student_email}</td>
+//                           <td><a class="a-link" href="/Plagiarism_Checker/adminProfile/index/${student.student_id}">
+//                                   <i class='bx bxs-user'></i>
+//                               </a></td>
+//                           <td><a class="delete-a-link" href="/Plagiarism_Checker/deleteUser.php?id=${student.student_id}" 
+//                                  onclick="return confirm('Are you sure you want to delete this user with ID ${student.student_id}?');">
+//                                   <i class='bx bx-trash'></i>
+//                               </a></td>
+//                       </tr>`;
+//               });
+//           } else {
+//               tableBody.innerHTML = '<tr><td colspan="5">No students found for this group.</td></tr>';
+//           }
+//       })
+//       .catch(error => {
+//           console.error('Error fetching data:', error);
+//       });
+// });
