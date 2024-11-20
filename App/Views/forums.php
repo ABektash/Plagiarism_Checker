@@ -4,107 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fourms</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Responsive Chat Interface</title>
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/forums.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
 </head>
 
 <body>
     <?php include 'inc/header.php'; ?>
 
-
-    <main class="chatMain">
-    <div id="chatContainer">
-        <!-- <div id="contactList">
-            <div class="contact">
-                <span class="contactName">Chat 1</span>
-                <span class="contactStatus">Just now</span>
+    <div class="app-container">
+        <div id="chat-list-container" class="chat-list">
+            <div class="chat-list-header">
+                <h2>Chats</h2>
             </div>
-            <div class="contact">
-                <span class="contactName">Chat 2</span>
-                <span class="contactStatus">Typing...</span>
-            </div>
-           // Add more contacts dynamically here 
-        </div> -->
-        <div id="chatSection">
-            <div id="chatHeader">
-                <h2>Chat 1</h2>
-                <div id="chatIcons">
-                    <!-- Icons for settings or other actions -->
+            <div id="chat-items" class="chat-items">
+                <div class="chat-item" data-chat="user1">
+                    <p class="chat-name">User 1</p>
+                    <p class="chat-preview">Hello! How are you?</p>
+                </div>
+                <div class="chat-item" data-chat="user2">
+                    <p class="chat-name">User 2</p>
+                    <p class="chat-preview">Let’s meet tomorrow.</p>
+                </div>
+                <div class="chat-item" data-chat="user3">
+                    <p class="chat-name">User 3</p>
+                    <p class="chat-preview">Where are you?</p>
                 </div>
             </div>
-            <div id="chatMessages">
-                <!-- Chat messages will be dynamically generated here -->
-                 
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <button id="toggle-chat-list" class="toggle-sidebar-btn">☰</button>
+                <h2 id="chat-title">Select a Chat</h2>
             </div>
-            <div id="chatInput">
-                <input type="text" id="messageTextBox" placeholder="Type a message...">
-                <button id="sendMessage"><i class="fa-solid fa-circle-right fa-lg"></i></button>
+
+            <div id="chat-box" class="chat-box">
+                <?php
+                // Static data array, formatted as if coming from the backend
+                $messages = [
+                    ['sender' => 'left', 'message' => 'Hi, how are you?', 'time' => '10:15 AM'],
+                    ['sender' => 'right', 'message' => "I'm good, thanks! What about you?", 'time' => '10:16 AM'],
+                    ['sender' => 'left', 'message' => "I'm working on a project.", 'time' => '10:17 AM'],
+                    ['sender' => 'right', 'message' => "That's great! Let me know if you need help.", 'time' => '10:18 AM'],
+                ];
+
+                
+                foreach ($messages as $msg) {
+                    $senderClass = htmlspecialchars($msg['sender']);
+                    $messageText = htmlspecialchars($msg['message']);
+                    $sentTime = htmlspecialchars($msg['time']);
+                    $isRead = $senderClass === 'right' ? '<span class="message-status read">✔✔</span>' : '';
+
+                    echo "<div class='chat-message $senderClass'>
+                            <div class='message-text'>
+                                $messageText
+                            </div>
+                            <div class='message-info'>
+                                <span class='message-time'>$sentTime</span>
+                                $isRead
+                            </div>
+                          </div>";
+                }
+                ?>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
             </div>
         </div>
     </div>
-    </main>
 
-
-    <?php include 'inc/footer.php'; ?>
-
-    
-    <script>
-        class Message {
-    constructor(parent, content, username, imageSrc = null) {
-        this.parent = parent;
-        this.content = content;
-        this.username = username;
-        
-
-        this.messageElement = document.createElement('div');
-        this.messageElement.className='userMsg';
-
-        const usernameLabel = document.createElement('label');
-        usernameLabel.className = 'nameUser';
-        usernameLabel.textContent = this.username;
-        
-
-        const contentLabel = document.createElement('label');
-        contentLabel.className = 'msgContent';
-        contentLabel.textContent = this.content;
-        
-        this.messageElement.appendChild(usernameLabel);
-        if (imageSrc) {
-            const imageElement = document.createElement('img');
-            imageElement.src = imageSrc;
-            imageElement.className = 'pic';
-            this.messageElement.appendChild(imageElement);
-        }else
-        {
-            const imageElement = document.createElement('img');
-            imageElement.src = '/Plagiarism_Checker/public/assets/images/defaultpic.jpg';
-            imageElement.className = 'pic';
-            this.messageElement.appendChild(imageElement);
-        }
-        this.messageElement.appendChild(contentLabel);
-        
-        this.parent.appendChild(this.messageElement);
-    }
-}
-
-
-const parentContainer = document.getElementById('chatMessages');
-
-document.getElementById('sendMessage').addEventListener('click', () => {
-    if(document.getElementById('messageTextBox').value != '')
-{
-    new Message(parentContainer, document.getElementById('messageTextBox').value, "User");
-    
-    document.getElementById('messageTextBox').value = '';
-}
-});
-
-    </script>
+    <script src="/Plagiarism_Checker/public/assets/js/forums.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 class Forums
 {
     private $db;
@@ -10,6 +13,10 @@ class Forums
 
     public function create($submissionID, $instructorID, $studentID)
     {
+        $submissionID = mysqli_real_escape_string($this->db, $submissionID);
+        $instructorID = mysqli_real_escape_string($this->db, $instructorID);
+        $studentID = mysqli_real_escape_string($this->db, $studentID);
+
         $query = "INSERT INTO `forums` (`SubmissionID`, `InstructorID`, `StudentID`) VALUES ('$submissionID', '$instructorID', '$studentID');";
         return mysqli_query($this->db, $query);
     }
@@ -38,13 +45,27 @@ class Forums
 
     public function delete($id)
     {
+        $id = mysqli_real_escape_string($this->db, $id);
+
         $query = "DELETE FROM `forums` WHERE ID = $id";
         return mysqli_query($this->db, $query);
     }
 
-    public function getAll($userid)
+    public function getAllForums($userid)
     {
-        $query = "SELECT * FROM `forums` WHERE `InstructorID` = '$userid' OR `StudentID` = '$userid'; ORDER BY Creadedat ASC;";
+        $userid = mysqli_real_escape_string($this->db, $userid);
+
+        $query = "SELECT f.*
+                  FROM forum f
+                  LEFT JOIN (
+                      SELECT forum_id, MAX(sent_at) AS last_message_time
+                      FROM forummessage
+                      WHERE user_id IN (user1id, user2id)
+                      GROUP BY forum_id
+                  ) AS last_message ON f.forum_id = last_message.forum_id
+                  WHERE last_message.last_message_time IS NOT NULL
+                  ORDER BY last_message.last_message_time DESC;";
+
         $result = $this->db->query($query);
         $Allforums = [];
 
@@ -67,15 +88,20 @@ class Forums_Messages
 
     public function create($forumID, $senderID, $messagetext)
     {
-        $message_text = mysqli_real_escape_string($this->db, $messagetext);
-        $query = "INSERT INTO `Forums_Messages` (`ForumID`, `SenderID`, `Messagetext`) VALUES ('$forumID', '$senderID', '$message_text');";
+        $forumID = mysqli_real_escape_string($this->db, $forumID);
+        $senderID = mysqli_real_escape_string($this->db, $senderID);
+        $messagetext = mysqli_real_escape_string($this->db, $messagetext);
+
+        $query = "INSERT INTO `Forums_Messages` (`ForumID`, `SenderID`, `Messagetext`,`Isread`) VALUES ('$forumID', '$senderID', '$messagetext',0);";
 
         return mysqli_query($this->db, $query);
     }
 
     public function getAllMessages($forumID)
     {
-        $query = "SELECT m.SenderID, u.Messagetext FROM Messages m WHERE m.ForumID = '$forumID' ORDER BY m.Sentat ASC;";
+        $forumID = mysqli_real_escape_string($this->db, $forumID);
+
+        $query = "SELECT m.SenderID, m.Messagetext, m.Isread  FROM Messages m WHERE m.ForumID = '$forumID' ORDER BY m.Sentat ASC;";
         $result = $this->db->query($query);
         $AllMessages = [];
 

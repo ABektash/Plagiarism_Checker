@@ -1,4 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once MODELS . 'Forums.php';
 class ForumsController extends Controller
 {
@@ -9,31 +13,22 @@ class ForumsController extends Controller
         $this->db = $conn;
     }
 
-    public function index($id)
+    public function index()
     {
-        $forum = new Forums($this->db);
-        $message = new Forums_Messages($this->db);
+        // $id = $_SESSION['user']['ID'];
+        // $forum = new Forums($this->db);
 
-        $forumData = $forum->getForumById($id);
+        // $allForums = $forum->getAllForums($id);
 
-        if ($forumData) {
+        // if ($allForums) {
+        //     $data = [
+        //         "allForums" => $allForums,
+        //     ];
 
-            $studentName = $forumData['StudentFirstName'] . ' ' . $forumData['StudentLastName'];
-            $instructorName = $forumData['InstructorFirstName'] . ' ' . $forumData['InstructorLastName'];
-
-            $messages = $message->getAllMessages($id);
-
-            $data = [
-                "forum" => $forumData,
-                "studentName" => $studentName,
-                "instructorName" => $instructorName,
-                "messages" => $messages
-            ];
-
-            $this->view('forums', $data);
-        } else {
-            $this->view('404Page');
-        }
+            $this->view('forums');//, $data
+        // } else {
+        //     $this->view('404Page');
+        // }
     }
 
     public function delete()
@@ -44,11 +39,19 @@ class ForumsController extends Controller
 
             $result = $forum->delete($forumID);
 
-            $data["messages"] = null;
             if ($result) {
+                $id = $_SESSION['user']['ID'];
+                $forum = new Forums($this->db);
+                $forumData = $forum->getForumById($id);
+
+                $data = [
+                    "forum" => $forumData,
+                    "messages" => null
+                ];
+
                 $this->view('manageSubmissions', $data);
             } else {
-                $data["deleteError"] = "Couldn't delete user!";
+                $data["deleteError"] = "Couldn't delete the forum!";
                 $this->view('forums', $data);
             }
         }
@@ -56,19 +59,50 @@ class ForumsController extends Controller
 
     public function submit()
     {
-        if (isset($_POST['submitforum'])) {
-            $forum = new Forums($this->db);
-            if ($forum->create($_POST['submissionID'], $_POST['instructorID'], $_POST['StudentID'])) {
-                $this->view('forums');
-            }
-        }
-        if (isset($_POST['submitmessage'])) {
+        if (isset($_POST['submitCreateMessage'])) {
             $message = new Forums_Messages($this->db);
-            if ($message->create($_POST['forumID'], $_POST['senderID'], $_POST['messagetext'])) {
-                $this->view('forums');
-                $messages = $message->getAllMessages($_POST['forumID']);
-                $data = ['allmessages' => $messages];
 
+            if ($message->create($_POST['forumID'], $_POST['senderID'], $_POST['messagetext'])) {
+
+                $messages = $message->getAllMessages($_POST['forumID']);
+                $data = ['messages' => $messages];
+                $this->view('forums', $data);
+
+            } else {
+                $data["sendingError"] = "Couldn't send the message!";
+                $this->view('forums', $data);
+            }
+        } else if (isset($_POST['submitGetForum'])) {
+            $forum = new Forums($this->db);
+            $message = new Forums_Messages($this->db);
+
+
+            if ($forumData = $forum->getForumById($_POST['forumID'])) {
+
+                $studentName = $forumData['StudentFirstName'] . ' ' . $forumData['StudentLastName'];
+                $instructorName = $forumData['InstructorFirstName'] . ' ' . $forumData['InstructorLastName'];
+                $messages = $message->getAllMessages($_POST['forumID']);
+
+                $data = [
+                    "forum" => $forumData,
+                    "studentName" => $studentName,
+                    "instructorName" => $instructorName,
+                    "messages" => $messages
+                ];                
+                $this->view('forums',$data);
+
+            } else {
+                $data["gettingForumError"] = "Couldn't get the chat!";
+                $this->view('forums', $data);
+            }
+
+        } else if (isset($_POST['submitCreateForum'])) {
+            $forum = new Forums($this->db);
+
+            if ($forum->create($_POST['submissionID'], $_POST['instructorID'], $_POST['studentID'])) {
+                $this->view('forums');
+            } else {
+                $data["creatingForumError"] = "Couldn't create the chat!";
                 $this->view('forums', $data);
             }
         }
