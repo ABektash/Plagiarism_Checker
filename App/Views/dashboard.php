@@ -29,15 +29,15 @@ if (session_status() == PHP_SESSION_NONE) {
 
             $userID = $_SESSION['user']['ID'];
             
-            $urlAssignments = "http://localhost/Plagiarism_Checker/App/Controllers/AssignmentDashboardController.php?userID=$userID";
+            $urlAssignments = "http://localhost/Plagiarism_Checker/public/dashboard/getAssignments?userID=$userID";
             $responseAssignments = file_get_contents($urlAssignments);
             $assignmentsData = json_decode($responseAssignments, true);
         
-            $urlSubmissions = "http://localhost/Plagiarism_Checker/App/Controllers/SubmissionDashboardController.php?userID=$userID";
+            $urlSubmissions = "http://localhost/Plagiarism_Checker/public/dashboard/getSubmissions?userID=$userID";
             $responseSubmissions = file_get_contents($urlSubmissions);
             $submissionsData = json_decode($responseSubmissions, true);
     
-            $urlReports = "http://localhost/Plagiarism_Checker/App/Controllers/PlagarismReportDashBoardController.php?userID=$userID";
+            $urlReports = "http://localhost/Plagiarism_Checker/public/dashboard/getReports?userID=$userID";
             $responseReports = file_get_contents($urlReports);
             $reportsData = json_decode($responseReports, true);
         
@@ -80,6 +80,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 </table>
                 </section>';
             } else {
+                echo 'session : '.$assignmentsData['session'];
                 echo '<p>No assignments found.</p>';
             }
         
