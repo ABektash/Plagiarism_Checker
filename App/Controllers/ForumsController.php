@@ -20,24 +20,31 @@ class ForumsController extends Controller
 
     public function index()
     {
-        $id = $_SESSION['user']['ID'];
-        $forum = new Forums($this->db);
-        $message = new Forums_Messages($this->db);
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        $allForums = $forum->getAllForums($id);
-        $messages = [];
+        if ($id !== null && ($userType == 2 || $userType == 3)) {
+            $forum = new Forums($this->db);
+            $message = new Forums_Messages($this->db);
 
-        if (!empty($allForums) && isset($_GET['forumID'])) {
-            $forumID = $_GET['forumID'];
-            $messages = $message->getAllMessages($forumID);
+            $allForums = $forum->getAllForums($id);
+            $messages = [];
+
+            if (!empty($allForums) && isset($_GET['forumID'])) {
+                $forumID = $_GET['forumID'];
+                $messages = $message->getAllMessages($forumID);
+            }
+
+            $data = [
+                "allForums" => $allForums,
+                "messages" => $messages,
+            ];
+
+            $this->view('forums', $data);
+        } else {
+            $this->view('404Page');
         }
 
-        $data = [
-            "allForums" => $allForums,
-            "messages" => $messages,
-        ];
-
-        $this->view('forums', $data);
     }
 
 
@@ -92,14 +99,14 @@ class ForumsController extends Controller
         } elseif (isset($_GET['submitGetForum'])) {
             $forum = new Forums($this->db);
             $message = new Forums_Messages($this->db);
-        
+
             $forumData = $forum->getForumById($_GET['forumID']);
             $messages = $message->getAllMessages($_GET['forumID']);
-        
+
             if ($forumData) {
                 $studentName = $forumData['StudentFirstName'] . ' ' . $forumData['StudentLastName'];
                 $instructorName = $forumData['InstructorFirstName'] . ' ' . $forumData['InstructorLastName'];
-        
+
                 $data = [
                     "forum" => $forumData,
                     "studentName" => $studentName,
@@ -108,7 +115,7 @@ class ForumsController extends Controller
                     "UserID" => $_SESSION['user']['ID'],
                     "UserType_id" => $_SESSION['user']['UserType_id'],
                 ];
-        
+
                 header('Content-Type: application/json');
                 echo json_encode($data);
             } else {

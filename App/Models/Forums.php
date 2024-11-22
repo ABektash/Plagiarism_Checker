@@ -109,9 +109,21 @@ class Forums_Messages
     public function getAllMessages($forumID)
     {
         $forumID = mysqli_real_escape_string($this->db, $forumID);
+        $userID = $_SESSION['user']['ID'] ?? null;
 
-        $query = "SELECT m.SenderID, m.Messagetext, m.Isread, m.sentat  FROM forums_messages m WHERE m.ForumID = '$forumID' ORDER BY m.Sentat ASC;";
-        $result = $this->db->query($query);
+        $updateQuery = "UPDATE forums_messages
+                        SET Isread = 1
+                        WHERE ForumID = '$forumID'
+                          AND SenderID != '$userID';";
+
+        $this->db->query($updateQuery);
+
+        $selectQuery = "SELECT m.SenderID, m.Messagetext, m.Isread, m.sentat
+                        FROM forums_messages m
+                        WHERE m.ForumID = '$forumID'
+                        ORDER BY m.Sentat ASC;";
+
+        $result = $this->db->query($selectQuery);
         $AllMessages = [];
 
         while ($row = $result->fetch_assoc()) {
