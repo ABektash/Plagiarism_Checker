@@ -2,9 +2,11 @@
 require_once MODELS .'AssignmentModel.php';
 require_once MODELS .'SubmissionModel.php';
 require_once MODELS .'PlagiarismReportModel.php';
+require_once MODELS .'GroupsModel.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 class DashboardController extends Controller
 {
     private $db;
@@ -143,4 +145,34 @@ class DashboardController extends Controller
             }
         }
     }
+
+    public function getInstructorData()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $errors = [];
+        
+            if (empty($_GET['userID'])) {
+                $errors['userIDError'] = "User ID is required.";
+            } elseif (!is_numeric($_GET['userID'])) {
+                $errors['userIDError'] = "User ID must be numeric.";
+            }
+        
+            if (!empty($errors)) {
+                echo json_encode(['errors' => $errors]);
+                exit;
+            }
+        
+            $userID = intval($_GET['userID']);
+            $dataFetcher= new GroupsModel($this->db,$userID);
+            try {
+
+                echo $dataFetcher->returnAsJson();
+            } catch (Exception $e) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => $e->getMessage()
+                ]);
+            }
+    }
+}
 }
