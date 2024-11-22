@@ -38,27 +38,27 @@ if (session_status() == PHP_SESSION_NONE) {
                                     <?php
                                     if ($UserType_id == 2) {
                                         echo '<div class="text-center">';
-                                            echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
-                                            echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
-                                            echo '<p class="mb-0 fs-4">Groups</p>';
+                                        echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
+                                        echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
+                                        echo '<p class="mb-0 fs-4">Groups</p>';
                                         echo '</div>';
                                         echo '<div class="text-center">';
-                                            echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
-                                            echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
-                                            echo '<p class="mb-0 fs-4">Assignments made</p>';
+                                        echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
+                                        echo "<h4 class='mb-0 fw-semibold lh-1'>$numberOfAssignments</h4>";
+                                        echo '<p class="mb-0 fs-4">Assignments made</p>';
                                         echo '</div>';
-                                    }  elseif ($UserType_id == 3) {
+                                    } elseif ($UserType_id == 3) {
                                         echo '<div class="text-center">';
-                                            echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
-                                            echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
-                                            echo '<p class="mb-0 fs-4">Groups</p>';
+                                        echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
+                                        echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
+                                        echo '<p class="mb-0 fs-4">Groups</p>';
                                         echo '</div>';
                                         echo '<div class="text-center">';
-                                            echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
-                                            echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
-                                            echo '<p class="mb-0 fs-4">Assignments done</p>';
+                                        echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
+                                        echo "<h4 class='mb-0 fw-semibold lh-1'>$numberOfAssignments</h4>";
+                                        echo '<p class="mb-0 fs-4">Assignments done</p>';
                                         echo '</div>';
-                                    } 
+                                    }
                                     ?>
                                 </div>
                             </div>
@@ -128,34 +128,50 @@ if (session_status() == PHP_SESSION_NONE) {
                         <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
                             <h3 class="mb-3 fw-semibold">Assignments Made</h3>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <div class="card">
-                                        <div class="card-header">12 DEC 2024, 18:00 pm</div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Assignment Title</h5>
-                                            <p class="card-text">This is a card with content related to an assignment made by the instructor.</p>
-                                            <a href="#" class="btn btn-primary">View Details</a>
+                                <?php if (!empty($assignments)) : ?>
+                                    <?php foreach ($assignments as $assignment) : ?>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <?= htmlspecialchars(date('d M Y, h:i A', strtotime($assignment['StartDate']))) ?>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= htmlspecialchars($assignment['Title']) ?></h5>
+                                                    <p class="card-text"><?= htmlspecialchars(substr($assignment['Description'], 0, 100)) ?></p>
+                                                    <a href="/assignment/details/<?= $assignment['ID'] ?>" class="btn btn-primary">View Details</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <p class="text-muted">No assignments available.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php
                     } elseif ($userType == 3) {
                     ?>
                         <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
-                            <h3 class="mb-3 fw-semibold">Assignments Submitted</h3>
+                            <h3 class="mb-3 fw-semibold">Assignments Made</h3>
                             <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <div class="card">
-                                        <div class="card-header">12 DEC 2024, 18:00 pm</div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Assignment Title</h5>
-                                            <p class="card-text">This is a card with content related to an assignment submitted by the student.</p>
-                                            <a href="#" class="btn btn-primary">View Details</a>
+                                <?php if (!empty($submissions)) : ?>
+                                    <?php foreach ($submissions as $submission) : ?>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <?= htmlspecialchars(date('d M Y, h:i A', strtotime($submission['submissionDate']))) ?>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= htmlspecialchars($submission['assignmentTitle']) ?></h5>
+                                                    <p class="card-text"><?= htmlspecialchars($submission['status']) ?></p>
+                                                    <a href="/assignment/details/<?= $submission['assignmentID'] ?>" class="btn btn-primary">View Details</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <p class="text-muted">No assignments available.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php

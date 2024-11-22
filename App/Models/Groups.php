@@ -48,6 +48,21 @@ class Groups
     
         return $students;
     }
+
+
+    function getUserGroupCountByUserID($userID) {
+        $userID = intval($userID); 
+    
+        $query = "SELECT COUNT(*) AS count FROM user_groups WHERE userID = $userID";
+        $result = mysqli_query($this->db, $query);
+    
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['count'];
+        } else {
+            return "Error: " . mysqli_error($this->db);
+        }
+    }
     
 
     public function getAllInst()

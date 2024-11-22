@@ -44,6 +44,55 @@ class Forums
         return null;
     }
 
+
+    public function getForumsData($userID)
+    {
+        $query = "
+        SELECT 
+            forums.ID AS forumID,
+            forums.Createdat AS forumCreatedAt,
+            CASE
+                WHEN forums.StudentID = $userID THEN forums.InstructorID
+                ELSE forums.StudentID
+            END AS otherUserID,
+            users.FirstName,
+            users.LastName,
+            forums_messages.Messagetext AS lastMessage,
+            forums_messages.Sentat AS lastMessageDate,
+            forums_messages.Isread
+        FROM forums
+        JOIN users 
+            ON (users.ID = CASE
+                            WHEN forums.StudentID = $userID THEN forums.InstructorID
+                            ELSE forums.StudentID
+                           END)
+        JOIN forums_messages 
+            ON forums_messages.ID = (
+                SELECT MAX(ID) 
+                FROM forums_messages 
+                WHERE forums_messages.ForumID = forums.ID
+            )
+        WHERE forums.StudentID = $userID OR forums.InstructorID = $userID
+        ";
+    
+        $result = $this->db->query($query);
+    
+        if (!$result) {
+            die("Query failed: " . $this->db->error);
+        }
+    
+        $forumsData = [];
+        while ($row = $result->fetch_assoc()) {
+            $forumsData[] = $row;
+        }
+
+        usort($forumsData, function ($a, $b) {
+            return strtotime($b['lastMessageDate']) - strtotime($a['lastMessageDate']);
+        });
+    
+        return $forumsData;
+    }
+
     public function delete($id)
     {
         $id = mysqli_real_escape_string($this->db, $id);
