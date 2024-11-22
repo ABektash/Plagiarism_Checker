@@ -12,23 +12,36 @@
     <?php include 'inc/header.php'; ?>
 
     <div class="app-container">
+
         <div id="chat-list-container" class="chat-list">
             <div class="chat-list-header">
                 <h2>Chats</h2>
             </div>
             <div id="chat-items" class="chat-items">
-                <div class="chat-item" data-chat="user1">
-                    <p class="chat-name">User 1</p>
-                    <p class="chat-preview">Hello! How are you?</p>
-                </div>
-                <div class="chat-item" data-chat="user2">
-                    <p class="chat-name">User 2</p>
-                    <p class="chat-preview">Let’s meet tomorrow.</p>
-                </div>
-                <div class="chat-item" data-chat="user3">
-                    <p class="chat-name">User 3</p>
-                    <p class="chat-preview">Where are you?</p>
-                </div>
+                <?php if (!empty($allForums)): ?>
+                    <?php foreach ($allForums as $forum): ?>
+                        <div class="chat-item" data-chat="<?= htmlspecialchars($forum['ID']) ?>" onclick="loadChat(<?= $forum['ID'] ?>)">
+                            <p class="chat-name">
+                                <?php
+                                switch ($_SESSION['user']['UserType_id']) {
+                                    case 2:
+                                        echo htmlspecialchars($forum['StudentName'] ?? 'Unknown');
+                                        break;
+                                    case 3:
+                                        echo htmlspecialchars('Dr. ' . $forum['InstructorName'] ?? 'Unknown');
+                                        break;
+                                    default:
+                                        echo htmlspecialchars('Unknown');
+                                        break;
+                                }
+                                ?>
+                            </p>
+                            <p class="chat-preview">Last message at: <?= htmlspecialchars($forum['last_message_time'] ?? 'N/A') ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No chats available</p>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -39,38 +52,16 @@
             </div>
 
             <div id="chat-box" class="chat-box">
-                <?php
-                // Static data array, formatted as if coming from the backend
-                $messages = [
-                    ['sender' => 'left', 'message' => 'Hi, how are you?', 'time' => '10:15 AM'],
-                    ['sender' => 'right', 'message' => "I'm good, thanks! What about you?", 'time' => '10:16 AM'],
-                    ['sender' => 'left', 'message' => "I'm working on a project.", 'time' => '10:17 AM'],
-                    ['sender' => 'right', 'message' => "That's great! Let me know if you need help.", 'time' => '10:18 AM'],
-                ];
-
-                
-                foreach ($messages as $msg) {
-                    $senderClass = htmlspecialchars($msg['sender']);
-                    $messageText = htmlspecialchars($msg['message']);
-                    $sentTime = htmlspecialchars($msg['time']);
-                    $isRead = $senderClass === 'right' ? '<span class="message-status read">✔✔</span>' : '';
-
-                    echo "<div class='chat-message $senderClass'>
-                            <div class='message-text'>
-                                $messageText
-                            </div>
-                            <div class='message-info'>
-                                <span class='message-time'>$sentTime</span>
-                                $isRead
-                            </div>
-                          </div>";
-                }
-                ?>
+                <p>Select a chat to view messages.</p>
             </div>
 
             <div class="chat-input">
-                <input type="text" id="message-input" placeholder="Type a message..." />
-                <button id="send-btn">Send</button>
+                <form id="message-form" method="POST" action="/Plagiarism_Checker/public/Forums/submit">
+                    <input type="hidden" id="forum-id" name="forumID" value="<?= htmlspecialchars($_GET['forumID'] ?? '') ?>">
+                    <input type="hidden" name="senderID" value="<?= htmlspecialchars($_SESSION['user']['ID'] ?? '') ?>">
+                    <input type="text" id="message-input" name="messagetext" placeholder="Type a message..." required>
+                    <button type="submit" name="submitCreateMessage" id="send-btn">Send</button>
+                </form>
             </div>
         </div>
     </div>

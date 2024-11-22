@@ -3,7 +3,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!defined('MODELS')) {
+    die('Direct access is not allowed.');
+}
+
 require_once MODELS . 'Forums.php';
+
 class ForumsController extends Controller
 {
     private $db;
@@ -15,21 +20,26 @@ class ForumsController extends Controller
 
     public function index()
     {
-        // $id = $_SESSION['user']['ID'];
-        // $forum = new Forums($this->db);
+        $id = $_SESSION['user']['ID'];
+        $forum = new Forums($this->db);
+        $message = new Forums_Messages($this->db);
 
-        // $allForums = $forum->getAllForums($id);
+        $allForums = $forum->getAllForums($id);
+        $messages = [];
 
-        // if ($allForums) {
-        //     $data = [
-        //         "allForums" => $allForums,
-        //     ];
+        if (!empty($allForums) && isset($_GET['forumID'])) {
+            $forumID = $_GET['forumID'];
+            $messages = $message->getAllMessages($forumID);
+        }
 
-            $this->view('forums');//, $data
-        // } else {
-        //     $this->view('404Page');
-        // }
+        $data = [
+            "allForums" => $allForums,
+            "messages" => $messages,
+        ];
+
+        $this->view('forums', $data);
     }
+
 
     public function delete()
     {
@@ -63,40 +73,51 @@ class ForumsController extends Controller
             $message = new Forums_Messages($this->db);
 
             if ($message->create($_POST['forumID'], $_POST['senderID'], $_POST['messagetext'])) {
-
                 $messages = $message->getAllMessages($_POST['forumID']);
-                $data = ['messages' => $messages];
-                $this->view('forums', $data);
-
+                $latestMessage = end($messages);
+                $data = [
+                    'success' => true,
+                    'messages' => $messages,
+                    'latestMessage' => $latestMessage,
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($data);
             } else {
-                $data["sendingError"] = "Couldn't send the message!";
-                $this->view('forums', $data);
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => "Couldn't send the message!"]);
             }
-        } else if (isset($_POST['submitGetForum'])) {
+            exit;
+
+        } elseif (isset($_GET['submitGetForum'])) {
             $forum = new Forums($this->db);
             $message = new Forums_Messages($this->db);
-
-
-            if ($forumData = $forum->getForumById($_POST['forumID'])) {
-
+        
+            $forumData = $forum->getForumById($_GET['forumID']);
+            $messages = $message->getAllMessages($_GET['forumID']);
+        
+            if ($forumData) {
                 $studentName = $forumData['StudentFirstName'] . ' ' . $forumData['StudentLastName'];
                 $instructorName = $forumData['InstructorFirstName'] . ' ' . $forumData['InstructorLastName'];
-                $messages = $message->getAllMessages($_POST['forumID']);
-
+        
                 $data = [
                     "forum" => $forumData,
                     "studentName" => $studentName,
                     "instructorName" => $instructorName,
-                    "messages" => $messages
-                ];                
-                $this->view('forums',$data);
-
+                    "messages" => $messages,
+                    "UserID" => $_SESSION['user']['ID'],
+                    "UserType_id" => $_SESSION['user']['UserType_id'],
+                ];
+        
+                header('Content-Type: application/json');
+                echo json_encode($data);
             } else {
-                $data["gettingForumError"] = "Couldn't get the chat!";
-                $this->view('forums', $data);
+                header('Content-Type: application/json');
+                echo json_encode(["error" => "Couldn't get the chat!"]);
             }
+            exit;
 
-        } else if (isset($_POST['submitCreateForum'])) {
+        } elseif (isset($_POST['submitCreateForum'])) {
             $forum = new Forums($this->db);
 
             if ($forum->create($_POST['submissionID'], $_POST['instructorID'], $_POST['studentID'])) {
@@ -105,6 +126,8 @@ class ForumsController extends Controller
                 $data["creatingForumError"] = "Couldn't create the chat!";
                 $this->view('forums', $data);
             }
+            exit;
+
         }
     }
 }
