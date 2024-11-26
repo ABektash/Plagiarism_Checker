@@ -143,6 +143,16 @@ textarea {
   cursor: pointer;
   margin-top: 1rem;
 }
+/* Add these CSS animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
 
 .submit-button:hover {
   background-color:  #02a793;
@@ -151,7 +161,11 @@ textarea {
 .file-upload {
   margin-top: 10px;
 }
-
+.wrapper{
+  width:200px;
+  padding:20px;
+  height: 150px;
+  }
 .error {
   color: red;
   margin-top: 10px;

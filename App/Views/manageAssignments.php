@@ -154,11 +154,28 @@
 
                 <div class="Choose-Group-Container">
                     <label>Group:</label>
-                    <select name="groupID" id="Group-Number-Edit" class="Group-Selection">
+                    <div class="wrapper"></div><select name="groupID" id="Group-Number-Edit" class="Group-Selection" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">5</option>
+                        <option value="1">165</option>
+                        <option value="2">265</option>
+                        <option value="3">354</option>
+                        <option value="4">4456</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        
                     </select>
                 </div>
 

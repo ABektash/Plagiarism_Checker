@@ -47,6 +47,7 @@ class ManageAssignmentsController extends Controller
 
         }
     }
+    
 
     // Function to handle editing an existing assignment
     public function editAssignment($id)

@@ -136,5 +136,14 @@ public function deleteAssignment($id)
 }
 
     
+public function getGroups() {
+    $query = "SELECT ID, Name FROM groups"; // Modify based on your database structure
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }
+
+
+
