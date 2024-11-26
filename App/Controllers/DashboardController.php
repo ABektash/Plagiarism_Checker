@@ -175,4 +175,33 @@ class DashboardController extends Controller
             }
     }
 }
+public function getGroupsAndCount()
+{
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $errors = [];
+    
+        if (empty($_GET['userID'])) {
+            $errors['userIDError'] = "User ID is required.";
+        } elseif (!is_numeric($_GET['userID'])) {
+            $errors['userIDError'] = "User ID must be numeric.";
+        }
+    
+        if (!empty($errors)) {
+            echo json_encode(['errors' => $errors]);
+            exit;
+        }
+    
+        $userID = intval($_GET['userID']);
+        $dataFetcher= new GroupsModel($this->db,$userID);
+        try {
+
+            echo $dataFetcher->getGroupsAndCountAsJson();
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
+}
+}
 }

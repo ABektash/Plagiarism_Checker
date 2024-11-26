@@ -6,12 +6,12 @@ require_once 'PlagiarismReportModel.php';
 class GroupsModel
 {
     private $conn;
-    private $instructorID;
+    private $UserID;
 
-    public function __construct($conn, $instructorID)
+    public function __construct($conn, $UserID)
     {
         $this->conn = $conn;
-        $this->instructorID = $instructorID;
+        $this->UserID = $UserID;
     }
 
     public function getAllAssignments()
@@ -24,13 +24,13 @@ class GroupsModel
         ";
         
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $this->instructorID);
+        $stmt->bind_param("i", $this->UserID);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $assignments = [];
         while ($row = $result->fetch_assoc()) {
-            $assignment = new AssignmentObject($this->conn, $this->instructorID);
+            $assignment = new AssignmentObject($this->conn, $this->UserID);
             foreach ($row as $key => $value) {
                 $assignment->$key = $value;
             }
@@ -65,7 +65,7 @@ class GroupsModel
 
     $submissions = [];
     while ($row = $result->fetch_assoc()) {
-        $submission = new SubmissionObject($this->conn, $this->instructorID);
+        $submission = new SubmissionObject($this->conn, $this->UserID);
         foreach ($row as $key => $value) {
             $submission->$key = $value;
         }
@@ -102,7 +102,7 @@ class GroupsModel
 
         $reports = [];
         while ($row = $result->fetch_assoc()) {
-            $report = new PlagiarismReportObject($this->conn, $row['submissionID'], $this->instructorID);
+            $report = new PlagiarismReportObject($this->conn, $row['submissionID'], $this->UserID);
             foreach ($row as $key => $value) {
                 $report->$key = $value;
             }
@@ -112,10 +112,66 @@ class GroupsModel
         $stmt->close();
         return $reports;
     }
+    public function getGroupsAndCountAsJson()
+{
+    $userId = $this->UserID;
+
+    $sql = "
+        SELECT 
+            g.ID AS GroupID, 
+            COUNT(DISTINCT ug.userID) AS MemberCount,
+            COUNT(DISTINCT s.ID) AS SubmissionCount
+        FROM 
+            `groups` g
+        INNER JOIN 
+            user_groups ug ON g.ID = ug.groupID
+        LEFT JOIN 
+            assignments a ON g.ID = a.groupID
+        LEFT JOIN 
+            submissions s ON a.ID = s.assignmentID
+        WHERE 
+            g.ID IN (
+                SELECT 
+                    groupID
+                FROM 
+                    user_groups
+                WHERE 
+                    userID = ?
+            )
+        GROUP BY 
+            g.ID
+    ";
+
+    try {
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return json_encode(['error' => $this->conn->error]);
+        }
+
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->bind_result($groupId, $memberCount, $submissionCount);
+
+        $groups = [];
+        while ($stmt->fetch()) {
+            $groups[] = [
+                'GroupID' => $groupId,
+                'MemberCount' => $memberCount,
+                'SubmissionCount' => $submissionCount
+            ];
+        }
+        $stmt->close();
+
+        return json_encode($groups);
+    } catch (Exception $e) {
+        return json_encode(['error' => $e->getMessage()]);
+    }
+}
+
 
     
     public function returnAsJson()
-{
+    {
     $assignments = $this->getAllAssignments();
     $assignmentIDs = array_map(function($assignment) {
         return $assignment->ID; 

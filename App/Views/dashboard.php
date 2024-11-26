@@ -201,38 +201,51 @@ if (session_status() == PHP_SESSION_NONE) {
 
         //if ($user_role == 'instructor'):
         if ($_SESSION['user']['UserType_id'] == 2):
-        ?>
-            <!-- Instructor Dashboard -->
-            <section id="groups">
-                <h2>Groups</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Group Name</th>
-                            <th>Total Students</th>
-                            <th>Submissions Received</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Group A</td>
-                            <td>30</td>
-                            <td>28</td>
-                            <td><a class="a-link" href="<?php url('manageGroupInsturctor/index'); ?>">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>Group B</td>
-                            <td>25</td>
-                            <td>20</td>
-                            <td><a class="a-link" href="<?php url('manageGroupInsturctor/index'); ?>">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            <?php 
+            $userID = $_SESSION['user']['ID']; 
 
-$userID = $_SESSION['user']['ID']; 
+    $jsonResponse = file_get_contents("http://localhost/Plagiarism_Checker/public/dashboard/getGroupsAndCount?userID=" . $userID);
+    
+    if ($jsonResponse === false) {
+        echo "Error fetching data.";
+        exit;
+    }
+
+    $groupsData = json_decode($jsonResponse, true);
+
+    echo '
+    <section id="groups">
+        <h2>Groups</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Total Students</th>
+                    <th>Submissions Received</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+
+    if (is_array($groupsData)) {
+        foreach ($groupsData as $group) {
+            echo '
+            <tr>
+                <td>Group ' . htmlspecialchars($group['GroupID']) . '</td>
+                <td>' . htmlspecialchars($group['MemberCount']) . '</td>
+                <td>' . htmlspecialchars($group['SubmissionCount']) . '</td>
+                <td><a class="a-link" href="' . 'http://localhost/Plagiarism_Checker/public/manageGroupInsturctor/index' . '">View</a></td>
+            </tr>';
+        }
+    } else {
+        echo '<tr><td colspan="4">No groups found.</td></tr>';
+    }
+
+    echo '
+            </tbody>
+        </table>
+    </section>';
+
 
 $response = file_get_contents("http://localhost/Plagiarism_Checker/public/dashboard/getInstructorData?userID={$userID}");
 $data = json_decode($response, true); 
