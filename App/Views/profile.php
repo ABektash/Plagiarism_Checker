@@ -33,23 +33,23 @@ if (session_status() == PHP_SESSION_NONE) {
                             if ($_SESSION['user']['UserType_id'] == 2) {
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
-                                echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
+                                echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
                                 echo '<p class="mb-0 fs-4">Groups</p>';
                                 echo '</div>';
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
-                                echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
+                                echo "<h4 class='mb-0 fw-semibold lh-1'>$numberOfAssignments</h4>";
                                 echo '<p class="mb-0 fs-4">Assignments made</p>';
                                 echo '</div>';
                             } elseif ($_SESSION['user']['UserType_id'] == 3) {
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
-                                echo '<h4 class="mb-0 fw-semibold lh-1">3</h4>';
+                                echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
                                 echo '<p class="mb-0 fs-4">Groups</p>';
                                 echo '</div>';
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-check fs-6 d-block mb-2"></i>';
-                                echo '<h4 class="mb-0 fw-semibold lh-1">6</h4>';
+                                echo "<h4 class='mb-0 fw-semibold lh-1'>$numberOfAssignments</h4>";
                                 echo '<p class="mb-0 fs-4">Assignments done</p>';
                                 echo '</div>';
                             }
@@ -110,9 +110,15 @@ if (session_status() == PHP_SESSION_NONE) {
                         echo '</li>';
                     } elseif ($_SESSION['user']['UserType_id'] == 3) {
                         echo '<li class="nav-item" role="presentation">';
-                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-submitted-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments-submitted" type="button" role="tab" aria-controls="pills-assignments-submitted" aria-selected="true">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="true">';
                         echo '<i class="fa fa-check-square me-2 fs-6"></i>';
                         echo '<span class="d-none d-md-block">Assignments Submitted</span>';
+                        echo '</button>';
+                        echo '</li>';
+                        echo '<li class="nav-item" role="presentation">';
+                        echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-discussion-forums-tab" data-bs-toggle="pill" data-bs-target="#pills-discussion-forums" type="button" role="tab" aria-controls="pills-discussion-forums" aria-selected="false">';
+                        echo '<i class="fa fa-comments me-2 fs-6"></i>';
+                        echo '<span class="d-none d-md-block">Discussion Forums</span>';
                         echo '</button>';
                         echo '</li>';
                     }
@@ -133,71 +139,108 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
                     <h3 class="mb-3 fw-semibold">Assignments Made</h3>
                     <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-header">12 DEC 2024, 18:00 pm</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Assignment Title</h5>
-                                    <p class="card-text">This is a card with content related to an assignment made by the instructor.</p>
-                                    <a href="#" class="btn btn-primary">View Details</a>
+                        <?php if (!empty($assignments)) : ?>
+                            <?php foreach ($assignments as $assignment) : ?>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <?= htmlspecialchars(date('d M Y, h:i A', strtotime($assignment['StartDate']))) ?>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= htmlspecialchars($assignment['Title']) ?></h5>
+                                            <p class="card-text"><?= htmlspecialchars(substr($assignment['Description'], 0, 100)) ?></p>
+                                            <a href="/assignment/details/<?= $assignment['ID'] ?>" class="btn btn-primary">View Details</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p class="text-muted">No assignments available.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="pills-discussion-forums" role="tabpanel" aria-labelledby="pills-discussion-forums-tab">
                     <h3 class="mb-3 fw-semibold">Discussion Forums</h3>
                     <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Discussion Topic</h5>
-                                    <span class="badge bg-secondary">Unread</span>
-                                </div>
-                                <div class="card-body">
-                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p>
-                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p>
-                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p>
-                                    <a href="#" class="btn btn-primary">View Discussion</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0">Discussion Topic</h5>
-                                    <span class="badge bg-secondary">Unread</span>
-                                </div>
-                                <div class="card-body">
-                                    <p class="mb-1"><strong>Posted by:</strong> John Doe</p>
-                                    <p class="mb-1"><strong>Date:</strong> 12 DEC 2024</p>
-                                    <p class="card-text">Join the conversation and share your thoughts on the latest assignment!</p>
-                                    <a href="#" class="btn btn-primary">View Discussion</a>
+                        <?php foreach ($forumsData as $forum): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Forum ID: <?= htmlspecialchars($forum['forumID']) ?></h5>
+                                        <?php if (!$forum['Isread']): ?>
+                                            <span class="badge bg-secondary">Unread</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-success">Read</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-1"><strong>Sent by:</strong> <?= htmlspecialchars($forum['FirstName'] . ' ' . $forum['LastName']) ?></p>
+                                        <p class="mb-1"><strong>Date:</strong> <?= htmlspecialchars(date('d M Y', strtotime($forum['lastMessageDate']))) ?></p>
+                                        <p class="card-text">
+                                            <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
+                                        </p>
+                                        <a href="/discussion/view/<?= htmlspecialchars($forum['forumID']) ?>" class="btn btn-primary">View Discussion</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Add more discussion topics as needed -->
+                        <?php endforeach; ?>
                     </div>
                 </div>
             <?php
             } elseif ($userType == 3) {
             ?>
                 <div class="tab-pane fade show active" id="pills-assignments" role="tabpanel" aria-labelledby="pills-assignments-tab">
-                    <h3 class="mb-3 fw-semibold">Assignments Submitted</h3>
+                    <h3 class="mb-3 fw-semibold">Assignments Made</h3>
                     <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-header">12 DEC 2024, 18:00 pm</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Assignment Title</h5>
-                                    <p class="card-text">This is a card with content related to an assignment submitted by the student.</p>
-                                    <a href="#" class="btn btn-primary">View Details</a>
+                        <?php if (!empty($submissions)) : ?>
+                            <?php foreach ($submissions as $submission) : ?>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <?= htmlspecialchars(date('d M Y, h:i A', strtotime($submission['submissionDate']))) ?>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= htmlspecialchars($submission['assignmentTitle']) ?></h5>
+                                            <p class="card-text"><?= htmlspecialchars($submission['status']) ?></p>
+                                            <a href="/assignment/details/<?= $submission['assignmentID'] ?>" class="btn btn-primary">View Details</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p class="text-muted">No assignments available.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="pills-discussion-forums" role="tabpanel" aria-labelledby="pills-discussion-forums-tab">
+                    <h3 class="mb-3 fw-semibold">Discussion Forums</h3>
+                    <div class="row">
+                        <?php foreach ($forumsData as $forum): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Forum ID: <?= htmlspecialchars($forum['forumID']) ?></h5>
+                                        <?php if (!$forum['Isread']): ?>
+                                            <span class="badge bg-secondary">Unread</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-success">Read</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-1"><strong>Sent by:</strong> <?= htmlspecialchars($forum['FirstName'] . ' ' . $forum['LastName']) ?></p>
+                                        <p class="mb-1"><strong>Date:</strong> <?= htmlspecialchars(date('d M Y', strtotime($forum['lastMessageDate']))) ?></p>
+                                        <p class="card-text">
+                                            <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
+                                        </p>
+                                        <a href="/discussion/view/<?= htmlspecialchars($forum['forumID']) ?>" class="btn btn-primary">View Discussion</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
             <?php
             }
             ?>

@@ -17,8 +17,10 @@ class App
 
     private function prepareURL($url)
     {
+        $url = parse_url($url, PHP_URL_PATH);
         $url = $this->removePublicAndBefore($url);
         $url = trim($url,"/");
+        
         if(!empty($url))
         {
             $url = explode('/',$url);

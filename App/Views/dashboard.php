@@ -29,15 +29,15 @@ if (session_status() == PHP_SESSION_NONE) {
 
             $userID = $_SESSION['user']['ID'];
             
-            $urlAssignments = "http://localhost/Plagiarism_Checker/App/Controllers/AssignmentDashboardController.php?userID=$userID";
+            $urlAssignments = "http://localhost/Plagiarism_Checker/public/dashboard/getAssignments?userID=$userID";
             $responseAssignments = file_get_contents($urlAssignments);
             $assignmentsData = json_decode($responseAssignments, true);
         
-            $urlSubmissions = "http://localhost/Plagiarism_Checker/App/Controllers/SubmissionDashboardController.php?userID=$userID";
+            $urlSubmissions = "http://localhost/Plagiarism_Checker/public/dashboard/getSubmissions?userID=$userID";
             $responseSubmissions = file_get_contents($urlSubmissions);
             $submissionsData = json_decode($responseSubmissions, true);
     
-            $urlReports = "http://localhost/Plagiarism_Checker/App/Controllers/PlagarismReportDashBoardController.php?userID=$userID";
+            $urlReports = "http://localhost/Plagiarism_Checker/public/dashboard/getReports?userID=$userID";
             $responseReports = file_get_contents($urlReports);
             $reportsData = json_decode($responseReports, true);
         
@@ -80,6 +80,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 </table>
                 </section>';
             } else {
+                echo 'session : '.$assignmentsData['session'];
                 echo '<p>No assignments found.</p>';
             }
         
@@ -229,61 +230,73 @@ if (session_status() == PHP_SESSION_NONE) {
                     </tbody>
                 </table>
             </section>
+            <?php 
 
-            <section id="submissions">
-                <h2>Submissions</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Assignment</th>
-                            <th>Submission Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>Essay on Climate Change</td>
-                            <td>2024-10-10</td>
-                            <td>Pending</td>
-                            <td><a class="a-link" href="<?php url('viewEssay/index'); ?>">Review</a></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>History Assignment</td>
-                            <td>2024-10-12</td>
-                            <td>Reviewed</td>
-                            <td><a class="a-link" href="<?php url('viewEssay/index'); ?>">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+$userID = $_SESSION['user']['ID']; 
 
-            <section id="reports">
-                <h2>Plagiarism Reports</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Assignment</th>
-                            <th>Similarity Score</th>
-                            <th>Report Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>Essay on Climate Change</td>
-                            <td>12%</td>
-                            <td>2024-10-11</td>
-                            <td><a class="a-link" href="<?php url('viewReportInstructor/index'); ?>">View Report</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+$response = file_get_contents("http://localhost/Plagiarism_Checker/public/dashboard/getInstructorData?userID={$userID}");
+$data = json_decode($response, true); 
+
+// Submissions section
+echo '<section id="submissions">';
+echo '<h2>Submissions</h2>';
+echo '<table>';
+echo '<thead>';
+echo '<tr>';
+echo '<th>Student</th>';
+echo '<th>Assignment</th>';
+echo '<th>Submission Date</th>';
+echo '<th>Status</th>';
+echo '<th>Actions</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
+
+foreach ($data['submissions'] as $submission) {
+    echo '<tr>';
+    echo '<td>' . htmlspecialchars($submission['studentName']) . '</td>'; 
+    echo '<td>' . htmlspecialchars($submission['assignment']['Title']) . '</td>';
+    echo '<td>' . htmlspecialchars($submission['submissionDate']) . '</td>';
+    echo '<td>' . htmlspecialchars($submission['status']) . '</td>';
+    echo '<td><a class="a-link" href="viewEssay/index">Review</a></td>'; 
+    echo '</tr>';
+}
+
+echo '</tbody>';
+echo '</table>';
+echo '</section>';
+
+// Plagiarism Reports section
+echo '<section id="reports">';
+echo '<h2>Plagiarism Reports</h2>';
+echo '<table>';
+echo '<thead>';
+echo '<tr>';
+echo '<th>Student</th>';
+echo '<th>Assignment</th>';
+echo '<th>Similarity Score</th>';
+echo '<th>Report Date</th>';
+echo '<th>Actions</th>';
+echo '</tr>';
+echo '</thead>';
+echo '<tbody>';
+
+foreach ($data['plagiarism_reports'] as $report) {
+    echo '<tr>';
+    echo '<td>' . htmlspecialchars($report['submission']['studentName']) . '</td>';
+    echo '<td>' . htmlspecialchars($report['submission']['assignment']['Title']) . '</td>';
+    echo '<td>' . htmlspecialchars($report['similarityPercentage']) . '%</td>';
+    echo '<td>' . htmlspecialchars($report['submission']['submissionDate']) . '</td>';
+    echo '<td><a class="a-link" href="viewReportInstructor/index">View Report</a></td>'; 
+    echo '</tr>';
+}
+
+echo '</tbody>';
+echo '</table>';
+echo '</section>';
+?>
+
+            
         <?php endif; ?>
 
     </main>

@@ -8,7 +8,7 @@ class SubmissionObject {
     public $submissionDate;
     public $status;
     public $assignment; 
-
+    private $studentName;
     public function __construct($conn, $userID) {
         $this->conn = $conn;
         $this->userID = $userID;
@@ -55,14 +55,24 @@ class SubmissionObject {
 
     
     public function returnAsJson() {
-        $this->assignment=$this->fetchAssignment();    
+        $query = "SELECT FirstName, LastName FROM users WHERE ID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $this->userID);
+        $stmt->execute();
+        $stmt->bind_result($firstName, $lastName);
+        $stmt->fetch();
+        $stmt->close();
+
+        $this->studentName = $firstName . ' ' . $lastName;
+        $this->assignment = $this->fetchAssignment();
         return json_encode([
             'ID' => $this->ID,
             'assignmentID' => $this->assignmentID,
             'userID' => $this->userID,
             'submissionDate' => $this->submissionDate,
             'status' => $this->status,
-            'assignment' => json_decode($this->assignment->returnAsJson()) 
+            'studentName' => $this->studentName,
+            'assignment' => json_decode($this->assignment->returnAsJson())
         ]);
     }
 }

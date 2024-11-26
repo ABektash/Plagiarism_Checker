@@ -59,11 +59,17 @@ class AssignmentsFetcher {
     }
 
     public function fetchAll() {
-        $query = "SELECT * FROM assignments WHERE userID = ?";
+        $query = "
+            SELECT a.* 
+            FROM assignments a
+            INNER JOIN user_groups ug ON a.groupID = ug.groupID
+            WHERE ug.userID = ?
+        ";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $this->userID);
         $stmt->execute();
         $result = $stmt->get_result();
+    
         while ($row = $result->fetch_assoc()) {
             $assignment = new AssignmentObject($this->conn, $this->userID);
             foreach ($row as $key => $value) {

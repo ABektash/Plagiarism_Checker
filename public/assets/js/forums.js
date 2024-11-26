@@ -1,17 +1,10 @@
-const chatListContainer = document.getElementById('chat-list-container');
-const chatItems = document.querySelectorAll('.chat-item');
-const chatTitle = document.getElementById('chat-title');
-const chatBox = document.getElementById('chat-box');
-const messageInput = document.getElementById('message-input');
-const sendBtn = document.getElementById('send-btn');
-const toggleChatListBtn = document.getElementById('toggle-chat-list');
-const chatContainer = document.querySelector('.chat-container');
-
-const updateChatTitle = (title) => {
-    if (chatTitle) chatTitle.innerText = title;
-};
+let lastForumLoad;
+let lastMessageDate = null;
 
 const toggleSidebar = () => {
+    const chatListContainer = document.getElementById('chat-list-container');
+    const chatContainer = document.querySelector('.chat-container');
+
     if (window.innerWidth <= 768) {
         const isHidden = chatListContainer.classList.toggle('hidden');
         chatContainer.classList.toggle('full', isHidden);
@@ -19,168 +12,273 @@ const toggleSidebar = () => {
 };
 
 const ensureSidebarVisibility = () => {
+    const chatListContainer = document.getElementById('chat-list-container');
+    const chatContainer = document.querySelector('.chat-container');
+
     if (window.innerWidth > 768) {
         chatListContainer.classList.remove('hidden');
         chatContainer.classList.remove('full');
     }
 };
 
-const sendMessage = () => {
-    const message = messageInput.value.trim();
-    if (message && chatBox) {
-        const newMessage = document.createElement('div');
-        newMessage.classList.add('chat-message', 'right');
-        newMessage.innerHTML = `${message}
-            <span class="message-status read">&#10003;&#10003;</span>`;
+const highlightChatItem = (forumID) => {
+    const chatItems = document.querySelectorAll('.chat-item');
 
-        chatBox.appendChild(newMessage);
-        messageInput.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
+    chatItems.forEach((item) => {
+
+        if (item.dataset.chat == forumID) {
+            item.classList.add('active');
+            return;
+        } else {
+            item.classList.remove('active');
+        }
+    });
+};
+
+const updateChatTitle = (title) => {
+    const chatTitle = document.getElementById('chat-title');
+    chatTitle.textContent = title || 'Select a Chat';
+};
+
+function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function getRelativeDate(date) {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+        return 'Today';
+    } else if (date.toDateString() === yesterday.toDateString()) {
+        return 'Yesterday';
+    } else {
+        return formatDate(date);
+    }
+}
+
+const loadChat = async (forumID) => {
+    if (lastForumLoad != forumID) {
+        const chatBox = document.getElementById('chat-box');
+        const forumIdInput = document.getElementById('forum-id');
+
+        chatBox.innerHTML = '<p>Loading messages...</p>';
+        forumIdInput.value = forumID;
+
+        try {
+            const response = await fetch(`/Plagiarism_Checker/public/Forums/submit?submitGetForum=true&forumID=${forumID}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.error) {
+                chatBox.innerHTML = `<p>${data.error}</p>`;
+                return;
+            }
+
+            chatBox.innerHTML = '';
+            const messages = data.messages;
+            const UserID = parseInt(data.UserID, 10);
+            const UserType_id = parseInt(data.UserType_id, 10);
+
+            let chatname;
+            if (UserType_id === 2) {
+                chatname = data.studentName;
+            } else if (UserType_id === 3) {
+                chatname = `Dr. ${data.instructorName}`;
+            } else {
+                chatname = 'Unknown Participant';
+            }
+
+            lastForumLoad = forumID;
+            updateChatTitle(chatname);
+            highlightChatItem(forumID);
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+
+            if (messages.length === 0) {
+                chatBox.innerHTML = '<p>No messages available. Start the conversation!</p>';
+                return;
+            }
+
+            messages.forEach((msg) => {
+                const senderClass = parseInt(msg.SenderID, 10) === UserID ? 'right' : 'left';
+
+                const sentTime = msg.sentat !== 'Unknown time' && msg.sentat
+                    ? (() => {
+                        const fullTime = new Date(msg.sentat);
+                        let hours = fullTime.getHours();
+                        const minutes = fullTime.getMinutes().toString().padStart(2, '0');
+                        const ampm = hours >= 12 ? 'PM' : 'AM';
+                        hours = hours % 12 || 12;
+                        return `${hours}:${minutes} ${ampm}`;
+                    })()
+                    : 'Unknown time';
+
+                const messageDate = new Date(msg.sentat);
+                const relativeDate = getRelativeDate(messageDate);
+
+                const messageHTML = `
+                    ${lastMessageDate !== relativeDate ? `<div class="date-separator"><span>${relativeDate}</span></div>` : ''}
+                    <div class="chat-message ${senderClass}">
+                        <div class="message-content">
+                            <div class="message-text">${msg.Messagetext}</div>        
+                            <span class="message-info">
+                                ${sentTime}
+                                ${senderClass === 'right' ? (msg.Isread == 1 ? '<span class="message-status read">✔✔</span>' : '<span class="message-status">✔✔</span>') : ''}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                chatBox.innerHTML += messageHTML;
+
+                lastMessageDate = relativeDate;
+            });
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            chatBox.innerHTML = '<p>Error loading messages. Please try again later.</p>';
+        }
+    } else {
+        if (window.innerWidth <= 768) {
+            toggleSidebar();
+        }
     }
 };
 
-chatItems.forEach((item) => {
-    item.addEventListener('click', () => {
-        const chatName = item.querySelector('.chat-name')?.innerText;
-        updateChatTitle(chatName || 'Chat');
+const sendMessage = async (event) => {
+    event.preventDefault();
 
-        toggleSidebar();
-    });
-});
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message-input');
+    const forumIdInput = document.getElementById('forum-id');
 
-if (sendBtn) sendBtn.addEventListener('click', sendMessage);
-if (messageInput) {
-    messageInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            sendMessage();
+    const message = messageInput.value.trim();
+    const forumID = forumIdInput.value;
+
+    if (message) {
+        const formData = new FormData();
+        formData.append('messagetext', message);
+        formData.append('forumID', forumID);
+        formData.append('senderID', messageForm.querySelector('[name="senderID"]').value);
+        formData.append('submitCreateMessage', 'true');
+
+        try {
+            const response = await fetch('/Plagiarism_Checker/public/Forums/submit', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const responseText = await response.text();
+                console.error('Unexpected Response:', responseText);
+                throw new Error('Unexpected response format');
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                messageInput.value = '';
+
+                if (forumID == lastForumLoad) {
+
+                    const sentTime = new Date();
+                    let hours = sentTime.getHours();
+                    const minutes = sentTime.getMinutes().toString().padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12 || 12;
+                    const formattedTime = `${hours}:${minutes} ${ampm}`;
+
+                    const currentDate = getRelativeDate(sentTime);
+
+                    const msg = {
+                        Messagetext: message,
+                        senderID: messageForm.querySelector('[name="senderID"]').value,
+                        time: formattedTime,
+                    };
+
+                    const senderClass = 'right';
+
+                    let dateSeparatorHTML = '';
+                    if (lastMessageDate !== currentDate) {
+                        dateSeparatorHTML = `<div class="date-separator"><span>${currentDate}</span></div>`;
+                        lastMessageDate = currentDate;
+                    }
+
+                    const messageHTML = `
+                        ${dateSeparatorHTML}
+                            <div class="chat-message ${senderClass}">
+                                <div class="message-content">
+                                    <div class="message-text">${msg.Messagetext}</div>        
+                                    <span class="message-info">
+                                        ${formattedTime}
+                                        ${senderClass === 'right' ? '<span class="message-status">✔✔</span>' : ''}
+                                    </span>
+                                </div>
+                            </div>`;
+
+                    const chatBox = document.getElementById('chat-box');
+                    chatBox.innerHTML += messageHTML;
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                } else {
+                    loadChat(forumID);
+                }
+            } else {
+                console.error('Backend Error:', data.error);
+            }
+        } catch (error) {
+            console.error('Fetch Error:', error);
         }
-    });
-}
+    }
+};
 
-if (toggleChatListBtn) {
-    toggleChatListBtn.addEventListener('click', toggleSidebar);
-}
+const designInitialization = () => {
+    const toggleChatListBtn = document.getElementById('toggle-chat-list');
+    const messageForm = document.getElementById('message-form');
+    const forumIdInput = document.getElementById('forum-id');
 
-window.addEventListener('resize', ensureSidebarVisibility);
+    if (toggleChatListBtn) {
+        toggleChatListBtn.addEventListener('click', toggleSidebar);
+    }
 
-ensureSidebarVisibility();
+    if (messageForm) {
+        messageForm.addEventListener('submit', sendMessage);
+    }
+
+    if (forumIdInput.value) {
+        highlightChatItem(forumIdInput.value);
+    }
+
+    window.addEventListener('resize', ensureSidebarVisibility);
+    ensureSidebarVisibility();
+
+};
 
 
-
-
-// const chatListContainer = document.getElementById('chat-list-container');
-// const messageInput = document.getElementById('message-input');
-// const sendBtn = document.getElementById('send-btn');
-// const toggleChatListBtn = document.getElementById('toggle-chat-list');
-// const chatContainer = document.querySelector('.chat-container');
-// const chatBox = document.getElementById('chat-box');
-
-// const toggleSidebar = () => {
-//     if (window.innerWidth <= 768) {
-//         const isHidden = chatListContainer.classList.toggle('hidden');
-//         chatContainer.classList.toggle('full', isHidden);
-//     }
-// };
-
-// const ensureSidebarVisibility = () => {
-//     if (window.innerWidth > 768) {
-//         chatListContainer.classList.remove('hidden');
-//         chatContainer.classList.remove('full');
-//     }
-// };
-
-// const sendMessage = () => {
-//     const message = messageInput.value.trim();
-//     if (message && chatBox) {
-//         const newMessage = document.createElement('div');
-//         newMessage.classList.add('chat-message', 'right');
-//         newMessage.innerHTML = `${message}
-//             <span class="message-status read">&#10003;&#10003;</span>`;
-
-//         chatBox.appendChild(newMessage);
-//         messageInput.value = '';
-//         chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
-//     }
-// };
-
-// if (sendBtn) sendBtn.addEventListener('click', sendMessage);
-// if (messageInput) {
-//     messageInput.addEventListener('keypress', (e) => {
-//         if (e.key === 'Enter') {
-//             e.preventDefault();
-//             sendMessage();
-//         }
-//     });
-// }
-
-// if (toggleChatListBtn) {
-//     toggleChatListBtn.addEventListener('click', toggleSidebar);
-// }
-
-// window.addEventListener('resize', ensureSidebarVisibility);
-
-// ensureSidebarVisibility();
+document.addEventListener('DOMContentLoaded', designInitialization);
 
 
 
-// document.getElementById('editForm').addEventListener('submit', function (event) {
-//     event.preventDefault();
 
-//     let formData = new FormData(this);
 
-//     fetch('/Plagiarism_Checker/App/Controllers/editUserValidation.php', {
-//         method: 'POST',
-//         body: formData
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             document.getElementById('edit-fname-error').textContent = '';
-//             document.getElementById('edit-lname-error').textContent = '';
-//             document.getElementById('edit-email-error').textContent = '';
-//             document.getElementById('edit-organizationName-error').textContent = '';
-//             document.getElementById('edit-address-error').textContent = '';
-//             document.getElementById('edit-phone-error').textContent = '';
-//             document.getElementById('edit-birthday-error').textContent = '';
-//             document.getElementById('edit-password-error').textContent = '';
-//             document.getElementById('edit-userType-error').textContent = '';
 
-//             if (data.errors) {
-//                 if (data.errors.firstNameError) {
-//                     document.getElementById('edit-fname-error').textContent = data.errors.firstNameError;
-//                 }
-//                 if (data.errors.lastNameError) {
-//                     document.getElementById('edit-lname-error').textContent = data.errors.lastNameError;
-//                 }
-//                 if (data.errors.emailError) {
-//                     document.getElementById('edit-email-error').textContent = data.errors.emailError;
-//                 }
-//                 if (data.errors.organizationNameError) {
-//                     document.getElementById('edit-organizationName-error').textContent = data.errors.organizationNameError;
-//                 }
-//                 if (data.errors.addressError) {
-//                     document.getElementById('edit-address-error').textContent = data.errors.addressError;
-//                 }
-//                 if (data.errors.phoneError) {
-//                     document.getElementById('edit-phone-error').textContent = data.errors.phoneError;
-//                 }
-//                 if (data.errors.birthdayError) {
-//                     document.getElementById('edit-birthday-error').textContent = data.errors.birthdayError;
-//                 }
-//                 if (data.errors.passwordError) {
-//                     document.getElementById('edit-password-error').textContent = data.errors.passwordError;
-//                 }
-//                 if (data.errors.userTypeError) {
-//                     document.getElementById('edit-userType-error').textContent = data.errors.userTypeError;
-//                 }
-//             } else if (data.success) {
-//                 closeEditForm();
-//                 location.reload();
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// });
+
+
+
 
 
