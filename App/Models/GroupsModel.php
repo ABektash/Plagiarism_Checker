@@ -168,8 +168,64 @@ class GroupsModel
     }
 }
 
-
+public function getGroupMembersAsJson($groupId)
+{
+    $this->conn; 
+    $this->UserID; 
     
+    $sql = "
+        SELECT u.ID AS UserID, u.FirstName, u.LastName, u.Email
+        FROM users u
+        INNER JOIN user_groups ug ON u.ID = ug.userID
+        WHERE ug.groupID = ? AND u.ID != ?
+    ";
+
+    if ($stmt = $this->conn->prepare($sql)) {
+
+        $stmt->bind_param("ii", $groupId, $this->UserID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $groupMembers = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $groupMembers[] = [
+                'UserID' => $row['UserID'],
+                'FirstName' => $row['FirstName'],
+                'LastName' => $row['LastName'],
+                'Email' => $row['Email']
+            ];
+        }
+        $result->free();
+        $stmt->close();
+        return json_encode($groupMembers);
+    } else {
+        return json_encode(['error' => 'Failed to prepare the query']);
+    }
+}
+public function getGroupsAsJson()
+{
+    $userID = $this->UserID;
+    $query = "SELECT groupID FROM user_groups WHERE userID = ?";
+
+    if ($stmt = $this->conn->prepare($query)) {
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $groupIDs = [];
+        while ($row = $result->fetch_assoc()) {
+            $groupIDs[] = $row['groupID'];
+        }
+
+        $result->free();
+        $stmt->close();
+
+        return json_encode($groupIDs);
+    } else {
+        
+        return json_encode(["error" => "Failed to prepare the SQL statement"]);
+    }
+}
+
     public function returnAsJson()
     {
     $assignments = $this->getAllAssignments();

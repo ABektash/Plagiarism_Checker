@@ -19,12 +19,25 @@
         <div class="Left-Group-Container">
             <h2 class="Group-Selection-Title">Group:</h2>
 
-            <select name="Group Number" class="Group-Selection">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
+            <form method="POST" action="">
+                <select name="GroupNumber" class="Group-Selection" onchange="this.form.submit()">
+                    <?php
+                    $userID = $_SESSION['user']['ID'];
+
+                    $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getGroups?userID=" . $userID;
+                    $response = file_get_contents($url);
+                    $groups = json_decode($response, true);
+
+                    if (is_array($groups) && !empty($groups)) {
+                        foreach ($groups as $groupID) {
+                            echo "<option value='$groupID'" . (isset($_POST['GroupNumber']) && $_POST['GroupNumber'] == $groupID ? ' selected' : '') . ">$groupID</option>";
+                        }
+                    } else {
+                        echo "<option>No groups available</option>";
+                    }
+                    ?>
+                </select>
+            </form>
         </div>
 
         <div class="Right-Group-Container">
@@ -48,69 +61,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>00106</td>
-                        <td>Ammar Bektash</td>
-                        <td>Abektash@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>00106</td>
-                        <td>Ammar Bektash</td>
-                        <td>Abektash@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>00106</td>
-                        <td>Ammar Bektash</td>
-                        <td>Abektash@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>00106</td>
-                        <td>Ammar Bektash</td>
-                        <td>Abektash@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
-                    <tr>
-                        <td>03242</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ghazouly@gmail.com</td>
-                        <td><a class="a-link"><i class='bx bxs-user'></i></a></td>
-                        <!-- <td><a class="Edit-std-btn">Edit</a> <a class="Delete-std-btn">Delete</a></td> -->
-                    </tr>
+                <?php
+if (isset($_POST['GroupNumber'])) {
+    $userID = $_SESSION['user']['ID'];
+    $groupID = $_POST['GroupNumber'];
+    $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getMembers?userID=" . $userID . "&groupID=" . $groupID;
+    $response = file_get_contents($url);
+    $members = json_decode($response, true);
+
+    if (is_array($members) && !empty($members)) {
+
+        foreach ($members as $member) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($member['UserID']) . "</td>";
+            echo "<td>" . htmlspecialchars($member['FirstName']) . " " . htmlspecialchars($member['LastName']) . "</td>";
+            echo "<td>" . htmlspecialchars($member['Email']) . "</td>";
+            echo "<td><a class='a-link' href='#'><i class='bx bxs-user'></i></a></td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='4'>No members found for this group.</td></tr>";
+    }
+}
+?>
+                    
                 </tbody>
             </table>
 
