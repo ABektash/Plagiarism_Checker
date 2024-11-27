@@ -429,6 +429,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (jsonData.success) {
                 alert(jsonData.message);
                 updateStudentTable(groupID); // Refresh the student table
+                updateInstructorsDropdown(groupID);
+
+                
                 addModal.style.display = "none";
                 studentIDInput.value = '';
                 groupIDInput.value = '';
@@ -437,12 +440,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } catch (error) {
             console.error('Error parsing JSON:', error);
-            alert('An error occurred while adding the student.');
+            alert('No Student Available with this ID.');
         }
     })
     .catch(error => {
         console.error('Error adding student:', error);
-        alert('An error occurred while adding the student.');
+        alert('No Student Available with this ID.');
     });
             
   });
@@ -457,200 +460,115 @@ document.addEventListener('DOMContentLoaded', function () {
 /////////////////////////////////////////////////////// ADD INSTRUCTOR MODAL ///////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function () {
-  const addInstructorModal = document.getElementById('addInstructorModal');
-  const addInstructorSaveBtn = document.getElementById('add-instructor-save-btn');
-  const cancelAddInstructorBtn = document.getElementById('cancel-add-instructor-btn');
-  const instructorIDInput = document.getElementById('instructorID'); // Access the correct instructor select field
-  const groupIDInput = document.getElementById('groupID');
+    const addInstructorModal = document.getElementById('addInstructorModal');
+    const addInstructorSaveBtn = document.getElementById('add-instructor-save-btn');
+    const cancelAddInstructorBtn = document.getElementById('cancel-add-instructor-btn');
+    const instructorIDInput = document.getElementById('instructorID');
+    const groupIDInput = document.getElementById('inst-groupID');
+    
+    // Function to fetch and update the instructors dropdown
+    const updateInstructorsDropdown = (groupID) => {
+        fetch(`/Plagiarism_Checker/public/manageGroups/getInstructorsByGroup/${groupID}`)
+            .then(response => response.json())
+            .then(data => {
+                const instructorDropdown = document.querySelector('.Instructor-Selection');
+                instructorDropdown.innerHTML = ''; // Clear the dropdown
 
-  // Fetch existing instructors in a group
-  const fetchInstructorsInGroup = async (groupID) => {
-      try {
-          const response = await fetch(`/Plagiarism_Checker/public/manageGroups/getInstructorsByGroup/${groupID}`);
-          const data = await response.json();
-          return data.map(instructor => instructor.instructor_id); // Return array of instructor IDs
-      } catch (error) {
-          console.error('Error fetching instructors:', error);
-          return [];
-      }
-  };
+                if (data.length > 0) {
+                    data.forEach((instructor, index) => {
+                        const option = document.createElement('option');
+                        option.value = instructor.inst_id;
+                        option.textContent = instructor.inst_name;
 
-  // Add event listener to open modal button
-  const openInstructorModalBtn = document.querySelector('.add-instructor-btn'); // Ensure this matches your button's class
-  if (openInstructorModalBtn) {
-      openInstructorModalBtn.addEventListener('click', function () {
-          addInstructorModal.style.display = "block";
-      });
-  } else {
-      console.error('Button to open modal not found.');
-  }
+                        // If it's the first instructor, set it as the selected option
+                        if (index === 0) {
+                            option.selected = true; // Select the first instructor by default
+                        }
 
-  // Handle form submission for adding an instructor
-  addInstructorSaveBtn.addEventListener('click', async function () {
-      const instructorID = instructorIDInput.value.trim();
-      const groupID = groupIDInput.value.trim();
+                        instructorDropdown.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.textContent = 'No instructors found';
+                    option.disabled = true;
+                    instructorDropdown.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching instructors:', error);
+            });
+    };
 
-      // Log raw input values
-      console.log("Raw input values:", instructorID, groupID); // Log raw input values
+    // Open modal button
+    const openInstructorModalBtn = document.querySelector('.add-instructor-btn');
+    openInstructorModalBtn.addEventListener('click', function () {
+        addInstructorModal.style.display = 'block';
+    });
 
-      // Log groupID directly
-      console.log("Group ID value before parsing:", groupIDInput.value);
+    // Close modal on cancel
+    cancelAddInstructorBtn.addEventListener('click', function () {
+        addInstructorModal.style.display = 'none';
+        instructorIDInput.value = '';
+        groupIDInput.value = '';
+    });
 
-      // Validate that the groupID is not empty before parsing
-      if (!groupID || isNaN(groupID)) {
-          console.log("Invalid groupID:", groupID);
-          alert('Group ID must be selected and numeric');
-          return;
-      }
+    // Save instructor logic
+    addInstructorSaveBtn.addEventListener('click', function () {
+        const instructorID = instructorIDInput.value.trim();
+        const groupID = groupIDInput.value.trim();
 
-      // Validate that instructorID is selected
-      if (!instructorID || isNaN(instructorID)) {
-          console.log("Invalid instructorID:", instructorID);
-          alert('Instructor ID must be selected and numeric');
-          return;
-      }
+        // Validate input
+        if (!instructorID || !groupID || isNaN(instructorID) || isNaN(groupID)) {
+            alert('Instructor ID and Group ID must be valid numeric values.');
+            return;
+        }
 
-      // Parse inputs to integers
-      const parsedInstructorID = parseInt(instructorID, 10);
-      const parsedGroupID = parseInt(groupID, 10);
+        // Send data to the backend to add instructor
+        fetch('/Plagiarism_Checker/public/manageGroups/addInstructorToGroup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ instructorID, groupID }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
 
-      console.log("Parsed values:", parsedInstructorID, parsedGroupID); // Log parsed values
+                    // Refresh the instructor select tag with updated data for the selected group
+                    // Call the existing function to update the dropdown
+                    updateInstructorsDropdown(groupID);
+                    updateStudentTable(groupID); // Update the table after deletion                    
 
-      // Validate inputs: ensure they're numeric and not empty
-      if (isNaN(parsedInstructorID) || isNaN(parsedGroupID)) {
-          console.log("Invalid input values:", parsedInstructorID, parsedGroupID); // Log values to debug
-          alert('Both Instructor ID and Group ID are required and must be numeric');
-          return;
-      }
+                    // Reset form and close modal
+                    instructorIDInput.value = '';
+                    groupIDInput.value = '';
+                    addInstructorModal.style.display = 'none';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add instructor. Please try again.');
+            });
+    });
 
-      // Proceed with further validation and sending data
-      const existingInstructors = await fetchInstructorsInGroup(parsedGroupID);
-      if (existingInstructors.includes(parsedInstructorID)) {
-          alert('This instructor is already a member of the selected group.');
-          return;
-      }
+    // Initial population of instructors when the page loads
+    const groupID = groupIDInput.value.trim();
+    if (groupID) {
+        updateInstructorsDropdown(groupID);
+    }
 
-      // Send data to the backend
-      fetch('/Plagiarism_Checker/public/manageGroups/addInstructorToGroup', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ instructorID: parsedInstructorID, groupID: parsedGroupID }),
-      })
-      .then(response => response.text())  // Get raw response text first
-      .then(data => {
-          console.log("Raw response data:", data);  // Log the raw data
-      
-          try {
-              const jsonData = JSON.parse(data);  // Try parsing JSON
-              console.log("Parsed JSON:", jsonData);  // Log parsed data
-      
-              if (jsonData.success) {
-                  alert(jsonData.message);
-                  updateInstructorTable(parsedGroupID); // Refresh the instructor table
-                  addInstructorModal.style.display = "none";
-                  instructorIDInput.value = '';
-                  groupIDInput.value = '';
-              } else {
-                  alert(jsonData.message);
-              }
-          } catch (error) {
-              console.error('Error parsing JSON:', error);
-              alert('An error occurred while adding the instructor.');
-          }
-      })
-      .catch(error => {
-          console.error('Error adding instructor:', error);
-          alert('An error occurred while adding the instructor.');
-      });
-  });
-
-  // Additional functionality to close modal
-  cancelAddInstructorBtn.addEventListener('click', function () {
-      addInstructorModal.style.display = "none";
-      instructorIDInput.value = '';
-      groupIDInput.value = '';
-  });
+    // Re-fetch instructor list when the group selection changes
+    groupIDInput.addEventListener('change', function () {
+        const newGroupID = groupIDInput.value.trim();
+        if (newGroupID) {
+            updateInstructorsDropdown(newGroupID);
+        }
+    });
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // const addInstructorModal = document.getElementById("addInstructorModal");
-  // const addInstructorSaveBtn = document.getElementById("addInstructorSaveBtn");
-  // const cancelAddInstructorBtn = document.getElementById(
-  //   "cancelAddInstructorBtn"
-  // );
-
-  // const instructorNameInput = document.getElementById("instructorName");
-  // const instructorNameError = document.getElementById("instructorNameError");
-
-  // document
-  //   .querySelector(".add-instructor-btn")
-  //   .addEventListener("click", function () {
-  //     addInstructorModal.style.display = "block";
-  //   });
-
-  // cancelAddInstructorBtn.addEventListener("click", function () {
-  //   addInstructorModal.style.display = "none";
-  // });
-
-  // addInstructorSaveBtn.addEventListener("click", function () {
-  //   let isValid = true;
-
-  //   if (!validateName(instructorNameInput.value.trim())) {
-  //     instructorNameError.style.display = "block";
-  //     instructorNameError.textContent = "Please enter a valid name.";
-  //     isValid = false;
-  //   } else {
-  //     instructorNameError.style.display = "none";
-  //   }
-
-  //   if (isValid) {
-  //     const instructorSelection = document.querySelector(
-  //       ".Instructor-Selection"
-  //     );
-  //     const newOption = document.createElement("option");
-  //     newOption.value = instructorNameInput.value.trim().replace(/\s+/g, "");
-  //     newOption.textContent = instructorNameInput.value.trim();
-
-  //     instructorSelection.appendChild(newOption);
-  //     addInstructorModal.style.display = "none";
-  //   }
-  // });
-
-  // const removeInstructorModal = document.getElementById(
-  //   "removeInstructorModal"
-  // );
-  // const confirmRemoveInstructorBtn = document.getElementById(
-  //   "confirmRemoveInstructorBtn"
-  // );
-  // const cancelRemoveInstructorBtn = document.getElementById(
-  //   "cancelRemoveInstructorBtn"
-  // );
-
-  // document
-  //   .querySelector(".remove-instructor-btn")
-  //   .addEventListener("click", function () {
-  //     const instructorSelection = document.querySelector(
-  //       ".Instructor-Selection"
-  //     );
-  //     instructorToRemove = instructorSelection.value;
-  //     removeInstructorModal.style.display = "block";
-  //   });
-
-  // confirmRemoveInstructorBtn.addEventListener("click", function () {
-  //   if (instructorToRemove) {
-  //     const instructorSelection = document.querySelector(
-  //       ".Instructor-Selection"
-  //     );
-  //     instructorSelection
-  //       .querySelector(`option[value="${instructorToRemove}"]`)
-  //       .remove();
-  //     removeInstructorModal.style.display = "none";
-  //   }
-  // });
-
-  // cancelRemoveInstructorBtn.addEventListener("click", function () {
-  //   removeInstructorModal.style.display = "none";
-  // });
 })();
