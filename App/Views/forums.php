@@ -40,7 +40,7 @@
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No chats available</p>
+                    <p style="text-align: center;">No chats exist</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -52,14 +52,13 @@
             </div>
 
             <div id="chat-box" class="chat-box">
-                <p>Select a chat to view messages.</p>
             </div>
 
             <div class="chat-input">
                 <form id="message-form" method="POST" action="/Plagiarism_Checker/public/Forums/submit">
                     <input type="hidden" id="forum-id" name="forumID" value="<?= htmlspecialchars($_GET['forumID'] ?? '') ?>">
                     <input type="hidden" name="senderID" value="<?= htmlspecialchars($_SESSION['user']['ID'] ?? '') ?>">
-                    <input type="text" id="message-input" name="messagetext" placeholder="Type a message..." required>
+                    <input type="text" id="message-input" name="messagetext" placeholder="Type a message..." required autocomplete="off">
                     <button type="submit" name="submitCreateMessage" id="send-btn">Send</button>
                 </form>
             </div>

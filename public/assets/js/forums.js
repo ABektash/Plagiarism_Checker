@@ -64,6 +64,7 @@ function getRelativeDate(date) {
 const loadChat = async (forumID) => {
     if (lastForumLoad != forumID) {
         const chatBox = document.getElementById('chat-box');
+        const chatInput = document.querySelector('.chat-input');
         const forumIdInput = document.getElementById('forum-id');
 
         chatBox.innerHTML = '<p>Loading messages...</p>';
@@ -99,8 +100,10 @@ const loadChat = async (forumID) => {
                 chatname = 'Unknown Participant';
             }
 
+            lastMessageDate = null;
             lastForumLoad = forumID;
             updateChatTitle(chatname);
+            chatInput.style.display = 'block';
             highlightChatItem(forumID);
             if (window.innerWidth <= 768) {
                 toggleSidebar();

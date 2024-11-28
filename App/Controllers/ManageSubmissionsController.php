@@ -1,5 +1,10 @@
 <?php
 require_once MODELS . 'Submission.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 class ManageSubmissionsController extends Controller
 {
     private $db;
@@ -12,13 +17,26 @@ class ManageSubmissionsController extends Controller
 
     public function index()
     {
-        $submission = new Submission($this->db);
-        $submissions = $submission->getAllSubmissions();
-        $data["submissions"] = $submissions;
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        $this->view('manageSubmissions', $data);
+        if (($id !== null) && ($userType == 1)) {
+            $submission = new Submission($this->db);
+            $submissions = $submission->getAllSubmissions();
+            $data["submissions"] = $submissions;
+
+            $this->view('manageSubmissions', $data);
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
-
 
     public function delete()
     {

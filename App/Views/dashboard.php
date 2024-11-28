@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,11 +15,6 @@
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
 </head>
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 
 <body>
     <?php include 'inc/header.php'; ?>
