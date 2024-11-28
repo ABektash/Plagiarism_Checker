@@ -49,6 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['passwordError'] = "Password is required.";
     } elseif (strlen($password) < 6) {
         $errors['passwordError'] = "Password must be at least 6 characters long.";
+    } else {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     }
 
     $UserType_id = $_POST['UserType_id'];
@@ -63,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->phone_number = $phone;
         $user->birthday = $birthday;
         $user->user_type_id = $UserType_id;
-        $user->password = $password;
+        $user->password = $hashedPassword;
 
         if ($user->addUser()) {
             echo json_encode(['success' => true]);

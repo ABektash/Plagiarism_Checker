@@ -46,7 +46,6 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Organization</th>
                         <th>Phone Number</th>
                         <th>Address</th>
@@ -63,7 +62,6 @@
                                 <td><?= htmlspecialchars($row['FirstName']) ?></td>
                                 <td><?= htmlspecialchars($row['LastName']) ?></td>
                                 <td><?= htmlspecialchars($row['Email']) ?></td>
-                                <td><?= htmlspecialchars($row['Password']) ?></td>
                                 <td><?= htmlspecialchars($row['Organization']) ?></td>
                                 <td><?= htmlspecialchars($row['PhoneNumber']) ?></td>
                                 <td><?= htmlspecialchars($row['Address']) ?></td>
@@ -133,7 +131,7 @@
                         <div class="error-message" id="edit-birthday-error"></div>
 
                         <label for="editPassword">Password</label>
-                        <input type="text" name="Password" id="editPassword" required>
+                        <input type="text" name="Password" id="editPassword" >
                         <div class="error-message" id="edit-password-error"></div>
 
                         <label for="editUserType">User Type</label>
