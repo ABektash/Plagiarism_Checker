@@ -19,19 +19,20 @@ class AdminProfileController extends Controller
 
     public function index($id)
     {
-        $id = $_SESSION['user']['ID'] ?? null;
+        $sid = $_SESSION['user']['ID'] ?? null;
         $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        if (($id !== null) && ($userType == 1)) {
+        if (($sid !== null) && ($userType == 1)) {
 
             $user = new User($this->db);
             $userDetails = $user->getUserById($id);
 
-            $group = new Groups($this->db);
-            $userDetails["groupsCount"] = $group->getUserGroupCountByUserID($id);
+            
 
 
             if ($userDetails) {
+                $group = new Groups($this->db);
+                $userDetails["groupsCount"] = $group->getUserGroupCountByUserID($id);
 
                 if ($userDetails["UserType_id"] == 2) {
 
@@ -59,7 +60,7 @@ class AdminProfileController extends Controller
                 $data = [
                     "error_code" => 404,
                     "error_message" => "We're sorry, but the page you're looking for doesn't exist, deleted or may have been moved.",
-                    "page_To_direct" => "adminDashboard",
+                    "page_To_direct" => "manageUsers",
                 ];
 
                 $this->view('errorPage', $data);

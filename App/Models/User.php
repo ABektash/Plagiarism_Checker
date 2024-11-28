@@ -213,6 +213,16 @@ class User
         return false;
     }
 
+    public function resetPassword($email, $password){
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $email = $this->conn->real_escape_string($email);
+
+        $query = "UPDATE users SET Password = '$hashedPassword' WHERE Email = '$email'";
+
+        return $this->conn->query($query);
+    }
+
 
     public function deleteUser($userID)
     {

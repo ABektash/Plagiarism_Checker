@@ -19,7 +19,7 @@
                     <div class="error-message" id="password-error"><?php echo $passwordError; ?></div>
                 <?php endif; ?>
 
-                <a href="#">Forgot password?</a>
+                <a onclick="window.location.href='<?php url('forgotPassword/index'); ?>'" style="cursor: pointer;">Forgot password?</a>
                 <input type="submit" name="submit" class="button" value="Login">
             </form>
             <div class="signup">
