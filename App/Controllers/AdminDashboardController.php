@@ -1,10 +1,19 @@
 <?php
+
+require_once MODELS . 'AdminDashboardModel.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 class AdminDashboardController extends Controller
 {
+    private $db;
+
+    public function __construct()
+    {
+        require_once CONFIG . 'dbh.inc.php';
+        $this->db = $conn;
+    }
     public function index()
     {
         $id = $_SESSION['user']['ID'] ?? null;
@@ -22,6 +31,35 @@ class AdminDashboardController extends Controller
             ];
 
             $this->view('errorPage', $data);
+        }
+    }
+    public function getAdminData()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $errors = [];
+
+            if (empty($_GET['userID'])) {
+                $errors['userIDError'] = "User ID is required.";
+            } elseif (!is_numeric($_GET['userID'])) {
+                $errors['userIDError'] = "User ID must be numeric.";
+            }
+
+            if (!empty($errors)) {
+                echo json_encode(['errors' => $errors]);
+                exit;
+            }
+
+            $userID = intval($_GET['userID']);
+
+            try {
+                $adminDataFetcher = new AdminDashboardModel($this->db, $userID);
+                echo $adminDataFetcher->getAdminDashboardDataAsJson();
+            } catch (Exception $e) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
     }
 }
