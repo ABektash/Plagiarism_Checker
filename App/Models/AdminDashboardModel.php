@@ -22,7 +22,8 @@ class AdminDashboardModel {
             'instructorsCount' => "
                 SELECT COUNT(*) as count 
                 FROM users 
-                WHERE UserType_id = (SELECT ID FROM usertypes WHERE Name = 'Instructor')"
+                WHERE UserType_id = (SELECT ID FROM usertypes WHERE Name = 'Instructor')",
+            'assignmentsCount' => "SELECT COUNT(*) as count FROM assignments"
         ];
 
         $resultData = [];
