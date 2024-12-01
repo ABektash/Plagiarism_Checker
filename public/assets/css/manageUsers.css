@@ -270,7 +270,7 @@ color: red;
   }
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1320px) {
   .Left-Group-Container {
     display: grid;
   }

@@ -44,9 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $password = $_POST['Password'];
-    if (empty($password)) {
-        $errors['passwordError'] = "Password is required.";
-    } elseif (strlen($password) < 6) {
+    if (!empty($password) && strlen($password) < 6) {
         $errors['passwordError'] = "Password must be at least 6 characters long.";
     }
 
@@ -64,7 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->phone_number = $phone;
         $user->birthday = $birthday;
         $user->user_type_id = $UserType_id;
-        $user->password = $password;
+        if ($password != ''){
+            $user->password = $password;
+        } else {
+            $user->password = null;
+        }
+        
 
         if ($user->editUser($id, $user->first_name, $user->last_name, $user->email, $user->organization, $user->address, $user->phone_number, $user->birthday, $user->password, $user->user_type_id)) {
             echo json_encode(['success' => true]);

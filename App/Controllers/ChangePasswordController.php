@@ -1,23 +1,40 @@
-<?php 
+<?php
+require_once MODELS . 'User.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once MODELS . 'User.php';
+
 class ChangePasswordController extends Controller
 {
     private $db;
 
     public function __construct()
     {
-        require_once CONFIG.'dbh.inc.php';
-        $this->db = $conn; 
+        require_once CONFIG . 'dbh.inc.php';
+        $this->db = $conn;
     }
 
     public function index()
     {
-        $this->view('changePassword');
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
+
+        if (($id !== null) && ($userType == 2 || $userType == 3 || $userType == 4)) {
+
+            $this->view('changePassword');
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
-    
+
 
     public function submit()
     {
@@ -48,8 +65,17 @@ class ChangePasswordController extends Controller
             if (empty($errors)) {
                 $user = new User($this->db);
 
-                if ($user->editUser($_SESSION['user']['ID'], $_SESSION['user']['FirstName'], $_SESSION['user']['LastName'], $_SESSION['user']['Email'], 
-                $_SESSION['user']['Organization'], $_SESSION['user']['Address'], $_SESSION['user']['PhoneNumber'], $_SESSION['user']['Birthday'], $_POST['password'])) {
+                if ($user->editUser(
+                    $_SESSION['user']['ID'],
+                    $_SESSION['user']['FirstName'],
+                    $_SESSION['user']['LastName'],
+                    $_SESSION['user']['Email'],
+                    $_SESSION['user']['Organization'],
+                    $_SESSION['user']['Address'],
+                    $_SESSION['user']['PhoneNumber'],
+                    $_SESSION['user']['Birthday'],
+                    $_POST['password']
+                )) {
                     $this->view('editProfile');
                 } else {
                     $errors['confirmPasswordError'] = "Something went wrong!";

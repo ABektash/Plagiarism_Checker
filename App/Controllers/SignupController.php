@@ -1,8 +1,11 @@
 <?php
-
 require_once MODELS . 'User.php';
-require_once MODELS.'Page.php'; 
-require_once MODELS.'UserTypePage.php';
+require_once MODELS . 'Page.php';
+require_once MODELS . 'UserTypePage.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 class SignupController extends Controller
 {

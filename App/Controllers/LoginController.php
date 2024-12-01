@@ -1,13 +1,14 @@
 <?php
-
-
 require_once MODELS . 'User.php';
-require_once MODELS.'Page.php'; 
-require_once MODELS.'UserTypePage.php';
+require_once MODELS . 'Page.php';
+require_once MODELS . 'UserTypePage.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 class LoginController extends Controller
 {
-
     private $db;
 
     public function __construct()
@@ -16,12 +17,10 @@ class LoginController extends Controller
         $this->db = $conn;
     }
 
-
     public function index()
     {
         $this->view('login');
     }
-
 
     public function submit()
     {

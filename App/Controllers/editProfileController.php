@@ -1,12 +1,12 @@
 <?php
-
 require_once MODELS . 'User.php';
 
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 class EditProfileController extends Controller
 {
-
     private $db;
 
     public function __construct()
@@ -17,7 +17,22 @@ class EditProfileController extends Controller
 
     public function index()
     {
-        $this->view('editProfile');
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
+
+        if (($id !== null) && ($userType == 2 || $userType == 3)) {
+
+            $this->view('editProfile');
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
 
 
@@ -49,14 +64,12 @@ class EditProfileController extends Controller
 
             $address = $_POST['address'];
 
-
             $phone = $_POST['phone'];
             if (!empty($phone)) {
                 if (!preg_match('/^(010|011|012|015)[0-9]{8}$/', $phone)) {
                     $errors['phoneError'] = "Invalid phone number";
                 }
             }
-
 
             $birthday = $_POST['birthday'];
             if (!empty($birthday) && $birthday != "0000-00-00") {

@@ -184,9 +184,6 @@
   font-weight: 600; 
 }
 
-/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
-
-/* Responsive media queries */
 @media (max-width: 1050px) {
   .navbar .logo {
     width: 140px;

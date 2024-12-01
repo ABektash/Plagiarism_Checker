@@ -22,7 +22,7 @@
 
         </div>
     </div>
-     <?php
+    <?php
     if (isset($insertError)) {
         echo "<script>alert('Action was Unsuccessful!');</script>";
         echo "<script>
@@ -31,7 +31,7 @@
     }
 
 
-    ?> 
+    ?>
 
     <main class="manageAssignmentsMain">
 
@@ -175,7 +175,7 @@
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                        
+
                     </select>
                 </div>
 

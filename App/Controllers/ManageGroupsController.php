@@ -1,6 +1,9 @@
-<?php 
-
+<?php
 require_once MODELS . 'Groups.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 class ManageGroupsController extends Controller
 {
@@ -12,383 +15,335 @@ class ManageGroupsController extends Controller
         $this->db = $conn;
     }
 
-    /**
-     * Default method to load the manageGroups view with initial data.
-     */
     public function index()
     {
-        $groupsModel = new Groups($this->db);
-    
-        $groupID = 1;
-        $students = $groupsModel->getStudentsByGroup($groupID);
-        $instructors = $groupsModel->getInstructorsByGroup($groupID);
-        $availableGroups = $groupsModel->getAvailableGroups(); // Fetch all available groups
-    
-        // Pass data to the view
-        $data = [
-            'students' => $students,
-            'instructors' => $instructors,
-            'defaultGroupID' => $groupID,
-            'availableGroups' => $availableGroups, // Add groups to the data
-        ];
-    
-        $this->view('manageGroups', $data);
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
+
+        if (($id !== null) && ($userType == 1)) {
+            $groupsModel = new Groups($this->db);
+
+            $groupID = 1;
+            $students = $groupsModel->getStudentsByGroup($groupID);
+            $instructors = $groupsModel->getInstructorsByGroup($groupID);
+            $availableGroups = $groupsModel->getAvailableGroups();
+
+            $data = [
+                'students' => $students,
+                'instructors' => $instructors,
+                'defaultGroupID' => $groupID,
+                'availableGroups' => $availableGroups,
+            ];
+
+            $this->view('manageGroups', $data);
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
 
     public function getAvailableGroups()
     {
         $groupsModel = new Groups($this->db);
-
-        // Fetch available groups
         $groups = $groupsModel->getAvailableGroups();
 
-        // Return data as JSON for AJAX requests
         header('Content-Type: application/json');
         echo json_encode($groups);
     }
 
-
-    /**
-     * Method to handle fetching students by group ID dynamically.
-     */
     public function getStudentsByGroup($groupID)
     {
         if (!is_numeric($groupID)) {
-            http_response_code(400); // Bad Request
+            http_response_code(400);
             echo json_encode(['error' => 'Invalid group ID']);
             return;
         }
 
         $groupsModel = new Groups($this->db);
-
-        // Fetch students for the selected group
         $users = $groupsModel->getStudentsByGroup((int)$groupID);
 
-        // Return data as JSON for AJAX requests
         header('Content-Type: application/json');
         echo json_encode($users);
     }
 
-
-
     public function getInstructorsByGroup($groupID)
-{
-    if (!is_numeric($groupID)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['error' => 'Invalid group ID']);
-        return;
+    {
+        if (!is_numeric($groupID)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid group ID']);
+            return;
+        }
+
+        $groupsModel = new Groups($this->db);
+        $instructors = $groupsModel->getInstructorsByGroup((int)$groupID);
+
+        header('Content-Type: application/json');
+        echo json_encode($instructors);
     }
 
-    $groupsModel = new Groups($this->db);
+    public function deleteStudentFromGroup()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $studentID = $data['studentID'];
+        $groupID = $data['groupID'];
+        if (!is_numeric($studentID) || !is_numeric($groupID)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid student or group ID']);
+            return;
+        }
 
-    // Fetch instructors for the selected group
-    $instructors = $groupsModel->getInstructorsByGroup((int)$groupID);
-
-    // Return data as JSON for AJAX requests
-    header('Content-Type: application/json');
-    echo json_encode($instructors);
-}
-
-
-public function deleteStudentFromGroup()
-{
-    // Get the data sent in the request
-    $data = json_decode(file_get_contents("php://input"), true);
-    $studentID = $data['studentID'];
-    $groupID = $data['groupID'];
-
-    if (!is_numeric($studentID) || !is_numeric($groupID)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['error' => 'Invalid student or group ID']);
-        return;
+        $query = "DELETE FROM user_groups WHERE userID = ? AND groupID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $studentID, $groupID);
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
     }
 
-    // Prepare and execute the query to remove the student from the group
-    $query = "DELETE FROM user_groups WHERE userID = ? AND groupID = ?";
-    $stmt = $this->db->prepare($query);
-    $stmt->bind_param("ii", $studentID, $groupID);
+    public function deleteInstructorFromGroup()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $instructorID = $data['instructorID'];
+        $groupID = $data['groupID'];
+        if (!is_numeric($instructorID) || !is_numeric($groupID)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid instructor or group ID']);
+            return;
+        }
 
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
-    }
-}
-
-public function deleteInstructorFromGroup()
-{
-    // Get the data sent in the request
-    $data = json_decode(file_get_contents("php://input"), true);
-    $instructorID = $data['instructorID'];
-    $groupID = $data['groupID'];
-
-    // Validate the instructorID and groupID
-    if (!is_numeric($instructorID) || !is_numeric($groupID)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['error' => 'Invalid instructor or group ID']);
-        return;
+        $query = "DELETE FROM user_groups WHERE userID = ? AND groupID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $instructorID, $groupID);
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => $stmt->error]);
+        }
     }
 
-    // Prepare and execute the query to remove the instructor from the group
-    $query = "DELETE FROM user_groups WHERE userID = ? AND groupID = ?";
-    $stmt = $this->db->prepare($query);
-    $stmt->bind_param("ii", $instructorID, $groupID);
+    public function addStudentToGroup()
+    {
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
 
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'error' => $stmt->error]);
-    }
-}
+        $data = json_decode(file_get_contents("php://input"), true);
+        $studentID = $data['studentID'] ?? null;
+        $groupID = $data['groupID'] ?? null;
+        if (!is_numeric($studentID) || !is_numeric($groupID)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Invalid student or group ID']);
+            return;
+        }
 
-public function addStudentToGroup()
-{
-    // Enable error reporting for debugging
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+        $userTypeQuery = "SELECT userType_id FROM users WHERE ID = ?";
+        $userTypeStmt = $this->db->prepare($userTypeQuery);
+        if (!$userTypeStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare user type query']);
+            return;
+        }
 
-    // Get the data sent in the request
-    $data = json_decode(file_get_contents("php://input"), true);
-    $studentID = $data['studentID'] ?? null;
-    $groupID = $data['groupID'] ?? null;
+        $userTypeStmt->bind_param("i", $studentID);
+        if (!$userTypeStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute user type query']);
+            return;
+        }
 
-    // Validate the inputs
-    if (!is_numeric($studentID) || !is_numeric($groupID)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['success' => false, 'message' => 'Invalid student or group ID']);
-        return;
-    }
+        $userTypeResult = $userTypeStmt->get_result();
+        if ($userTypeResult->num_rows === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Student not found']);
+            return;
+        }
 
-    // Check if the userType_id for the student is 3 (Student)
-    $userTypeQuery = "SELECT userType_id FROM users WHERE ID = ?";
-    $userTypeStmt = $this->db->prepare($userTypeQuery);
+        $user = $userTypeResult->fetch_assoc();
+        if ($user['userType_id'] != 3) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'User is not a valid student']);
+            return;
+        }
 
-    if (!$userTypeStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare user type query']);
-        return;
-    }
+        $groupQuery = "SELECT 1 FROM groups WHERE ID = ?";
+        $groupStmt = $this->db->prepare($groupQuery);
+        if (!$groupStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare group check query']);
+            return;
+        }
 
-    $userTypeStmt->bind_param("i", $studentID);
+        $groupStmt->bind_param("i", $groupID);
+        if (!$groupStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute group check query']);
+            return;
+        }
 
-    if (!$userTypeStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute user type query']);
-        return;
-    }
+        $groupResult = $groupStmt->get_result();
+        if ($groupResult->num_rows === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Group ID does not exist']);
+            return;
+        }
 
-    $userTypeResult = $userTypeStmt->get_result();
-    if ($userTypeResult->num_rows === 0) {
-        http_response_code(404); // Not Found
-        echo json_encode(['success' => false, 'message' => 'Student not found']);
-        return;
-    }
+        $checkQuery = "SELECT 1 FROM user_groups WHERE userID = ? AND groupID = ?";
+        $checkStmt = $this->db->prepare($checkQuery);
+        if (!$checkStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare check query']);
+            return;
+        }
 
-    $user = $userTypeResult->fetch_assoc();
-    if ($user['userType_id'] != 3) { // Check if user is a student
-        http_response_code(403); // Forbidden
-        echo json_encode(['success' => false, 'message' => 'User is not a valid student']);
-        return;
-    }
+        $checkStmt->bind_param("ii", $studentID, $groupID);
+        if (!$checkStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute check query']);
+            return;
+        }
 
-    // Check if the groupID exists in the 'groups' table
-    $groupQuery = "SELECT 1 FROM groups WHERE ID = ?";
-    $groupStmt = $this->db->prepare($groupQuery);
+        $checkStmt->store_result();
+        if ($checkStmt->num_rows > 0) {
+            http_response_code(409);
+            echo json_encode(['success' => false, 'message' => 'Student already exists in this group']);
+            return;
+        }
 
-    if (!$groupStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare group check query']);
-        return;
-    }
+        $insertQuery = "INSERT INTO user_groups (userID, groupID) VALUES (?, ?)";
+        $insertStmt = $this->db->prepare($insertQuery);
+        if (!$insertStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare insert query']);
+            return;
+        }
 
-    $groupStmt->bind_param("i", $groupID);
+        $insertStmt->bind_param("ii", $studentID, $groupID);
+        if ($insertStmt->execute()) {
+            http_response_code(200);
+            echo json_encode(['success' => true, 'message' => 'Student added successfully']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to add student']);
+        }
 
-    if (!$groupStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute group check query']);
-        return;
-    }
-
-    $groupResult = $groupStmt->get_result();
-    if ($groupResult->num_rows === 0) {
-        http_response_code(404); // Not Found
-        echo json_encode(['success' => false, 'message' => 'Group ID does not exist']);
-        return;
-    }
-
-    // Check if the student is already in the group
-    $checkQuery = "SELECT 1 FROM user_groups WHERE userID = ? AND groupID = ?";
-    $checkStmt = $this->db->prepare($checkQuery);
-
-    if (!$checkStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare check query']);
-        return;
-    }
-
-    $checkStmt->bind_param("ii", $studentID, $groupID);
-
-    if (!$checkStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute check query']);
-        return;
-    }
-
-    $checkStmt->store_result(); // Store the result
-    if ($checkStmt->num_rows > 0) {
-        http_response_code(409); // Conflict
-        echo json_encode(['success' => false, 'message' => 'Student already exists in this group']);
-        return;
+        $userTypeStmt->close();
+        $groupStmt->close();
+        $checkStmt->close();
+        $insertStmt->close();
     }
 
-    // Insert the student into the group
-    $insertQuery = "INSERT INTO user_groups (userID, groupID) VALUES (?, ?)";
-    $insertStmt = $this->db->prepare($insertQuery);
+    public function addInstructorToGroup()
+    {
 
-    if (!$insertStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare insert query']);
-        return;
-    }
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
 
-    $insertStmt->bind_param("ii", $studentID, $groupID);
+        $data = json_decode(file_get_contents("php://input"), true);
+        $instructorID = $data['instructorID'] ?? null;
+        $groupID = $data['groupID'] ?? null;
 
-    if ($insertStmt->execute()) {
-        http_response_code(200); // Success
-        echo json_encode(['success' => true, 'message' => 'Student added successfully']);
-    } else {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to add student']);
-    }
+        if (!is_numeric($instructorID) || !is_numeric($groupID)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Invalid instructor or group ID']);
+            return;
+        }
 
-    // Close statements
-    $userTypeStmt->close();
-    $groupStmt->close();
-    $checkStmt->close();
-    $insertStmt->close();
-}
+        $userTypeQuery = "SELECT userType_id FROM users WHERE ID = ?";
+        $userTypeStmt = $this->db->prepare($userTypeQuery);
+        if (!$userTypeStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare user type query']);
+            return;
+        }
 
-// Assuming you have an instance of Groups model called $groupsModel
+        $userTypeStmt->bind_param("i", $instructorID);
+        if (!$userTypeStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute user type query']);
+            return;
+        }
 
-public function addInstructorToGroup()
-{
-    // Enable error reporting for debugging
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+        $userTypeResult = $userTypeStmt->get_result();
+        if ($userTypeResult->num_rows === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Instructor not found']);
+            return;
+        }
 
-    // Get the data sent in the request
-    $data = json_decode(file_get_contents("php://input"), true);
-    $instructorID = $data['instructorID'] ?? null;
-    $groupID = $data['groupID'] ?? null;
+        $user = $userTypeResult->fetch_assoc();
+        if ($user['userType_id'] != 2) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'User is not a valid instructor']);
+            return;
+        }
 
-    // Validate the inputs
-    if (!is_numeric($instructorID) || !is_numeric($groupID)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['success' => false, 'message' => 'Invalid instructor or group ID']);
-        return;
-    }
+        $groupQuery = "SELECT 1 FROM groups WHERE ID = ?";
+        $groupStmt = $this->db->prepare($groupQuery);
+        if (!$groupStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare group check query']);
+            return;
+        }
 
-    // Check if the userType_id for the instructor is 2 (Instructor)
-    $userTypeQuery = "SELECT userType_id FROM users WHERE ID = ?";
-    $userTypeStmt = $this->db->prepare($userTypeQuery);
+        $groupStmt->bind_param("i", $groupID);
+        if (!$groupStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute group check query']);
+            return;
+        }
 
-    if (!$userTypeStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare user type query']);
-        return;
-    }
+        $groupResult = $groupStmt->get_result();
+        if ($groupResult->num_rows === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Group ID does not exist']);
+            return;
+        }
 
-    $userTypeStmt->bind_param("i", $instructorID);
+        $checkQuery = "SELECT 1 FROM user_groups WHERE userID = ? AND groupID = ?";
+        $checkStmt = $this->db->prepare($checkQuery);
+        if (!$checkStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare check query']);
+            return;
+        }
 
-    if (!$userTypeStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute user type query']);
-        return;
-    }
+        $checkStmt->bind_param("ii", $instructorID, $groupID);
+        if (!$checkStmt->execute()) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to execute check query']);
+            return;
+        }
 
-    $userTypeResult = $userTypeStmt->get_result();
-    if ($userTypeResult->num_rows === 0) {
-        http_response_code(404); // Not Found
-        echo json_encode(['success' => false, 'message' => 'Instructor not found']);
-        return;
-    }
+        $checkStmt->store_result();
+        if ($checkStmt->num_rows > 0) {
+            http_response_code(409);
+            echo json_encode(['success' => false, 'message' => 'Instructor already exists in this group']);
+            return;
+        }
 
-    $user = $userTypeResult->fetch_assoc();
-    if ($user['userType_id'] != 2) { // Check if user is an instructor
-        http_response_code(403); // Forbidden
-        echo json_encode(['success' => false, 'message' => 'User is not a valid instructor']);
-        return;
-    }
+        $insertQuery = "INSERT INTO user_groups (userID, groupID) VALUES (?, ?)";
+        $insertStmt = $this->db->prepare($insertQuery);
+        if (!$insertStmt) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to prepare insert query']);
+            return;
+        }
 
-    // Check if the groupID exists in the 'groups' table
-    $groupQuery = "SELECT 1 FROM groups WHERE ID = ?";
-    $groupStmt = $this->db->prepare($groupQuery);
-
-    if (!$groupStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare group check query']);
-        return;
-    }
-
-    $groupStmt->bind_param("i", $groupID);
-
-    if (!$groupStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute group check query']);
-        return;
-    }
-
-    $groupResult = $groupStmt->get_result();
-    if ($groupResult->num_rows === 0) {
-        http_response_code(404); // Not Found
-        echo json_encode(['success' => false, 'message' => 'Group ID does not exist']);
-        return;
-    }
-
-    // Check if the instructor is already in the group
-    $checkQuery = "SELECT 1 FROM user_groups WHERE userID = ? AND groupID = ?";
-    $checkStmt = $this->db->prepare($checkQuery);
-
-    if (!$checkStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare check query']);
-        return;
-    }
-
-    $checkStmt->bind_param("ii", $instructorID, $groupID);
-
-    if (!$checkStmt->execute()) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to execute check query']);
-        return;
-    }
-
-    $checkStmt->store_result(); // Store the result
-    if ($checkStmt->num_rows > 0) {
-        http_response_code(409); // Conflict
-        echo json_encode(['success' => false, 'message' => 'Instructor already exists in this group']);
-        return;
-    }
-
-    // Insert the instructor into the group
-    $insertQuery = "INSERT INTO user_groups (userID, groupID) VALUES (?, ?)";
-    $insertStmt = $this->db->prepare($insertQuery);
-
-    if (!$insertStmt) {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to prepare insert query']);
-        return;
-    }
-
-    $insertStmt->bind_param("ii", $instructorID, $groupID);
-
-    if ($insertStmt->execute()) {
-        http_response_code(200); // Success
-        echo json_encode(['success' => true, 'message' => 'Instructor added successfully']);
-    } else {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['success' => false, 'message' => 'Failed to add instructor']);
-    }
+        $insertStmt->bind_param("ii", $instructorID, $groupID);
+        if ($insertStmt->execute()) {
+            http_response_code(200);
+            echo json_encode(['success' => true, 'message' => 'Instructor added successfully']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to add instructor']);
+        }
 
     // Close statements
     $userTypeStmt->close();

@@ -1,5 +1,10 @@
 <?php
 require_once MODELS . 'User.php';
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 class ManageUsersController extends Controller
 {
     private $db;
@@ -9,17 +14,32 @@ class ManageUsersController extends Controller
         require_once CONFIG . 'dbh.inc.php';
         $this->db = $conn;
     }
+
     public function index()
     {
-        $user = new User($this->db);
-        $users = $user->getAllUsers();
-        $data = ['users' => $users];
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        $this->view('manageUsers', $data);
+        if (($id !== null) && ($userType == 1)) {
+            $user = new User($this->db);
+            $users = $user->getAllUsers();
+            $data = ['users' => $users];
+
+            $this->view('manageUsers', $data);
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
 
-
-    public function delete() {
+    public function delete()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['userID'])) {
             $userID = $_POST['userID'];
             $user = new User($this->db);
@@ -35,8 +55,6 @@ class ManageUsersController extends Controller
             }
         }
     }
-
-
 
     public function submit()
     {
@@ -62,9 +80,7 @@ class ManageUsersController extends Controller
                 $errors['organizationNameError'] = "Organization name is too long";
             }
 
-
             $address = $_POST['Address'];
-
 
             $phone = $_POST['PhoneNumber'];
             if (!empty($phone) && !ctype_digit($phone)) {
@@ -75,7 +91,7 @@ class ManageUsersController extends Controller
             if (!empty($birthday)) {
                 $date = DateTime::createFromFormat('Y-m-d', $birthday);
                 $currentDate = new DateTime();
-            
+
                 if (!$date || $date->format('Y-m-d') !== $birthday) {
                     $errors['birthdayError'] = "Invalid birthday format. Use YYYY-MM-DD";
                 } elseif ($date >= $currentDate) {
@@ -91,9 +107,7 @@ class ManageUsersController extends Controller
                 $errors['passwordError'] = "Password must be at least 6 characters long.";
             }
 
-
             $UserType_id = $_POST['UserType_id'];
-
 
             if (empty($errors)) {
                 $user = new User(db: $this->db);

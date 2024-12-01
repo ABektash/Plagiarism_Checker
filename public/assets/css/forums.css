@@ -8,20 +8,18 @@ body {
     font-family: Arial, sans-serif;
     height: 100vh;
     overflow: hidden;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
 }
 
-/* App Container */
 .app-container {
     display: flex;
     height: calc(100vh - 70px); 
     overflow: hidden;
 }
 
-/* Sidebar */
 .chat-list {
     width: 25%;
-    background: #f8f8f8;
+    background: #f9f9f9;
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
@@ -75,7 +73,6 @@ body {
     font-size: 14px;
 }
 
-/* Chat Container */
 .chat-container {
     flex: 1;
     display: flex;
@@ -103,6 +100,7 @@ body {
     flex: 1;
     margin: 0;
     font-size: 20px;
+    text-align: center;
 }
 
 .chat-box {
@@ -111,14 +109,13 @@ body {
     padding: 20px;
     background: #f9f9f9;
     display: flex;
-    flex-direction: column; /* Ensure new messages render at the bottom */
-    overflow-y: auto; /* Enable scrolling if necessary */
-    justify-content: flex-start; /* Always align messages at the bottom */
+    flex-direction: column; 
+    overflow-y: auto;  
+    justify-content: flex-start; 
 
     gap: 15px;
 }
 
-/* Messages */
 .date-separator {
     text-align: center;
     font-size: 14px;
@@ -174,7 +171,7 @@ body {
 }
 
 .message-info {
-    font-size: 10px;
+    font-size: 11px;
     color: #999;
     margin-left: 10px;
     display: inline-block;
@@ -182,7 +179,6 @@ body {
     align-self: flex-end; 
     line-height: 1.2; 
 }
-
 
 .chat-message.left {
     background: #e0e0e0;
@@ -212,6 +208,10 @@ body {
     position: relative;
 }
 
+.chat-input{
+    display: none;
+}
+
 .chat-input input {
     flex: 1;
     padding: 10px;
@@ -219,8 +219,6 @@ body {
     border-radius: 20px;
     font-size: 14px;
     outline: none;
-    
-    
 }
 
 .chat-input button {
@@ -261,6 +259,7 @@ body {
 .toggle-sidebar-btn i {
     margin-right: 8px; 
 }
+
 @media screen and (max-width: 768px) {
     .chat-list {
         width: 100%;

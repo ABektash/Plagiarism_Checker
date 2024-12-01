@@ -1,13 +1,9 @@
 <?php
+require_once MODELS . 'Forums.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-if (!defined('MODELS')) {
-    die('Direct access is not allowed.');
-}
-
-require_once MODELS . 'Forums.php';
 
 class ForumsController extends Controller
 {
@@ -23,7 +19,7 @@ class ForumsController extends Controller
         $id = $_SESSION['user']['ID'] ?? null;
         $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        if ($id !== null && ($userType == 2 || $userType == 3)) {
+        if (($id !== null) && ($userType == 2 || $userType == 3)) {
             $forum = new Forums($this->db);
             $message = new Forums_Messages($this->db);
 
@@ -42,11 +38,16 @@ class ForumsController extends Controller
 
             $this->view('forums', $data);
         } else {
-            $this->view('404Page');
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
         }
-
     }
-
 
     public function delete()
     {
@@ -95,7 +96,6 @@ class ForumsController extends Controller
                 echo json_encode(['success' => false, 'error' => "Couldn't send the message!"]);
             }
             exit;
-
         } elseif (isset($_GET['submitGetForum'])) {
             $forum = new Forums($this->db);
             $message = new Forums_Messages($this->db);
@@ -123,7 +123,6 @@ class ForumsController extends Controller
                 echo json_encode(["error" => "Couldn't get the chat!"]);
             }
             exit;
-
         } elseif (isset($_POST['submitCreateForum'])) {
             $forum = new Forums($this->db);
 
@@ -134,7 +133,6 @@ class ForumsController extends Controller
                 $this->view('forums', $data);
             }
             exit;
-
         }
     }
 }

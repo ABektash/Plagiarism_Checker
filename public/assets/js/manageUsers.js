@@ -7,7 +7,7 @@ function openEditForm(user) {
   document.getElementById("editAddress").value = user.Address;
   document.getElementById("editPhoneNumber").value = user.PhoneNumber;
   document.getElementById("editBirthday").value = user.Birthday;
-  document.getElementById("editPassword").value = user.Password;
+  document.getElementById("editPassword").value = '';
   document.getElementById("editUserType").value = user.UserType_id;
   document.getElementById("editFormPopup").style.display = "block";
 }

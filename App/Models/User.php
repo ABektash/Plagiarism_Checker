@@ -27,50 +27,52 @@ class User
     }
 
     public function signup()
-    {
-        $first_name = mysqli_real_escape_string($this->conn, $this->first_name);
-        $last_name = mysqli_real_escape_string($this->conn, $this->last_name);
-        $email = mysqli_real_escape_string($this->conn, $this->email);
-        $password = mysqli_real_escape_string($this->conn, $this->password);
-        $organization = mysqli_real_escape_string($this->conn, $this->organization);
-        $address = mysqli_real_escape_string($this->conn, $this->address);
-        $phone_number = mysqli_real_escape_string($this->conn, $this->phone_number);
-        $birthday = mysqli_real_escape_string($this->conn, $this->birthday);
-        $user_type_id = 4;
+{
+    $first_name = mysqli_real_escape_string($this->conn, $this->first_name);
+    $last_name = mysqli_real_escape_string($this->conn, $this->last_name);
+    $email = mysqli_real_escape_string($this->conn, $this->email);
+    $password = $this->password; 
+    $organization = mysqli_real_escape_string($this->conn, $this->organization);
+    $address = mysqli_real_escape_string($this->conn, $this->address);
+    $phone_number = mysqli_real_escape_string($this->conn, $this->phone_number);
+    $birthday = mysqli_real_escape_string($this->conn, $this->birthday);
+    $user_type_id = 4; 
 
-        $check_email_query = "SELECT Email FROM " . $this->table_name . " WHERE Email = '$email'";
-        $result = mysqli_query($this->conn, $check_email_query);
+    $check_email_query = "SELECT Email FROM " . $this->table_name . " WHERE Email = '$email'";
+    $result = mysqli_query($this->conn, $check_email_query);
 
-        if (mysqli_num_rows($result) > 0) {
-            return false;
-        }
-
-        $query = "INSERT INTO " . $this->table_name . " 
-                  (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
-                  VALUES ('$first_name', '$last_name', '$email', '$password', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
-
-        if (mysqli_query($this->conn, $query)) {
-            $user_id = mysqli_insert_id($this->conn);
-
-            $_SESSION['user'] = [
-                'ID' => $user_id,
-                'FirstName' => $first_name,
-                'LastName' => $last_name,
-                'Email' => $email,
-                'Organization' => $organization,
-                'Address' => $address,
-                'PhoneNumber' => $phone_number,
-                'Birthday' => $birthday,
-                'UserType_id' => $user_type_id
-            ];
-
-
-
-            return true;
-        }
-
-        return false;
+    if (mysqli_num_rows($result) > 0) {
+        return false; 
     }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO " . $this->table_name . " 
+              (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
+              VALUES ('$first_name', '$last_name', '$email', '$hashed_password', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
+
+    if (mysqli_query($this->conn, $query)) {
+        $user_id = mysqli_insert_id($this->conn);
+
+        $_SESSION['user'] = [
+            'ID' => $user_id,
+            'FirstName' => $first_name,
+            'LastName' => $last_name,
+            'Email' => $email,
+            'Organization' => $organization,
+            'Address' => $address,
+            'PhoneNumber' => $phone_number,
+            'Birthday' => $birthday,
+            'UserType_id' => $user_type_id,
+            'Password' => $password
+        ];
+
+        return true; 
+    }
+
+    return false; 
+}
+
 
 
 
@@ -92,10 +94,10 @@ class User
         if (mysqli_num_rows($result) > 0) {
             return false;
         }
-
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $query = "INSERT INTO " . $this->table_name . " 
                   (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
-                  VALUES ('$first_name', '$last_name', '$email', '$password', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
+                  VALUES ('$first_name', '$last_name', '$email', '$hashed_password', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
 
         if (mysqli_query($this->conn, $query)) {
             //$user_id = mysqli_insert_id($this->conn);
@@ -107,39 +109,37 @@ class User
 
 
     public function login($email, $password)
-    {
-        $email = mysqli_real_escape_string($this->conn, $email);
-        $password = mysqli_real_escape_string($this->conn, $password);
+{
+    $email = mysqli_real_escape_string($this->conn, $email);
 
-        $query = "SELECT * FROM " . $this->table_name . " WHERE Email = '$email' LIMIT 1";
-        $result = mysqli_query($this->conn, $query);
+    $query = "SELECT * FROM " . $this->table_name . " WHERE Email = '$email' LIMIT 1";
+    $result = mysqli_query($this->conn, $query);
 
-        if (mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-
-            if ($password === $user_data['Password']) {
-                $_SESSION['user'] = [
-                    'ID' => $user_data['ID'],
-                    'FirstName' => $user_data['FirstName'],
-                    'LastName' => $user_data['LastName'],
-                    'Email' => $user_data['Email'],
-                    'Organization' => $user_data['Organization'],
-                    'Address' => $user_data['Address'],
-                    'PhoneNumber' => $user_data['PhoneNumber'],
-                    'Birthday' => $user_data['Birthday'],
-                    'UserType_id' => $user_data['UserType_id']
-                ];
-
-
-
-                return $user_data;
-            } else {
-                return false;
-            }
+    if (mysqli_num_rows($result) > 0) {
+        $user_data = mysqli_fetch_assoc($result);
+        
+        if (password_verify($password, $user_data['Password'])) {
+            $_SESSION['user'] = [
+                'ID' => $user_data['ID'],
+                'FirstName' => $user_data['FirstName'],
+                'LastName' => $user_data['LastName'],
+                'Email' => $user_data['Email'],
+                'Organization' => $user_data['Organization'],
+                'Address' => $user_data['Address'],
+                'PhoneNumber' => $user_data['PhoneNumber'],
+                'Birthday' => $user_data['Birthday'],
+                'UserType_id' => $user_data['UserType_id']
+            ];
+            $user_data['Password'] = $password;
+            return $user_data;
+        } else {
+            return false;
         }
-
-        return false;
     }
+
+    return false;
+}
+
 
 
     public function getAllUsers()
@@ -181,7 +181,8 @@ class User
 
         if ($password !== null) {
             $password = mysqli_real_escape_string($this->conn, $password);
-            $query .= ", Password = '$password'";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $query .= ", Password = '$hashed_password'";
         }
 
         if ($userTypeID !== null) {
@@ -210,6 +211,16 @@ class User
         }
 
         return false;
+    }
+
+    public function resetPassword($email, $password){
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $email = $this->conn->real_escape_string($email);
+
+        $query = "UPDATE users SET Password = '$hashedPassword' WHERE Email = '$email'";
+
+        return $this->conn->query($query);
     }
 
 

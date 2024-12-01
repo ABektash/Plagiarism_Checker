@@ -1,93 +1,102 @@
 <?php
+require_once MODELS . 'Assignments.php';
 
-require_once MODELS . 'Assignments.php'; // Include the Assignments model
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 class ManageAssignmentsAdminController extends Controller
 {
+    private $db;
     private $assignmentsModel;
 
-    // Constructor to initialize the model and database connection
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php'; // Include the database connection
+        require_once CONFIG . 'dbh.inc.php';
         $this->db = $conn;
-        $this->assignmentsModel = new Assignments($this->db); // Instantiate the model
+        $this->assignmentsModel = new Assignments($this->db);
     }
 
-    // Function to load the assignments view with all assignments
     public function index()
     {
-        $assignments = $this->assignmentsModel->getAssignments(); // Fetch all assignments
-        $this->view('manageAssignmentsAdmin', ['assignments' => $assignments]); // Pass assignments to the view
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
+
+        if (($id !== null) && ($userType == 1)) {
+
+            $assignments = $this->assignmentsModel->getAssignments();
+            $this->view('manageAssignmentsAdmin', ['assignments' => $assignments]);
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
     }
 
-    // Function to handle adding a new assignment
     public function addAssignment()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Get form data
+
             $title = $_POST['assignment-title'];
             $description = $_POST['assignment-description'];
             $dueDate = $_POST['due-date'];
             $groupID = $_POST['groupID'];
 
-            // Add the assignment to the database
-            if($this->assignmentsModel->addAssignment($title, $description, $dueDate,  $groupID)){
+            if ($this->assignmentsModel->addAssignment($title, $description, $dueDate,  $groupID)) {
                 echo "<script>
-                window.location.href = '" . redirect('manageAssignmentsAdmin/index') . "';
+                window.location.href = '" . redirect('manageAssignmentsAdmin') . "';
                 </script>";
-            }else{
-                $assignments = $this->assignmentsModel->getAssignments(); 
+            } else {
+                $assignments = $this->assignmentsModel->getAssignments();
                 $data['assignments'] = $assignments;
                 $data['insertError'] = true;
-                $this->view('manageAssignmentsAdmin', $data ); 
-                
+                $this->view('manageAssignmentsAdmin', $data);
             }
         }
     }
 
-    
-    // Function to handle editing an existing assignment
     public function editAssignment($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Get form data
+
             $title = $_POST['assignment-title'];
             $description = $_POST['assignment-description'];
             $dueDate = $_POST['due-date'];
             $groupID = $_POST['groupID'];
 
-            
+
             if ($this->assignmentsModel->editAssignment($id, $title, $description, $dueDate, $groupID)) {
                 echo "<script>
-                    window.location.href = '" . redirect('manageAssignmentsAdmin/index') . "';
+                    window.location.href = '" . redirect('manageAssignmentsAdmin') . "';
                     </script>";
             } else {
-                    $assignments = $this->assignmentsModel->getAssignments(); 
-                    $data['assignments'] = $assignments;
-                    $data['insertError'] = true;
-                    $this->view('manageAssignmentsAdmin', $data ); 
+                $assignments = $this->assignmentsModel->getAssignments();
+                $data['assignments'] = $assignments;
+                $data['insertError'] = true;
+                $this->view('manageAssignmentsAdmin', $data);
             }
-        } else {           
+        } else {
             $assignment = $this->assignmentsModel->getAssignmentById($id);
             $this->view('editAssignment', ['assignment' => $assignment]);
         }
     }
 
-    // Function to handle deleting an assignment
     public function deleteAssignment($id)
     {
         if ($this->assignmentsModel->deleteAssignment($id)) {
             echo "<script>
-                window.location.href = '" . redirect('manageAssignmentsAdmin/index') . "';
+                window.location.href = '" . redirect('manageAssignmentsAdmin') . "';
                 </script>";
         } else {
-            $assignments = $this->assignmentsModel->getAssignments(); 
-                $data['assignments'] = $assignments;
-                $data['insertError'] = true;
-                $this->view('manageAssignmentsAdmin', $data ); 
+            $assignments = $this->assignmentsModel->getAssignments();
+            $data['assignments'] = $assignments;
+            $data['insertError'] = true;
+            $this->view('manageAssignmentsAdmin', $data);
         }
     }
-    
-    
 }
