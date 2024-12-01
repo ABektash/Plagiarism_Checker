@@ -123,6 +123,16 @@
     </div>
 </div>
 
+            <!-- Remove Group Confirmation Modal -->
+            <div id="DeleteGroupModal" class="modal">
+                <div class="modal-content">
+                    <p>Are you sure you want to delete this Group?</p>
+                    <button id="confirmDeleteGroupBtn">Yes</button>
+                    <button id="cancelDeleteGroupBtn">No</button>
+                </div>
+            </div>
+
+
 
         </main>
     </section>

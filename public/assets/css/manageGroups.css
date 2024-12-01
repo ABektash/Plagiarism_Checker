@@ -196,13 +196,13 @@ table td {
 #confirmRemoveInstructorBtn, #cancelRemoveInstructorBtn,
 #addInstructorSaveBtn, #cancelAddInstructorBtn,
 #save-btn, #cancel-edit-btn,
-#cancel-add-btn, #cancel-add-instructor-btn , #add-save-btn , #add-instructor-save-btn {
+#cancel-add-btn, #cancel-add-instructor-btn , #add-save-btn , #add-instructor-save-btn,#confirmDeleteGroupBtn ,#cancelDeleteGroupBtn{
   background-color:var(--blue);
   color: white;
   font-weight: 600; 
 }
 
-#yes-btn:hover, #confirmRemoveInstructorBtn:hover {
+#yes-btn:hover, #confirmRemoveInstructorBtn:hover ,#confirmDeleteGroupBtn:hover{
   background-color: #dc143c;
   transform: scale(1.05); 
 }
@@ -211,7 +211,7 @@ table td {
 #no-btn:hover, #cancelRemoveInstructorBtn:hover,
 #addInstructorSaveBtn:hover, #cancelAddInstructorBtn:hover,
 #save-btn:hover, #cancel-edit-btn:hover,
-#cancel-add-btn:hover,#cancel-add-instructor-btn:hover, #add-save-btn:hover , #add-instructor-save-btn:hover {
+#cancel-add-btn:hover,#cancel-add-instructor-btn:hover, #add-save-btn:hover , #add-instructor-save-btn:hover ,#cancelDeleteGroupBtn:hover{
   background-color:  #02a793;
   transform: scale(1.05); 
 }

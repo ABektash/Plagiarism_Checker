@@ -60,6 +60,113 @@ function updateStudentTable(groupID) {
     });
 }
 
+// Global function to update the group selection dropdown
+function updateGroupSelection() {
+    const groupSelection = document.getElementById('groupSelection'); // Ensure this element exists
+
+    if (!groupSelection) {
+        console.error('Group selection dropdown not found');
+        return;
+    }
+
+    fetch('/Plagiarism_Checker/public/manageGroups/getAvailableGroups')  // Correct API endpoint
+        .then(response => response.json())
+        .then(groups => {
+            groupSelection.innerHTML = ''; // Clear existing options
+
+            // If there are groups, populate the dropdown
+            if (groups.length > 0) {
+                groups.forEach((group, index) => {
+                    const option = document.createElement('option');
+                    option.value = group.group_id; // Correct reference to group_id
+                    option.textContent = 'Group ' + group.group_id; // Correctly display the group ID
+                    groupSelection.appendChild(option);
+
+                    // Set the first group as the default selection
+                    if (index === 0) {
+                        option.selected = true;
+                    }
+                });
+            } else {
+                // If no groups, show a default message (optional)
+                const option = document.createElement('option');
+                option.textContent = 'No groups available';
+                option.disabled = true;
+                groupSelection.appendChild(option);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching groups:', error);
+        });
+}
+// Global function to update the instructors dropdown
+function updateInstructorsDropdown(groupID) {
+    console.log("Updating instructors dropdown for group ID:", groupID); // Debugging
+
+    const instructorDropdown = document.querySelector('.Instructor-Selection');
+    if (!instructorDropdown) {
+        console.error('Instructor dropdown not found');
+        return;
+    }
+
+    fetch(`/Plagiarism_Checker/public/manageGroups/getInstructorsByGroup/${groupID}`)
+        .then(response => response.json())
+        .then(data => {
+            instructorDropdown.innerHTML = ''; // Clear the dropdown
+
+            if (data.length > 0) {
+                data.forEach((instructor, index) => {
+                    const option = document.createElement('option');
+                    option.value = instructor.inst_id;
+                    option.textContent = instructor.inst_name;
+
+                    // If it's the first instructor, set it as the selected option
+                    if (index === 0) {
+                        option.selected = true; // Select the first instructor by default
+                    }
+
+                    instructorDropdown.appendChild(option);
+                });
+            } else {
+                const option = document.createElement('option');
+                option.textContent = 'No instructors found';
+                option.disabled = true;
+                instructorDropdown.appendChild(option);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching instructors:', error);
+        });
+}
+// Global function to set the selected group in the group selection dropdown
+function setSelectedGroup(groupID) {
+    const groupSelection = document.getElementById('groupSelection');  // Ensure this is the correct ID
+    if (!groupSelection) {
+        console.error('Group selection dropdown not found');
+        return;
+    }
+
+    // Loop through the options to find the one that matches the groupID
+    const options = groupSelection.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value == groupID) {
+            groupSelection.selectedIndex = i;  // Set the selected option by index
+            break;  // Exit the loop once the matching option is found
+        }
+    }
+}
+
+
+
+// Ensure the function is available on page load
+document.addEventListener('DOMContentLoaded', function () {
+    // Call the global function to update the group selection dropdown
+    updateGroupSelection();
+});
+
+
+
+
   (() => {
     let rowToDelete;
     const deleteButtons = document.querySelectorAll(".delete-a-link");
@@ -223,6 +330,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Ensure there's a valid groupID when page loads
   const defaultGroupID = groupSelection.value || 1;  // Default to group ID 1 if no group is selected
+
+  const FirstGroupID = groupSelection.options.length > 0 ? groupSelection.options[0].value : 1;
+
   updateStudentTable(defaultGroupID);  // Load students for the default group
 
   // Add event listener for when the selection changes
@@ -430,6 +540,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert(jsonData.message);
                 updateStudentTable(groupID); // Refresh the student table
                 updateInstructorsDropdown(groupID);
+                setSelectedGroup(groupID);
+
 
                 
                 addModal.style.display = "none";
@@ -465,39 +577,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const cancelAddInstructorBtn = document.getElementById('cancel-add-instructor-btn');
     const instructorIDInput = document.getElementById('instructorID');
     const groupIDInput = document.getElementById('inst-groupID');
-    
-    // Function to fetch and update the instructors dropdown
-    const updateInstructorsDropdown = (groupID) => {
-        fetch(`/Plagiarism_Checker/public/manageGroups/getInstructorsByGroup/${groupID}`)
-            .then(response => response.json())
-            .then(data => {
-                const instructorDropdown = document.querySelector('.Instructor-Selection');
-                instructorDropdown.innerHTML = ''; // Clear the dropdown
-
-                if (data.length > 0) {
-                    data.forEach((instructor, index) => {
-                        const option = document.createElement('option');
-                        option.value = instructor.inst_id;
-                        option.textContent = instructor.inst_name;
-
-                        // If it's the first instructor, set it as the selected option
-                        if (index === 0) {
-                            option.selected = true; // Select the first instructor by default
-                        }
-
-                        instructorDropdown.appendChild(option);
-                    });
-                } else {
-                    const option = document.createElement('option');
-                    option.textContent = 'No instructors found';
-                    option.disabled = true;
-                    instructorDropdown.appendChild(option);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching instructors:', error);
-            });
-    };
 
     // Open modal button
     const openInstructorModalBtn = document.querySelector('.add-instructor-btn');
@@ -537,9 +616,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert(data.message);
 
                     // Refresh the instructor select tag with updated data for the selected group
-                    // Call the existing function to update the dropdown
-                    updateInstructorsDropdown(groupID);
-                    updateStudentTable(groupID); // Update the table after deletion                    
+                    updateInstructorsDropdown(groupID); // This now calls the global function
+                    updateStudentTable(groupID); // Update the table after deletion
+                    setSelectedGroup(groupID);  
 
                     // Reset form and close modal
                     instructorIDInput.value = '';
@@ -558,17 +637,119 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial population of instructors when the page loads
     const groupID = groupIDInput.value.trim();
     if (groupID) {
-        updateInstructorsDropdown(groupID);
+        updateInstructorsDropdown(groupID); // This now calls the global function
     }
 
     // Re-fetch instructor list when the group selection changes
     groupIDInput.addEventListener('change', function () {
         const newGroupID = groupIDInput.value.trim();
         if (newGroupID) {
-            updateInstructorsDropdown(newGroupID);
+            updateInstructorsDropdown(newGroupID); // This now calls the global function
         }
     });
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////Create Group///////////////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+    const createGroupBtn = document.querySelector('.create-group-btn');
+
+    if (createGroupBtn) {
+        createGroupBtn.addEventListener('click', function () {
+            // Send request to create a new group with auto-generated ID
+            fetch('/Plagiarism_Checker/public/manageGroups/addGroup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})  // No group name required
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('New group created successfully.');
+
+                    // Refresh the group selection and instructor/student tables
+                    updateGroupSelection();
+                    // updateInstructorsDropdown(data.group_id);  // Use the new group ID
+                    // updateStudentTable(data.group_id);
+                } else {
+                    alert('Failed to create group: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error creating group:', error);
+                alert('An error occurred while creating the group.');
+            });
+        });
+    }
+});
+//////////////////////////////////////////////////Delete Group///////////////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteGroupModal = document.getElementById('DeleteGroupModal');
+    const confirmDeleteGroupBtn = document.getElementById('confirmDeleteGroupBtn');
+    const cancelDeleteGroupBtn = document.getElementById('cancelDeleteGroupBtn');
+    const deleteGroupBtn = document.querySelector('.delete-group-btn');
+    let groupIDToDelete = null;
+
+    // Show the modal when the "Delete Group" button is clicked
+    deleteGroupBtn.addEventListener('click', function () {
+        groupIDToDelete = getSelectedGroupID(); // Get the selected group ID
+        if (groupIDToDelete) {
+            deleteGroupModal.style.display = 'block'; // Show the modal
+        } else {
+            alert('Please select a group to delete');
+        }
+    });
+
+    // Hide the modal when the "No" button is clicked
+    cancelDeleteGroupBtn.addEventListener('click', function () {
+        deleteGroupModal.style.display = 'none'; // Hide the modal
+    });
+
+    // Delete the group when the "Yes" button is clicked
+    confirmDeleteGroupBtn.addEventListener('click', function () {
+        if (groupIDToDelete) {
+            deleteGroup(groupIDToDelete);
+        } else {
+            alert('No group selected for deletion');
+        }
+        deleteGroupModal.style.display = 'none'; // Hide the modal after action
+    });
+
+    // Function to get the selected group ID (implement according to your logic)
+    function getSelectedGroupID() {
+        const groupSelection = document.getElementById('groupSelection');
+        return groupSelection ? groupSelection.value : null;  // Return selected group ID
+    }
+
+    // Function to delete the group and associated users
+    function deleteGroup(groupID) {
+        fetch('/Plagiarism_Checker/public/manageGroups/deleteGroup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ groupID })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Group deleted successfully');
+                // Optionally, refresh the group selection dropdown and other UI elements
+                updateGroupSelection();  // Ensure this is defined globally
+                const FirstGroupID = groupSelection.options.length > 0 ? groupSelection.options[0].value : 1;
+                updateInstructorsDropdown(FirstGroupID);  // Update instructors if necessary
+                updateStudentTable(FirstGroupID);  // Update student table if necessary
+            } else {
+                alert('Error deleting group: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete group');
+        });
+    }
+});
+
+
 })();

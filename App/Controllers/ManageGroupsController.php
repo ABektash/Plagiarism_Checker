@@ -398,4 +398,41 @@ public function addInstructorToGroup()
 }
 
 
+public function addGroup() {
+    $groupsModel = new Groups($this->db);
+    $newGroupID = $groupsModel->createGroup();
+
+    if ($newGroupID) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'group_id' => $newGroupID]);
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Failed to create a new group']);
+    }
+}
+
+
+public function deleteGroup() {
+    // Get the group ID from the request
+    $input = json_decode(file_get_contents('php://input'), true);
+    $groupID = $input['groupID'] ?? null;
+
+    if (!$groupID) {
+        echo json_encode(['success' => false, 'message' => 'Group ID is required']);
+        return;
+    }
+
+    // Initialize the Groups model
+    $groupsModel = new Groups($this->db);
+
+    // Attempt to delete the group
+    $deleteSuccess = $groupsModel->deleteGroup($groupID);
+
+    if ($deleteSuccess) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error deleting group']);
+    }
+}
+
 }

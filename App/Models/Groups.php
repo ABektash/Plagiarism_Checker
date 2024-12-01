@@ -129,6 +129,43 @@ public function addInstructorToGroup($instructorID, $groupID)
     return $stmt->execute();
 }
 
+public function createGroup() {
+    try {
+        // Insert a new row; only the auto-increment ID will be created
+        $query = "INSERT INTO groups () VALUES ()";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        // Return the ID of the newly created group
+        return $this->db->insert_id;  // For MySQLi
+    } catch (Exception $e) {
+        // Log the error for debugging
+        error_log("Error creating group: " . $e->getMessage());
+        return false;
+    }
+}
+
+public function deleteGroup($groupID) {
+    try {
+        // Delete associated users from the user_groups table
+        $query = "DELETE FROM user_groups WHERE groupID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $groupID);
+        $stmt->execute();
+
+        // Delete the group from the groups table
+        $query = "DELETE FROM groups WHERE ID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $groupID);
+        $stmt->execute();
+
+        return true; // Return true if the group and users were deleted successfully
+    } catch (Exception $e) {
+        // Log the error
+        error_log("Error deleting group: " . $e->getMessage());
+        return false; // Return false if there was an error
+    }
+}
 
 
 public function getUserGroupCountByUserID($userID) {
@@ -144,4 +181,6 @@ public function getUserGroupCountByUserID($userID) {
         return "Error: " . mysqli_error($this->db);
     }
 }
+
+
 }
