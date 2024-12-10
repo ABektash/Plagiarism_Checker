@@ -67,7 +67,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     $title = $assignment['Title'];
                     $dueDate = $assignment['DueDate'] ?? 'Not Set';
                     $status = 'Pending';
-                    $submissionLink = 'submit/index'; 
+                    $submissionLink = redirect('submit/index'); 
                     
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($title) . '</td>';
