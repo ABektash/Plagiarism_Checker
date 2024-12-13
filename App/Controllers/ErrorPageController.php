@@ -8,6 +8,6 @@ class ErrorPageController extends Controller
 {
     public function index()
     {
-            $this->view('ErrorPage');
+        $this->view('ErrorPage');
     }
 }

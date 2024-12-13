@@ -1,5 +1,5 @@
 <?php
-require_once MODELS . 'GroupsModel.php';
+require_once MODELS . 'Groups.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -11,7 +11,9 @@ class ManageGroupInsturctorController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
     public function index()
@@ -51,7 +53,7 @@ class ManageGroupInsturctorController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new GroupsModel($this->db, $userID);
+            $dataFetcher = new Groups($this->db);
             try {
 
                 echo $dataFetcher->getGroupsAsJson();
@@ -63,7 +65,7 @@ class ManageGroupInsturctorController extends Controller
             }
         }
     }
-    
+
     public function getMembers()
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -84,7 +86,7 @@ class ManageGroupInsturctorController extends Controller
 
             $userID = intval($_GET['userID']);
             $groupID = intval($_GET['groupID']);
-            $dataFetcher = new GroupsModel($this->db, $userID);
+            $dataFetcher = new Groups($this->db);
             try {
 
                 echo $dataFetcher->getGroupMembersAsJson($groupID);

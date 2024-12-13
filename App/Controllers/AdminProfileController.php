@@ -13,7 +13,9 @@ class AdminProfileController extends Controller
     private $db;
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
 
@@ -27,7 +29,7 @@ class AdminProfileController extends Controller
             $user = new User($this->db);
             $userDetails = $user->getUserById($id);
 
-            
+
 
 
             if ($userDetails) {

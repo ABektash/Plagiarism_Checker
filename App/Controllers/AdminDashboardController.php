@@ -1,6 +1,6 @@
 <?php
 
-require_once MODELS . 'AdminDashboardModel.php';
+require_once MODELS . 'User.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,7 +11,9 @@ class AdminDashboardController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
     public function index()
@@ -33,7 +35,7 @@ class AdminDashboardController extends Controller
             $this->view('errorPage', $data);
         }
     }
-    public function getAdminData()
+    public function getAdminDashboard()
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $errors = [];
@@ -52,8 +54,8 @@ class AdminDashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $adminDataFetcher = new AdminDashboardModel($this->db, $userID);
-                echo $adminDataFetcher->getAdminDashboardDataAsJson();
+                $adminDashboard = new User($this->db);
+                echo $adminDashboard->getAdminDashboardDataAsJson();
             } catch (Exception $e) {
                 echo json_encode([
                     'success' => false,

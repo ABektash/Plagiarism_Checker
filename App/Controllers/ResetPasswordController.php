@@ -11,7 +11,9 @@ class ResetPasswordController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
 
@@ -29,12 +31,12 @@ class ResetPasswordController extends Controller
 
             $this->view('errorPage', $data);
         }
-    
+
         $row = $result->fetch_assoc();
-    
-        $currentDate = new DateTime(); 
-        $expiryDate = new DateTime($row['expDate']); 
-    
+
+        $currentDate = new DateTime();
+        $expiryDate = new DateTime($row['expDate']);
+
         if ($currentDate > $expiryDate) {
             $data = [
                 "error_code" => 404,
@@ -82,5 +84,4 @@ class ResetPasswordController extends Controller
             }
         }
     }
-
 }

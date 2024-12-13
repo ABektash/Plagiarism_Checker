@@ -6,10 +6,19 @@ if (session_status() == PHP_SESSION_NONE) {
 class Assignments
 {
     private $conn;
+    public $UserID;
+    public $ID;
+    public $Title;
+    public $Description;
+    public $StartDate;
+    public $DueDate;
+    public $groupID;
+    public $assignments = [];
 
     public function __construct($conn)
     {
         $this->conn = $conn;
+        $this->UserID = isset($_SESSION['user']['ID']) && !is_null($_SESSION['user']['ID']) ? $_SESSION['user']['ID'] : null;
     }
 
     public function getAssignments()
@@ -35,7 +44,6 @@ class Assignments
 
         return $assignments;
     }
-    // Function to get a single assignment by its ID
     public function getAssignmentById($id)
     {
         $query = "SELECT * FROM assignments WHERE ID = :id";
@@ -45,105 +53,116 @@ class Assignments
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-   
-public function addAssignment($title, $description, $dueDate, $groupID)
-{
-    
-    if (!isset($_SESSION["user"]["ID"])) {
-        throw new Exception("User not logged in.");
-    }
+    public function addAssignment($title, $description, $dueDate, $groupID)
+    {
 
-    
-    $user_ID = $_SESSION["user"]["ID"];
+        if (!isset($_SESSION["user"]["ID"])) {
+            throw new Exception("User not logged in.");
+        }
 
-    
-    $query = "INSERT INTO assignments (userID, Title, Description, DueDate, groupID) 
+        $user_ID = $_SESSION["user"]["ID"];
+        $query = "INSERT INTO assignments (userID, Title, Description, DueDate, groupID) 
               VALUES ('$user_ID', '$title', '$description', '$dueDate', '$groupID')";
+        try {
+            return $this->conn->query($query);
+        } catch (PDOException $e) {
 
-    
-    try {
-        return $this->conn->query($query); 
-    } catch (PDOException $e) {
-        
-        error_log("Error adding assignment: " . $e->getMessage());
-        return false;
+            error_log("Error adding assignment: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
-
-// public function editAssignment($id, $title, $description, $dueDate, $groupID)
-// {
-
-//     $id = intval($id);
-    
-//     $query = "UPDATE assignments 
-//               SET Title = $title, Description = $description, DueDate = $dueDate, groupID = $groupID 
-//               WHERE ID = $id";
-
-//     try {
-//         return $this->conn->query($query);
-//     } catch (PDOException $e) {
-//         error_log("Error editing assignment: " . $e->getMessage());
-//         return false;
-//     }
-// }
-public function editAssignment($id, $title, $description, $dueDate, $groupID)
-{
-    $query = "UPDATE assignments 
+    public function editAssignment($id, $title, $description, $dueDate, $groupID)
+    {
+        $query = "UPDATE assignments 
               SET Title = ?, Description = ?, DueDate = ?, groupID = ? 
               WHERE ID = ?";
 
-    // Prepare the statement
-    $stmt = $this->conn->prepare($query);
+        $stmt = $this->conn->prepare($query);
 
-    // Check if the statement was prepared successfully
-    if (!$stmt) {
-        // Log error and return false
-        error_log("Failed to prepare statement: " . $this->conn->error);
-        return false;
+        if (!$stmt) {
+            error_log("Failed to prepare statement: " . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("ssssi", $title, $description, $dueDate, $groupID, $id);
+
+        try {
+            return $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            error_log("Error editing assignment: " . $e->getMessage());
+            return false;
+        }
     }
 
-    // Bind parameters to prevent SQL injection
-    $stmt->bind_param("ssssi", $title, $description, $dueDate, $groupID, $id);
+    public function deleteAssignment($id)
+    {
+        $id = intval($id);
 
-    try {
-        return $stmt->execute();
-    } catch (mysqli_sql_exception $e) {
-        error_log("Error editing assignment: " . $e->getMessage());
-        return false;
+        $query = "DELETE FROM assignments WHERE ID = $id";
+
+        try {
+            return $this->conn->query($query);
+        } catch (PDOException $e) {
+            error_log("Error deleting assignment: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getGroups()
+    {
+        $query = "SELECT ID, Name FROM groups";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get($field, $type = 'string')
+    {
+        $result = null;
+        $query = "SELECT $field FROM assignments WHERE ID = ? AND userID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $this->ID, $this->UserID);
+        $stmt->execute();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        $stmt->close();
+        settype($result, $type);
+        return $result;
+    }
+    public function returnAsJson()
+    {
+        return json_encode([
+            'ID' => $this->ID,
+            'Title' => $this->Title,
+            'Description' => $this->Description,
+            'StartDate' => $this->StartDate,
+            'DueDate' => $this->DueDate,
+            'userID' => $this->UserID,
+            'groupID' => $this->groupID
+        ]);
+    }
+    public function fetchAll()
+    {
+        $query = "
+            SELECT a.* 
+            FROM assignments a
+            INNER JOIN user_groups ug ON a.groupID = ug.groupID
+            WHERE ug.userID = ?
+        ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $this->UserID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $assignment = new Assignments($this->conn);
+            foreach ($row as $key => $value) {
+                $assignment->$key = $value;
+            }
+            $this->assignments[] = $assignment;
+        }
+        $stmt->close();
+        return $this->assignments;
     }
 }
-
-
-
-
-public function deleteAssignment($id)
-{
-    // Sanitize the input ID
-    $id = intval($id);
-
-    // Create the delete query
-    $query = "DELETE FROM assignments WHERE ID = $id";
-
-    // Execute the query
-    try {
-        return $this->conn->query($query);
-    } catch (PDOException $e) {
-        // Log the error and return false
-        error_log("Error deleting assignment: " . $e->getMessage());
-        return false;
-    }
-}
-
-    
-public function getGroups() {
-    $query = "SELECT ID, Name FROM groups"; // Modify based on your database structure
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-}
-
-
-

@@ -10,7 +10,9 @@ class ForumsController extends Controller
     private $db;
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
 
@@ -55,7 +57,7 @@ class ForumsController extends Controller
             $forumID = $_POST['forumID'];
             $forum = new Forums($this->db);
 
-            $result = $forum->delete($forumID);
+            $result = $forum->deleteForum($forumID);
 
             if ($result) {
                 $id = $_SESSION['user']['ID'];
@@ -80,7 +82,7 @@ class ForumsController extends Controller
         if (isset($_POST['submitCreateMessage'])) {
             $message = new Forums_Messages($this->db);
 
-            if ($message->create($_POST['forumID'], $_POST['senderID'], $_POST['messagetext'])) {
+            if ($message->createForums_Messages($_POST['forumID'], $_POST['senderID'], $_POST['messagetext'])) {
                 $messages = $message->getAllMessages($_POST['forumID']);
                 $latestMessage = end($messages);
                 $data = [
@@ -126,7 +128,7 @@ class ForumsController extends Controller
         } elseif (isset($_POST['submitCreateForum'])) {
             $forum = new Forums($this->db);
 
-            if ($forum->create($_POST['submissionID'], $_POST['instructorID'], $_POST['studentID'])) {
+            if ($forum->createForum($_POST['submissionID'], $_POST['instructorID'], $_POST['studentID'])) {
                 $this->view('forums');
             } else {
                 $data["creatingForumError"] = "Couldn't create the chat!";

@@ -12,7 +12,7 @@ class submitController extends Controller
         $userType = $_SESSION['user']['UserType_id'] ?? null;
 
         if (($id !== null) && ($userType == 3)) {
-            
+
             $this->view('submit');
         } else {
 

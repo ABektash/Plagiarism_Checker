@@ -1,6 +1,8 @@
 <?php
 require_once '../Models/User.php';
-require_once '../Config/dbh.inc.php';
+require_once '../Config/DatabaseConnection.php';
+$db_instance = DatabaseConnection::getInstance();
+$conn = $db_instance->getConnection();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $errors = [];

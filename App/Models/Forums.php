@@ -11,7 +11,7 @@ class Forums
         $this->db = $db;
     }
 
-    public function create($submissionID, $instructorID, $studentID)
+    public function createForum($submissionID, $instructorID, $studentID)
     {
         $submissionID = mysqli_real_escape_string($this->db, $submissionID);
         $instructorID = mysqli_real_escape_string($this->db, $instructorID);
@@ -93,7 +93,7 @@ class Forums
         return $forumsData;
     }
 
-    public function delete($id)
+    public function deleteForum($id)
     {
         $id = mysqli_real_escape_string($this->db, $id);
 
@@ -144,7 +144,7 @@ class Forums_Messages
         $this->db = $db;
     }
 
-    public function create($forumID, $senderID, $messagetext)
+    public function createForums_Messages($forumID, $senderID, $messagetext)
     {
         $forumID = mysqli_real_escape_string($this->db, $forumID);
         $senderID = mysqli_real_escape_string($this->db, $senderID);

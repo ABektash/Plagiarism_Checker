@@ -1,35 +1,34 @@
 <?php
-require_once 'SubmissionModel.php';
-class PlagiarismReportObject
+require_once 'Submission.php';
+class PlagiarismReport
 {
-    private $conn;
+    private $db;
     public $ID;
     public $submissionID;
     public $feedback;
     public $similarityPercentage;
     public $userID;
     public $submission;
-    public function __construct($conn, $submissionID, $userID)
+    public function __construct($db, $submissionID = null, $userID)
     {
-        $this->conn = $conn;
+        $this->db = $db;
         $this->submissionID = $submissionID;
         $this->userID = $userID;
     }
     public function set($field, $value)
     {
         $query = "UPDATE plagiarism_reports SET $field = ? WHERE ID = ?";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->db->prepare($query);
         $stmt->bind_param("si", $value, $this->ID);
         $stmt->execute();
         $stmt->close();
         $this->$field = $value;
     }
-
-
     public function get($field, $type = 'string')
     {
+        $result = null;
         $query = "SELECT $field FROM plagiarism_reports WHERE ID = ?";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $this->ID);
         $stmt->execute();
         $stmt->bind_result($result);
@@ -41,12 +40,12 @@ class PlagiarismReportObject
     private function fetchSubmission()
     {
         $query = "SELECT * FROM submissions WHERE ID = ?";
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $this->submissionID);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
-            $submission = new SubmissionObject($this->conn, $this->userID);
+            $submission = new Submission($this->db);
             foreach ($row as $key => $value) {
                 $submission->$key = $value;
             }
@@ -65,25 +64,12 @@ class PlagiarismReportObject
             'submission' => json_decode($this->submission->returnAsJson())
         ]);
     }
-}
-
-class PlagiarismReportsFetcher
-{
-    private $conn;
-    public $userID;
-    public function __construct($conn, $userID)
-    {
-        $this->conn = $conn;
-        $this->userID = $userID;
-    }
-
-
     public function fetchBySubmissionIDs($submissionIDs)
     {
         $placeholders = implode(',', array_fill(0, count($submissionIDs), '?'));
         $query = "SELECT * FROM plagiarism_reports WHERE submissionID IN ($placeholders)";
 
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->db->prepare($query);
 
         $types = str_repeat('i', count($submissionIDs));
         $stmt->bind_param($types, ...$submissionIDs);
@@ -93,7 +79,7 @@ class PlagiarismReportsFetcher
         $reports = [];
 
         while ($row = $result->fetch_assoc()) {
-            $report = new PlagiarismReportObject($this->conn, $row['submissionID'], $this->userID);
+            $report = new PlagiarismReport($this->db, $row['submissionID'], $this->userID);
 
             foreach ($row as $key => $value) {
                 $report->$key = $value;
@@ -105,3 +91,5 @@ class PlagiarismReportsFetcher
         return $reports;
     }
 }
+
+

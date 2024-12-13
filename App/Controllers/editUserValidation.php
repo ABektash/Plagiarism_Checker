@@ -1,6 +1,8 @@
 <?php
 require_once '../Models/User.php';
-require_once '../Config/dbh.inc.php';
+require_once '../Config/DatabaseConnection.php';
+$db_instance = DatabaseConnection::getInstance();
+$conn = $db_instance->getConnection();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
     if (empty($_POST['FirstName'])) {
@@ -62,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->phone_number = $phone;
         $user->birthday = $birthday;
         $user->user_type_id = $UserType_id;
-        if ($password != ''){
+        if ($password != '') {
             $user->password = $password;
         } else {
             $user->password = null;
         }
-        
+
 
         if ($user->editUser($id, $user->first_name, $user->last_name, $user->email, $user->organization, $user->address, $user->phone_number, $user->birthday, $user->password, $user->user_type_id)) {
             echo json_encode(['success' => true]);

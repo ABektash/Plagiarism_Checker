@@ -12,7 +12,9 @@ class ForgotPasswordController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
 
@@ -54,8 +56,6 @@ class ForgotPasswordController extends Controller
             $stmt->execute();
 
             $this->sendResetEmail($email, $resetKey);
-
-            
         } else {
             $this->view('forgotPassword');
         }
@@ -67,17 +67,17 @@ class ForgotPasswordController extends Controller
 
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com'; 
+            $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = APP_EMAIL; 
-            $mail->Password = APP_PASSWORD;   
+            $mail->Username = APP_EMAIL;
+            $mail->Password = APP_PASSWORD;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            
 
-            $mail->setFrom(APP_EMAIL, 'Plagiarism Detection'); 
-            $mail->addAddress($email); 
-            $mail->isHTML(true); 
+
+            $mail->setFrom(APP_EMAIL, 'Plagiarism Detection');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
             $mail->Body = "
             <p>Dear User,</p>

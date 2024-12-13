@@ -1,16 +1,18 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
- 
+
 if (isset($_POST['userType'])) {
 
-    require_once '../Models/UserTypePage.php'; 
+    require_once '../Models/UserTypePage.php';
     require_once '../Models/Page.php';
-    require_once '../Config/dbh.inc.php';
+    require_once '../Config/DatabaseConnection.php';
+    $db_instance = DatabaseConnection::getInstance();
+    $conn = $db_instance->getConnection();
 
     $userTypeID = intval($_POST['userType']);
-    
-    if (!$conn){
+
+    if (!$conn) {
         echo "Error in connection";
     }
 
@@ -22,7 +24,7 @@ if (isset($_POST['userType'])) {
 
     $response = [
         'availablePages' => $availablePages,
-        'chosenPages' => array_filter($availablePages, function($page) use ($chosenPages) {
+        'chosenPages' => array_filter($availablePages, function ($page) use ($chosenPages) {
             return in_array($page['id'], $chosenPages);
         })
     ];
@@ -30,4 +32,3 @@ if (isset($_POST['userType'])) {
     header('Content-Type: application/json');
     echo json_encode($response);
 }
-

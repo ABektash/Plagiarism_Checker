@@ -29,23 +29,22 @@ if (session_status() == PHP_SESSION_NONE) {
         if ($_SESSION['user']['UserType_id'] == 3):
 
             $userID = $_SESSION['user']['ID'];
-            
-            $urlAssignments = "http://localhost/Plagiarism_Checker/public/dashboard/getAssignments?userID=$userID";
+
+            $urlAssignments = redirect("/dashboard/getAssignments") . "?userID=" . $userID;
             $responseAssignments = file_get_contents($urlAssignments);
             $assignmentsData = json_decode($responseAssignments, true);
-        
-            $urlSubmissions = "http://localhost/Plagiarism_Checker/public/dashboard/getSubmissions?userID=$userID";
+
+            $urlSubmissions = redirect("/dashboard/getSubmissions") . "?userID=" . $userID;
             $responseSubmissions = file_get_contents($urlSubmissions);
             $submissionsData = json_decode($responseSubmissions, true);
-    
-            $urlReports = "http://localhost/Plagiarism_Checker/public/dashboard/getReports?userID=$userID";
+
+            $urlReports = redirect("/dashboard/getReports") . "?userID=" . $userID;
             $responseReports = file_get_contents($urlReports);
             $reportsData = json_decode($responseReports, true);
-        
- 
+
+
             if ($assignmentsData['success']) {
                 $assignments = $assignmentsData['assignments'];
-        
 
                 echo '<!-- Student Dashboard -->
                 <section id="assignments">
@@ -60,15 +59,15 @@ if (session_status() == PHP_SESSION_NONE) {
                             </tr>
                         </thead>
                         <tbody>';
-        
+
                 foreach ($assignments as $assignmentJson) {
                     $assignment = json_decode($assignmentJson, true);
-                    
+
                     $title = $assignment['Title'];
                     $dueDate = $assignment['DueDate'] ?? 'Not Set';
                     $status = 'Pending';
-                    $submissionLink = redirect('submit/index'); 
-                    
+                    $submissionLink = redirect('submit/index');
+
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($title) . '</td>';
                     echo '<td>' . htmlspecialchars($dueDate) . '</td>';
@@ -76,19 +75,19 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td><a class="a-link" href="' . $submissionLink . '">View</a></td>';
                     echo '</tr>';
                 }
-        
+
                 echo '</tbody>
                 </table>
                 </section>';
             } else {
-                echo 'session : '.$assignmentsData['session'];
+                echo 'session : ' . $assignmentsData['session'];
                 echo '<p>No assignments found.</p>';
             }
-        
+
             // Start Submissions Table
             if ($submissionsData['success']) {
                 $submissions = $submissionsData['submissions'];
-        
+
                 echo '<section id="submissions">
                     <h2>My Submissions</h2>
                     <table>
@@ -101,28 +100,28 @@ if (session_status() == PHP_SESSION_NONE) {
                             </tr>
                         </thead>
                         <tbody>';
-        
-              
+
+
                 foreach ($submissions as $submissionJson) {
                     $submission = json_decode($submissionJson, true);
-        
-                    
+
+
                     $submissionDate = $submission['submissionDate'];
-                    $status = $submission['status']; 
-                    $assignmentTitle = $submission['assignment']['Title']; 
-                    
-                    
+                    $status = $submission['status'];
+                    $assignmentTitle = $submission['assignment']['Title'];
+
+
                     if ($status == 'Pending') {
-                        $viewLink = 'viewReport/index'; 
-                        $linkStyle = 'color: grey;'; 
-                        $onclick = 'onclick="return false;"'; 
+                        $viewLink = 'viewReport/index';
+                        $linkStyle = 'color: grey;';
+                        $onclick = 'onclick="return false;"';
                     } else {
                         $viewLink = 'viewReport/index';
-                        $linkStyle = ''; 
-                        $onclick = ''; 
+                        $linkStyle = '';
+                        $onclick = '';
                     }
-        
-                   
+
+
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($assignmentTitle) . '</td>';
                     echo '<td>' . htmlspecialchars($submissionDate) . '</td>';
@@ -130,19 +129,19 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td><a class="a-link" href="' . $viewLink . '" style="' . $linkStyle . '" ' . $onclick . '>View</a></td>';
                     echo '</tr>';
                 }
-        
+
                 echo '</tbody>
                 </table>
                 </section>';
             } else {
                 echo '<p>No submissions found.</p>';
             }
-        
+
             // Start Plagiarism Reports Table
             if ($reportsData['success']) {
                 $reports = $reportsData['plagiarismReports'];
-            
-                
+
+
                 echo '<section id="reports">
                     <h2>Plagiarism Reports</h2>
                     <table>
@@ -155,15 +154,15 @@ if (session_status() == PHP_SESSION_NONE) {
                             </tr>
                         </thead>
                         <tbody>';
-            
-               
-                foreach ($reports as $report) { 
-                    
-                    $assignmentTitle = $report['submission']['assignment']['Title']; 
-                    $similarityScore = $report['similarityPercentage'] . '%'; 
-                    $reportDate = $report['submission']['submissionDate']; 
+
+
+                foreach ($reports as $report) {
+
+                    $assignmentTitle = $report['submission']['assignment']['Title'];
+                    $similarityScore = $report['similarityPercentage'] . '%';
+                    $reportDate = $report['submission']['submissionDate'];
                     $viewReportLink = 'viewReport/index';
-            
+
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($assignmentTitle) . '</td>';
                     echo '<td class="similarity-progress">' . htmlspecialchars($similarityScore) . '</td>';
@@ -171,20 +170,20 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td><a class="a-link" href="' . $viewReportLink . '">View Report</a></td>';
                     echo '</tr>';
                 }
-            
+
                 echo '</tbody>
                 </table>
                 </section>';
             } else {
                 echo '<p>No plagiarism reports found.</p>';
             }
-        
-    ?>
-        
-            <!-- Student Dashboard -->       
-            
 
-            
+        ?>
+
+            <!-- Student Dashboard -->
+
+
+
 
             <section id="progress">
                 <h2>Progress Tracking</h2>
@@ -202,18 +201,18 @@ if (session_status() == PHP_SESSION_NONE) {
 
         //if ($user_role == 'instructor'):
         if ($_SESSION['user']['UserType_id'] == 2):
-            $userID = $_SESSION['user']['ID']; 
+            $userID = $_SESSION['user']['ID'];
 
-    $jsonResponse = file_get_contents("http://localhost/Plagiarism_Checker/public/dashboard/getGroupsAndCount?userID=" . $userID);
-    
-    if ($jsonResponse === false) {
-        echo "Error fetching data.";
-        exit;
-    }
+            $jsonResponse = file_get_contents(redirect("/dashboard/getGroupsAndCount") . "?userID=" . $userID);
 
-    $groupsData = json_decode($jsonResponse, true);
+            if ($jsonResponse === false) {
+                echo "Error fetching data.";
+                exit;
+            }
 
-    echo '
+            $groupsData = json_decode($jsonResponse, true);
+
+            echo '
     <section id="groups">
         <h2>Groups</h2>
         <table>
@@ -228,89 +227,89 @@ if (session_status() == PHP_SESSION_NONE) {
             <tbody>';
 
 
-    if (is_array($groupsData)) {
-        foreach ($groupsData as $group) {
-            echo '
+            if (is_array($groupsData)) {
+                foreach ($groupsData as $group) {
+                    echo '
             <tr>
                 <td>Group ' . htmlspecialchars($group['GroupID']) . '</td>
                 <td>' . htmlspecialchars($group['MemberCount']) . '</td>
                 <td>' . htmlspecialchars($group['SubmissionCount']) . '</td>
-                <td><a class="a-link" href="' . 'http://localhost/Plagiarism_Checker/public/manageGroupInsturctor/index' . '">View</a></td>
+                <td><a class="a-link" href="' . 'redirect("/manageGroupInsturctor/index")' . '">View</a></td>
             </tr>';
-        }
-    } else {
-        echo '<tr><td colspan="4">No groups found.</td></tr>';
-    }
+                }
+            } else {
+                echo '<tr><td colspan="4">No groups found.</td></tr>';
+            }
 
-    echo '
+            echo '
             </tbody>
         </table>
     </section>';
 
 
-$response = file_get_contents("http://localhost/Plagiarism_Checker/public/dashboard/getInstructorData?userID={$userID}");
-$data = json_decode($response, true); 
+            $response = file_get_contents(redirect("/dashboard/getInstructorData"). "?userID=" . $userID);
+            $data = json_decode($response, true);
 
-// Submissions section
-echo '<section id="submissions">';
-echo '<h2>Submissions</h2>';
-echo '<table>';
-echo '<thead>';
-echo '<tr>';
-echo '<th>Student</th>';
-echo '<th>Assignment</th>';
-echo '<th>Submission Date</th>';
-echo '<th>Status</th>';
-echo '<th>Actions</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
+            // Submissions section
+            echo '<section id="submissions">';
+            echo '<h2>Submissions</h2>';
+            echo '<table>';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Student</th>';
+            echo '<th>Assignment</th>';
+            echo '<th>Submission Date</th>';
+            echo '<th>Status</th>';
+            echo '<th>Actions</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
 
-foreach ($data['submissions'] as $submission) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($submission['studentName']) . '</td>'; 
-    echo '<td>' . htmlspecialchars($submission['assignment']['Title']) . '</td>';
-    echo '<td>' . htmlspecialchars($submission['submissionDate']) . '</td>';
-    echo '<td>' . htmlspecialchars($submission['status']) . '</td>';
-    echo '<td><a class="a-link" href="viewEssay/index">Review</a></td>'; 
-    echo '</tr>';
-}
+            foreach ($data['submissions'] as $submission) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($submission['studentName']) . '</td>';
+                echo '<td>' . htmlspecialchars($submission['assignment']['Title']) . '</td>';
+                echo '<td>' . htmlspecialchars($submission['submissionDate']) . '</td>';
+                echo '<td>' . htmlspecialchars($submission['status']) . '</td>';
+                echo '<td><a class="a-link" href="viewEssay/index">Review</a></td>';
+                echo '</tr>';
+            }
 
-echo '</tbody>';
-echo '</table>';
-echo '</section>';
+            echo '</tbody>';
+            echo '</table>';
+            echo '</section>';
 
-// Plagiarism Reports section
-echo '<section id="reports">';
-echo '<h2>Plagiarism Reports</h2>';
-echo '<table>';
-echo '<thead>';
-echo '<tr>';
-echo '<th>Student</th>';
-echo '<th>Assignment</th>';
-echo '<th>Similarity Score</th>';
-echo '<th>Report Date</th>';
-echo '<th>Actions</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
+            // Plagiarism Reports section
+            echo '<section id="reports">';
+            echo '<h2>Plagiarism Reports</h2>';
+            echo '<table>';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Student</th>';
+            echo '<th>Assignment</th>';
+            echo '<th>Similarity Score</th>';
+            echo '<th>Report Date</th>';
+            echo '<th>Actions</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
 
-foreach ($data['plagiarism_reports'] as $report) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($report['submission']['studentName']) . '</td>';
-    echo '<td>' . htmlspecialchars($report['submission']['assignment']['Title']) . '</td>';
-    echo '<td>' . htmlspecialchars($report['similarityPercentage']) . '%</td>';
-    echo '<td>' . htmlspecialchars($report['submission']['submissionDate']) . '</td>';
-    echo '<td><a class="a-link" href="viewReportInstructor/index">View Report</a></td>'; 
-    echo '</tr>';
-}
+            foreach ($data['plagiarism_reports'] as $report) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($report['submission']['studentName']) . '</td>';
+                echo '<td>' . htmlspecialchars($report['submission']['assignment']['Title']) . '</td>';
+                echo '<td>' . htmlspecialchars($report['similarityPercentage']) . '%</td>';
+                echo '<td>' . htmlspecialchars($report['submission']['submissionDate']) . '</td>';
+                echo '<td><a class="a-link" href="viewReportInstructor/index">View Report</a></td>';
+                echo '</tr>';
+            }
 
-echo '</tbody>';
-echo '</table>';
-echo '</section>';
-?>
+            echo '</tbody>';
+            echo '</table>';
+            echo '</section>';
+        ?>
 
-            
+
         <?php endif; ?>
 
     </main>

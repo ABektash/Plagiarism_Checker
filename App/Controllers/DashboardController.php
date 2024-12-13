@@ -1,8 +1,8 @@
 <?php
-require_once MODELS . 'AssignmentModel.php';
-require_once MODELS . 'SubmissionModel.php';
-require_once MODELS . 'PlagiarismReportModel.php';
-require_once MODELS . 'GroupsModel.php';
+require_once MODELS . 'Assignments.php';
+require_once MODELS . 'Submission.php';
+require_once MODELS . 'PlagiarismReport.php';
+require_once MODELS . 'Groups.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -14,7 +14,9 @@ class DashboardController extends Controller
 
     public function __construct()
     {
-        require_once CONFIG . 'dbh.inc.php';
+        require_once CONFIG . 'DatabaseConnection.php';
+        $db_instance = DatabaseConnection::getInstance();
+        $conn = $db_instance->getConnection();
         $this->db = $conn;
     }
     public function index()
@@ -55,7 +57,7 @@ class DashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $assignmentsFetcher = new AssignmentsFetcher($this->db, $userID);
+                $assignmentsFetcher = new Assignments($this->db);
                 $assignments = $assignmentsFetcher->fetchAll();
 
                 $assignmentsJson = array_map(function ($assignment) {
@@ -94,7 +96,7 @@ class DashboardController extends Controller
 
             try {
 
-                $submissionModel = new SubmissionFetcher($this->db, $userID);
+                $submissionModel = new Submission($this->db);
                 $submissions = $submissionModel->fetchAll();
 
                 $submissionsJson = array_map(function ($submission) {
@@ -132,7 +134,7 @@ class DashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $submissionFetcher = new SubmissionFetcher($this->db, $userID);
+                $submissionFetcher = new Submission($this->db);
                 $submissions = $submissionFetcher->fetchAll();
                 $submissionIDs = array_map(function ($submission) {
                     return $submission->ID;
@@ -140,7 +142,7 @@ class DashboardController extends Controller
 
                 $reports = [];
                 if (!empty($submissionIDs)) {
-                    $plagiarismReportsFetcher = new PlagiarismReportsFetcher($this->db, $userID);
+                    $plagiarismReportsFetcher = new PlagiarismReport($this->db, null, $userID);
                     $reports = $plagiarismReportsFetcher->fetchBySubmissionIDs($submissionIDs);
                 }
                 $reportsJson = array_map(function ($report) {
@@ -177,7 +179,7 @@ class DashboardController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new GroupsModel($this->db, $userID);
+            $dataFetcher = new Groups($this->db);
             try {
 
                 echo $dataFetcher->returnAsJson();
@@ -206,7 +208,7 @@ class DashboardController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new GroupsModel($this->db, $userID);
+            $dataFetcher = new Groups($this->db);
             try {
 
                 echo $dataFetcher->getGroupsAndCountAsJson();

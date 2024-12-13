@@ -22,39 +22,39 @@
 				<h1>Dashboard</h1>
 			</div>
 			<?php
-$userID = $_SESSION['user']['ID'];
+			$userID = $_SESSION['user']['ID'];
 
-$url = "http://localhost/Plagiarism_Checker/public/adminDashboard/getAdminData?userID=" . $userID;
+			$url = redirect("/adminDashboard/getAdminDashboard") ."?userID=". $userID;
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$response = curl_exec($ch);
+			$response = curl_exec($ch);
 
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-    curl_close($ch);
-    exit;
-}
+			if (curl_errno($ch)) {
+				echo 'Error:' . curl_error($ch);
+				curl_close($ch);
+				exit;
+			}
 
-curl_close($ch);
+			curl_close($ch);
 
-$data = json_decode($response, true);
+			$data = json_decode($response, true);
 
-if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-    echo 'Error decoding JSON response.';
-    exit;
-}
+			if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+				echo 'Error decoding JSON response.';
+				exit;
+			}
 
-$GLOBALS['plagiarismReportsCount'] = $data['plagiarismReportsCount'];
-$GLOBALS['usersCount'] = $data['usersCount'];
-$GLOBALS['submissionsCount'] = $data['submissionsCount'];
-$GLOBALS['groupsCount'] = $data['groupsCount'];
-$GLOBALS['studentsCount'] = $data['studentsCount'];
-$GLOBALS['instructorsCount'] = $data['instructorsCount'];
-$GLOBALS['assignmentsCount'] = $data['assignmentsCount'];
-?>
+			$GLOBALS['plagiarismReportsCount'] = $data['plagiarismReportsCount'];
+			$GLOBALS['usersCount'] = $data['usersCount'];
+			$GLOBALS['submissionsCount'] = $data['submissionsCount'];
+			$GLOBALS['groupsCount'] = $data['groupsCount'];
+			$GLOBALS['studentsCount'] = $data['studentsCount'];
+			$GLOBALS['instructorsCount'] = $data['instructorsCount'];
+			$GLOBALS['assignmentsCount'] = $data['assignmentsCount'];
+			?>
 			<div class="analytics-section">
 				<h2 class="dashboard-h2">Analytics</h2>
 				<div class="analytics-cards">
@@ -137,7 +137,7 @@ $GLOBALS['assignmentsCount'] = $data['assignmentsCount'];
 						<a href=" <?php url('manageSubmissions'); ?>" class="btn">View Reports</a>
 					</div>
 
-					
+
 				</div>
 			</div>
 
