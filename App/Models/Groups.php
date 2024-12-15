@@ -15,11 +15,12 @@ class Groups
     public $groupID;
     private $UserID;
 
-    public function __construct($db)
+    public function __construct($db, $userId = null)
     {
         $this->db = $db;
-        $this->UserID = isset($_SESSION['user']['ID']) && !is_null($_SESSION['user']['ID']) ? $_SESSION['user']['ID'] : null;
+        $this->UserID = $userId ?? ($_SESSION['user']['ID'] ?? null);
     }
+
 
     public function getAvailableGroups()
     {

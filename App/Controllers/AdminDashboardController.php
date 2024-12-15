@@ -54,7 +54,7 @@ class AdminDashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $adminDashboard = new User($this->db);
+                $adminDashboard = new User($this->db); //mngrb 
                 echo $adminDashboard->getAdminDashboardDataAsJson();
             } catch (Exception $e) {
                 echo json_encode([

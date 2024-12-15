@@ -27,9 +27,6 @@
     <section id="content">
         <?php include 'inc/navbar.php'; ?>
 
-
-
-
         <main>
             <div class="head-title">
                 <h1>Manage Assignments</h1>
@@ -141,60 +138,60 @@
 
 
             <div id="forum-container-EDIT">
-        <div class="forum-post">
-            <div class="header-container">
-                <h1 id="HeaderManage">Edit Assignment</h1>
-                <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
+                <div class="forum-post">
+                    <div class="header-container">
+                        <h1 id="HeaderManage">Edit Assignment</h1>
+                        <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
+                    </div>
+                    <form id="assignment-form-Edit" method="post">
+                        <div class="post-title">
+                            <label for="assignment-title">Assignment Title:</label><br>
+                            <input type="text" id="assignment-title-Edit" name="assignment-title" required>
+                        </div>
+
+                        <div class="post-content">
+                            <label for="assignment-description">Description:</label><br>
+                            <textarea id="assignment-description-Edit" name="assignment-description" rows="5"
+                                required></textarea>
+                        </div>
+
+                        <div class="post-details">
+                            <label for="due-date">Due Date:</label><br>
+                            <input type="date" id="due-date-Edit" name="due-date" required>
+                            <div id="date-error-Edit" class="error"></div>
+                        </div>
+
+                        <div class="Choose-Group-Container">
+                            <label>Group:</label><br>
+                            <select name="groupID" id="Group-Number-Edit" class="Group-Selection" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">5</option>
+                                <option value="1">165</option>
+                                <option value="2">265</option>
+                                <option value="3">354</option>
+                                <option value="4">4456</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="edit-button">Edit Assignment</button>
+                    </form>
+                </div>
             </div>
-            <form id="assignment-form-Edit" method="post">
-                <div class="post-title">
-                    <label for="assignment-title">Assignment Title:</label><br>
-                    <input type="text" id="assignment-title-Edit" name="assignment-title" required>
-                </div>
-
-                <div class="post-content">
-                    <label for="assignment-description">Description:</label><br>
-                    <textarea id="assignment-description-Edit" name="assignment-description" rows="5"
-                        required></textarea>
-                </div>
-
-                <div class="post-details">
-                    <label for="due-date">Due Date:</label><br>
-                    <input type="date" id="due-date-Edit" name="due-date" required>
-                    <div id="date-error-Edit" class="error"></div>
-                </div>
-
-                <div class="Choose-Group-Container">
-                    <label>Group:</label><br>
-                    <select name="groupID" id="Group-Number-Edit" class="Group-Selection" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">5</option>
-                        <option value="1">165</option>
-                        <option value="2">265</option>
-                        <option value="3">354</option>
-                        <option value="4">4456</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        
-                    </select>
-                </div>
-
-                <button type="submit" class="edit-button">Edit Assignment</button>
-            </form>
-        </div>
-    </div>
 
 
 
