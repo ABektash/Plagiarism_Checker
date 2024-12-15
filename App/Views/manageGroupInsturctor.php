@@ -27,13 +27,18 @@
                     $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getGroups?userID=" . $userID;
                     $response = file_get_contents($url);
                     $groups = json_decode($response, true);
-
+                    
                     if (is_array($groups) && !empty($groups)) {
                         foreach ($groups as $groupID) {
                             echo "<option value='$groupID'" . (isset($_POST['GroupNumber']) && $_POST['GroupNumber'] == $groupID ? ' selected' : '') . ">$groupID</option>";
                         }
                     } else {
                         echo "<option>No groups available</option>";
+                    }
+
+                    if(!empty($groups))
+                    if (!isset($_POST['GroupNumber'])) {
+                        $_POST['GroupNumber'] = $groups[0];
                     }
                     ?>
                 </select>
@@ -83,6 +88,7 @@ if (isset($_POST['GroupNumber'])) {
         echo "<tr><td colspan='4'>No members found for this group.</td></tr>";
     }
 }
+
 ?>
                     
                 </tbody>

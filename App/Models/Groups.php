@@ -288,6 +288,8 @@ class Groups
             `groups` g
         INNER JOIN 
             user_groups ug ON g.ID = ug.groupID
+        INNER JOIN 
+            users u ON ug.userID = u.ID AND u.UserType_id = 3
         LEFT JOIN 
             assignments a ON g.ID = a.groupID
         LEFT JOIN 
