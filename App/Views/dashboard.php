@@ -23,22 +23,20 @@ if (session_status() == PHP_SESSION_NONE) {
     <main>
 
         <?php
-        // session_start();
-        // $user_role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
         // Fetch user ID from session
         if ($_SESSION['user']['UserType_id'] == 3):
 
             $userID = $_SESSION['user']['ID'];
 
-            $urlAssignments = redirect("/dashboard/getAssignments") . "?userID=" . $userID;
+            $urlAssignments = redirect("dashboard/getAssignments") . "?userID=" . $userID;
             $responseAssignments = file_get_contents($urlAssignments);
             $assignmentsData = json_decode($responseAssignments, true);
 
-            $urlSubmissions = redirect("/dashboard/getSubmissions") . "?userID=" . $userID;
+            $urlSubmissions = redirect("dashboard/getSubmissions") . "?userID=" . $userID;
             $responseSubmissions = file_get_contents($urlSubmissions);
             $submissionsData = json_decode($responseSubmissions, true);
 
-            $urlReports = redirect("/dashboard/getReports") . "?userID=" . $userID;
+            $urlReports = redirect("dashboard/getReports") . "?userID=" . $userID;
             $responseReports = file_get_contents($urlReports);
             $reportsData = json_decode($responseReports, true);
 
@@ -203,7 +201,7 @@ if (session_status() == PHP_SESSION_NONE) {
         if ($_SESSION['user']['UserType_id'] == 2):
             $userID = $_SESSION['user']['ID'];
 
-            $jsonResponse = file_get_contents(redirect("/dashboard/getGroupsAndCount") . "?userID=" . $userID);
+            $jsonResponse = file_get_contents(redirect("Dashboard/getGroupsAndCount") . "?userID=" . $userID);
 
             if ($jsonResponse === false) {
                 echo "Error fetching data.";
@@ -211,7 +209,6 @@ if (session_status() == PHP_SESSION_NONE) {
             }
 
             $groupsData = json_decode($jsonResponse, true);
-
             echo '
     <section id="groups">
         <h2>Groups</h2>
@@ -247,7 +244,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </section>';
 
 
-            $response = file_get_contents(redirect("/dashboard/getInstructorData"). "?userID=" . $userID);
+            $response = file_get_contents(redirect("Dashboard/getInstructorData") . "?userID=" . $userID);
             $data = json_decode($response, true);
 
             // Submissions section

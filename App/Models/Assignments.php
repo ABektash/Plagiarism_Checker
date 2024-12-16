@@ -19,10 +19,10 @@ class Assignments implements AssignmentSubject
     public $assignments = [];
     private array $observers = [];
 
-    public function __construct($conn)
+        public function __construct($db, $userId = null)
     {
-        $this->conn = $conn;
-        $this->UserID = isset($_SESSION['user']['ID']) && !is_null($_SESSION['user']['ID']) ? $_SESSION['user']['ID'] : null;
+        $this->conn = $db;
+        $this->UserID = $userId ?? ($_SESSION['user']['ID'] ?? null);
     }
 
     public function getAssignments()

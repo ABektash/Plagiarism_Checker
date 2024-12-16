@@ -53,7 +53,7 @@ class ManageGroupInsturctorController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new Groups($this->db);
+            $dataFetcher = new Groups($this->db,$userID);
             try {
 
                 echo $dataFetcher->getGroupsAsJson();
@@ -86,7 +86,7 @@ class ManageGroupInsturctorController extends Controller
 
             $userID = intval($_GET['userID']);
             $groupID = intval($_GET['groupID']);
-            $dataFetcher = new Groups($this->db);
+            $dataFetcher = new Groups($this->db,$userID);
             try {
 
                 echo $dataFetcher->getGroupMembersAsJson($groupID);

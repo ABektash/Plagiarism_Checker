@@ -35,6 +35,11 @@
                     } else {
                         echo "<option>No groups available</option>";
                     }
+
+                    if (!empty($groups))
+                        if (!isset($_POST['GroupNumber'])) {
+                            $_POST['GroupNumber'] = $groups[0];
+                        }
                     ?>
                 </select>
             </form>
@@ -61,30 +66,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-if (isset($_POST['GroupNumber'])) {
-    $userID = $_SESSION['user']['ID'];
-    $groupID = $_POST['GroupNumber'];
-    $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getMembers?userID=" . $userID . "&groupID=" . $groupID;
-    $response = file_get_contents($url);
-    $members = json_decode($response, true);
+                    <?php
+                    if (isset($_POST['GroupNumber'])) {
+                        $userID = $_SESSION['user']['ID'];
+                        $groupID = $_POST['GroupNumber'];
+                        $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getMembers?userID=" . $userID . "&groupID=" . $groupID;
+                        $response = file_get_contents($url);
+                        $members = json_decode($response, true);
 
-    if (is_array($members) && !empty($members)) {
+                        if (is_array($members) && !empty($members)) {
 
-        foreach ($members as $member) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($member['UserID']) . "</td>";
-            echo "<td>" . htmlspecialchars($member['FirstName']) . " " . htmlspecialchars($member['LastName']) . "</td>";
-            echo "<td>" . htmlspecialchars($member['Email']) . "</td>";
-            echo "<td><a class='a-link' href='#'><i class='bx bxs-user'></i></a></td>";
-            echo "</tr>";
-        }
-    } else {
-        echo "<tr><td colspan='4'>No members found for this group.</td></tr>";
-    }
-}
-?>
-                    
+                            foreach ($members as $member) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($member['UserID']) . "</td>";
+                                echo "<td>" . htmlspecialchars($member['FirstName']) . " " . htmlspecialchars($member['LastName']) . "</td>";
+                                echo "<td>" . htmlspecialchars($member['Email']) . "</td>";
+                                echo "<td><a class='a-link' href='#'><i class='bx bxs-user'></i></a></td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4'>No members found for this group.</td></tr>";
+                        }
+                    }
+
+                    ?>
+
                 </tbody>
             </table>
 

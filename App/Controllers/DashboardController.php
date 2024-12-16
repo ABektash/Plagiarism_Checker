@@ -57,7 +57,7 @@ class DashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $assignmentsFetcher = new Assignments($this->db);
+                $assignmentsFetcher = new Assignments($this->db,$userID);
                 $assignments = $assignmentsFetcher->fetchAll();
 
                 $assignmentsJson = array_map(function ($assignment) {
@@ -96,7 +96,7 @@ class DashboardController extends Controller
 
             try {
 
-                $submissionModel = new Submission($this->db);
+                $submissionModel = new Submission($this->db,$userID);
                 $submissions = $submissionModel->fetchAll();
 
                 $submissionsJson = array_map(function ($submission) {
@@ -134,7 +134,7 @@ class DashboardController extends Controller
             $userID = intval($_GET['userID']);
 
             try {
-                $submissionFetcher = new Submission($this->db);
+                $submissionFetcher = new Submission($this->db,$userID);
                 $submissions = $submissionFetcher->fetchAll();
                 $submissionIDs = array_map(function ($submission) {
                     return $submission->ID;
@@ -179,7 +179,7 @@ class DashboardController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new Groups($this->db);
+            $dataFetcher = new Groups($this->db,$userID);
             try {
 
                 echo $dataFetcher->returnAsJson();
@@ -208,9 +208,11 @@ class DashboardController extends Controller
             }
 
             $userID = intval($_GET['userID']);
-            $dataFetcher = new Groups($this->db);
+            
+            $dataFetcher = new Groups($this->db,$userID);
+            
             try {
-
+                
                 echo $dataFetcher->getGroupsAndCountAsJson();
             } catch (Exception $e) {
                 echo json_encode([

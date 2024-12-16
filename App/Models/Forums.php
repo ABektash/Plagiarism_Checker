@@ -74,13 +74,13 @@ class Forums
             )
         WHERE forums.StudentID = $userID OR forums.InstructorID = $userID
         ";
-    
+
         $result = $this->db->query($query);
-    
+
         if (!$result) {
             die("Query failed: " . $this->db->error);
         }
-    
+
         $forumsData = [];
         while ($row = $result->fetch_assoc()) {
             $forumsData[] = $row;
@@ -89,7 +89,7 @@ class Forums
         usort($forumsData, function ($a, $b) {
             return strtotime($b['lastMessageDate']) - strtotime($a['lastMessageDate']);
         });
-    
+
         return $forumsData;
     }
 
@@ -106,23 +106,35 @@ class Forums
         $userid = mysqli_real_escape_string($this->db, $userid);
 
         $query = "SELECT 
-                      f.*, 
-                      last_message.last_message_time,
-                      CONCAT(i.FirstName, ' ', i.LastName) AS InstructorName,
-                      CONCAT(s.FirstName, ' ', s.LastName) AS StudentName
+                    f.ID AS ForumID,
+                    f.SubmissionID,
+                    f.InstructorID,
+                    f.StudentID,
+                    f.Createdat,
+                    last_message.last_message_time,
+                    CONCAT(i.FirstName, ' ', i.LastName) AS InstructorName,
+                    CONCAT(s.FirstName, ' ', s.LastName) AS StudentName,
+                    a.Title AS AssignmentTitle,
+                    sub.submissionDate AS SubmissionTime
+                FROM 
+                    forums f
+                LEFT JOIN (
+                    SELECT 
+                        ForumID, 
+                        MAX(Sentat) AS last_message_time
                     FROM 
-                      forums f
-                    LEFT JOIN (
-                        SELECT ForumID, MAX(Sentat) AS last_message_time
-                        FROM forums_messages
-                        GROUP BY ForumID
-                    ) AS last_message ON f.ID = last_message.ForumID
-                    LEFT JOIN users i ON f.InstructorID = i.ID
-                    LEFT JOIN users s ON f.StudentID = s.ID
-                    WHERE 
-                        f.InstructorID = '$userid' OR f.StudentID = '$userid'
-                    ORDER BY 
-                        last_message.last_message_time DESC;";
+                        forums_messages
+                    GROUP BY 
+                        ForumID
+                ) AS last_message ON f.ID = last_message.ForumID
+                LEFT JOIN users i ON f.InstructorID = i.ID
+                LEFT JOIN users s ON f.StudentID = s.ID
+                LEFT JOIN submissions sub ON f.SubmissionID = sub.ID
+                LEFT JOIN assignments a ON sub.assignmentID = a.ID
+                WHERE 
+                    f.InstructorID = '$userid' OR f.StudentID = '$userid'
+                ORDER BY 
+                    last_message.last_message_time DESC;";
 
         $result = $this->db->query($query);
         $Allforums = [];

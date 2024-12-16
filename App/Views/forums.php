@@ -20,7 +20,7 @@
             <div id="chat-items" class="chat-items">
                 <?php if (!empty($allForums)): ?>
                     <?php foreach ($allForums as $forum): ?>
-                        <div class="chat-item" data-chat="<?= htmlspecialchars($forum['ID']) ?>" onclick="loadChat(<?= $forum['ID'] ?>)">
+                        <div class="chat-item" data-chat="<?= htmlspecialchars($forum['ForumID']) ?>" onclick="loadChat(<?= $forum['ForumID'] ?>)">
                             <p class="chat-name">
                                 <?php
                                 switch ($_SESSION['user']['UserType_id']) {
@@ -36,7 +36,15 @@
                                 }
                                 ?>
                             </p>
-                            <p class="chat-preview">Last message at: <?= htmlspecialchars($forum['last_message_time'] ?? 'N/A') ?></p>
+                            <p class="chat-preview">Last message at: <?= htmlspecialchars($forum['last_message_time'] ?? 'N/A') ?>
+                            </p>
+                            <br>
+                            <p class="chat-details">
+                                Assignment: <?= htmlspecialchars($forum['AssignmentTitle'] ?? 'No Assignment') ?>
+                            </p>
+                            <p class="chat-details">
+                                Submission Date: <?= htmlspecialchars($forum['SubmissionTime'] ?? 'No Submission') ?>
+                            </p>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -44,6 +52,7 @@
                 <?php endif; ?>
             </div>
         </div>
+
 
         <div class="chat-container">
             <div class="chat-header">
