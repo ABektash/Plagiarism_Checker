@@ -1,8 +1,4 @@
 <?php
-require 'App/Libraries/PHPMailer/PHPMailer.php';
-require 'App/Libraries/PHPMailer/SMTP.php';
-require 'App/Libraries/PHPMailer/Exception.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

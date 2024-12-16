@@ -3,7 +3,10 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-class Assignments
+
+require_once 'AssignmentSubject.php';
+
+class Assignments implements AssignmentSubject
 {
     private $conn;
     public $UserID;
@@ -14,6 +17,7 @@ class Assignments
     public $DueDate;
     public $groupID;
     public $assignments = [];
+    private array $observers = [];
 
     public function __construct($conn)
     {
@@ -53,9 +57,9 @@ class Assignments
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
     public function addAssignment($title, $description, $dueDate, $groupID)
     {
-
         if (!isset($_SESSION["user"]["ID"])) {
             throw new Exception("User not logged in.");
         }
@@ -64,13 +68,40 @@ class Assignments
         $query = "INSERT INTO assignments (userID, Title, Description, DueDate, groupID) 
               VALUES ('$user_ID', '$title', '$description', '$dueDate', '$groupID')";
         try {
-            return $this->conn->query($query);
-        } catch (PDOException $e) {
+            $result = $this->conn->query($query);
 
+            if ($result) {
+                $usersQuery = "SELECT u.ID, u.FirstName, u.LastName, u.Email 
+                FROM users u
+                INNER JOIN user_groups ug ON u.ID = ug.userID
+                WHERE ug.groupID = '$groupID'";
+
+                $result = $this->conn->query($usersQuery);
+
+                if ($result) {
+                    while ($userData = $result->fetch_assoc()) {
+                        $user = new User($this->conn);
+                        $user->email = $userData['Email'];
+                        $this->addObserver($user);
+                    }
+                }
+
+                $message = "A new assignment '{$title}' has been uploaded. Due Date: {$dueDate}.";
+
+                $this->notifyObservers($message);
+
+                $this->observers = [];
+
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
             error_log("Error adding assignment: " . $e->getMessage());
             return false;
         }
     }
+
+
 
     public function editAssignment($id, $title, $description, $dueDate, $groupID)
     {
@@ -164,5 +195,23 @@ class Assignments
         }
         $stmt->close();
         return $this->assignments;
+    }
+
+
+    public function addObserver(AssignmentObserver $observer): void
+    {
+        $this->observers[] = $observer;
+    }
+
+    public function removeObserver(AssignmentObserver $observer): void
+    {
+        $this->observers = array_filter($this->observers, fn($obs) => $obs !== $observer);
+    }
+
+    public function notifyObservers(string $message): void
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($message);
+        }
     }
 }

@@ -1,12 +1,15 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require_once 'Page.php';
 require_once 'UserTypePage.php';
+require_once 'AssignmentObserver.php';
 
-class User
+class User implements AssignmentObserver
 {
     private $conn;
     private $table_name = "users";
@@ -278,5 +281,30 @@ class User
         }
 
         return json_encode($resultData);
+    }
+
+
+    public function update(string $message): void {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = APP_EMAIL;
+            $mail->Password = APP_PASSWORD;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+
+            $mail->setFrom(APP_EMAIL, 'Plagiarism Detection');
+            $mail->addAddress($this->email);
+            $mail->isHTML(true);
+            $mail->Subject = 'New Assignment Uploaded';
+            $mail->Body = $message;
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {}
     }
 }
