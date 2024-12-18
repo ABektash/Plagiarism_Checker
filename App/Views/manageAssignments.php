@@ -29,8 +29,6 @@
                             window.location.href = '" . redirect('manageAssignments/index') . "';
                             </script>";
     }
-
-
     ?>
 
     <main class="manageAssignmentsMain">

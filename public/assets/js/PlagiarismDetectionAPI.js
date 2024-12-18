@@ -1,31 +1,86 @@
 // // Function to fetch plagiarism detection results
-// async function testAPIIIII() {
-//   const options = {
-//       method: 'POST',
-//       headers: {
-//           accept: 'application/json',
-//           'content-type': 'application/json',
-//           authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOWE5YTI2ZmYtNTJlOS00N2RkLWJmZDMtNmUxNzcwNDM5NjAwIiwidHlwZSI6ImFwaV90b2tlbiJ9.roZn8xBXOqwlQaBDmdxr5SAaIZtp0Sq6ETXar0clhF4'
-//       },
-//       body: JSON.stringify({
-//           providers: 'originalityai',
-//           text: 'essay, an analytic, interpretative, or critical literary composition usually much shorter and less systematic and formal than a dissertation or thesis and usually dealing with its subject from a limited and often personal point of view.Some early treatises—such as those of Cicero on the pleasantness of old age or on the art of divination, Seneca on anger or clemency, and Plutarch on the passing of oracles—presage to a certain degree the form and tone of the essay, but not until the late 16th century was the flexible and deliberately nonchalant and versatile form of the essay perfected by the French writer Michel de Montaigne. Choosing the name essai to emphasize that his compositions were attempts or endeavours, a groping toward the expression of his personal thoughts and experiences, Montaigne used the essay as a means of self-discovery. His Essais, published in their final form in 1588, are still considered among the finest of their kind. Later writers who most nearly recall the charm of Montaigne include, in England, Robert Burton, though his whimsicality is more erudite, Sir Thomas Browne, and Laurence Sterne, and in France, with more self-consciousness and pose, André Gide and Jean Cocteau.',
-//           title: 'essay'
-//       })
-//   };
+// async function CallAPI(extractedText) {
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             accept: 'application/json',
+//             'content-type': 'application/json',
+//             authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOWE5YTI2ZmYtNTJlOS00N2RkLWJmZDMtNmUxNzcwNDM5NjAwIiwidHlwZSI6ImFwaV90b2tlbiJ9.roZn8xBXOqwlQaBDmdxr5SAaIZtp0Sq6ETXar0clhF4'
+//         },
+//         body: JSON.stringify({
+//             providers: 'originalityai',
+//             text: extractedText,
+//             title: 'Uploaded Assignment'
+//         })
+//     };
 
-//   try {
-//       const response = await fetch('https://api.edenai.run/v2/text/plagia_detection', options);
-//       const result = await response.json();
-//       document.getElementById('result').innerText = JSON.stringify(result, null, 2);
-//   } catch (error) {
-//       console.error('Error:', error);
-//       document.getElementById('result').innerText = 'An error occurred. Please try again.';
-//   }
+//     try {
+//         const response = await fetch('https://api.edenai.run/v2/text/plagia_detection', options);
+//         const result = await response.json();
+//         document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+//     } catch (error) {
+//         console.error('Error:', error);
+//         document.getElementById('result').innerText = 'An error occurred. Please try again.';
+//     }
 // }
 
-// // Attach the event listener to the form
-// document.getElementById('plagiarismForm').addEventListener('submit', (event) => {
-//   event.preventDefault(); // Prevent form submission from reloading the page
-//   testAPIIIII(); // Call the function
+// // Wait for the DOM to load
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Get the form and input elements
+//     const form = document.getElementById('assignment-form-Add');
+//     const pdfFileInput = document.getElementById('assignment-file');
+//     const pdfTextContainer = document.getElementById('pdfText');
+
+//     // Load the PDF.js library
+//     const pdfjsLib = window['pdfjs-dist/build/pdf'];
+//     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+//     // Handle form submission
+//     form.addEventListener('submit', function (e) {
+//         e.preventDefault(); // Prevent the form from submitting normally
+
+//         const file = pdfFileInput.files[0]; // Get the selected file
+
+//         if (file && file.type === 'application/pdf') {
+//             extractTextFromPDF(file);
+//         } else {
+//             pdfTextContainer.innerHTML = 'Please upload a valid PDF file.';
+//         }
+//     });
+
+//     // Function to process and extract text from the PDF
+//     async function extractTextFromPDF(file) {
+//         try {
+//             const fileReader = new FileReader();
+
+//             fileReader.onload = async function (event) {
+//                 const pdfData = new Uint8Array(event.target.result);
+
+//                 const pdf = await pdfjsLib.getDocument(pdfData).promise;
+
+//                 let extractedText = '';
+
+//                 // Loop through all the pages and extract text
+//                 for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+//                     const page = await pdf.getPage(pageNum);
+//                     const textContent = await page.getTextContent();
+                    
+//                     // Combine the text content from the page
+//                     const pageText = textContent.items.map(item => item.str).join(' ');
+//                     extractedText += pageText + '\n';
+//                 }
+
+//                 // Display the extracted text
+//                 pdfTextContainer.innerText = extractedText.trim();
+
+//                 // Call the plagiarism detection API with the extracted text
+//                 CallAPI(extractedText.trim());
+//             };
+
+//             // Read the PDF file as an ArrayBuffer
+//             fileReader.readAsArrayBuffer(file);
+//         } catch (error) {
+//             pdfTextContainer.innerHTML = 'Error processing the PDF file: ' + error.message;
+//         }
+//     }
 // });

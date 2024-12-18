@@ -50,13 +50,16 @@ class Assignments implements AssignmentSubject
     }
     public function getAssignmentById($id)
     {
-        $query = "SELECT * FROM assignments WHERE ID = :id";
+        $query = "SELECT ID, Title, Description, DueDate, groupID FROM assignments WHERE ID = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        if (!$stmt) {
+            error_log("Failed to prepare statement: " . $this->conn->error);
+            return false;
+        }
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
 
     public function addAssignment($title, $description, $dueDate, $groupID)
     {

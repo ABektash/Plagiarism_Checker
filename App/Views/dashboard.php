@@ -70,7 +70,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td>' . htmlspecialchars($title) . '</td>';
                     echo '<td>' . htmlspecialchars($dueDate) . '</td>';
                     echo '<td>' . htmlspecialchars($status) . '</td>';
-                    echo '<td><a class="a-link" href="' . $submissionLink . '">View</a></td>';
+                    echo '<td><a class="a-link" href="' . redirect("submit/index?assignmentID=" . $assignment["ID"]) . '">View</a></td>';
                     echo '</tr>';
                 }
 
