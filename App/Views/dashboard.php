@@ -43,29 +43,37 @@ if (session_status() == PHP_SESSION_NONE) {
 
             if ($assignmentsData['success']) {
                 $assignments = $assignmentsData['assignments'];
-
-                echo '<!-- Student Dashboard -->
-                <section id="assignments">
-                    <h2>Assignments due</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Assignment</th>
-                                <th>Submission Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-
+            
+                // Prevent duplicate rendering
+                $renderedAssignments = [];
+            
+                echo '<section id="assignments">
+                        <h2>Assignments due</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Assignment</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+            
                 foreach ($assignments as $assignmentJson) {
                     $assignment = json_decode($assignmentJson, true);
-
+            
+                    // Avoid duplicate assignment rendering
+                    if (in_array($assignment['ID'], $renderedAssignments)) {
+                        continue;
+                    }
+                    $renderedAssignments[] = $assignment['ID'];
+            
                     $title = $assignment['Title'];
                     $dueDate = $assignment['DueDate'] ?? 'Not Set';
                     $status = 'Pending';
                     $submissionLink = redirect('submit/index');
-
+            
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($title) . '</td>';
                     echo '<td>' . htmlspecialchars($dueDate) . '</td>';
@@ -73,14 +81,14 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td><a class="a-link" href="' . redirect("submit/index?assignmentID=" . $assignment["ID"]) . '">View</a></td>';
                     echo '</tr>';
                 }
-
+            
                 echo '</tbody>
-                </table>
-                </section>';
+                      </table>
+                      </section>';
             } else {
-                echo 'session : ' . $assignmentsData['session'];
                 echo '<p>No assignments found.</p>';
             }
+            
 
             // Start Submissions Table
             if ($submissionsData['success']) {

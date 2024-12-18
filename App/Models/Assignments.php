@@ -52,14 +52,48 @@ class Assignments implements AssignmentSubject
     {
         $query = "SELECT ID, Title, Description, DueDate, groupID FROM assignments WHERE ID = ?";
         $stmt = $this->conn->prepare($query);
+    
         if (!$stmt) {
             error_log("Failed to prepare statement: " . $this->conn->error);
             return false;
         }
+    
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->get_result();
+    
+        $assignment = $result->fetch_assoc();
+    
+        if (!$assignment) {
+            error_log("No assignment found for ID: " . $id);
+        }
+    
+        return $assignment;
     }
+    
+    public function saveFileToDatabase($assignmentId, $fileName, $filePath)
+    {
+        // SQL query to update the assignment with the file information
+        $query = "UPDATE assignments SET fileName = ?, filePath = ? WHERE id = ?";
+    
+        // Prepare the SQL statement
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            die("Database prepare failed: " . $this->conn->error);  // Use mysqli_error() here
+        }
+    
+        // Bind the parameters
+        $stmt->bind_param('ssi', $fileName, $filePath, $assignmentId);  // Use 'ssi' for string, string, integer
+    
+        // Execute the query and check if it was successful
+        if (!$stmt->execute()) {
+            die("Failed to execute query: " . $stmt->error);  // Use mysqli error() method
+        }
+    
+        return true;
+    }
+    
 
     public function addAssignment($title, $description, $dueDate, $groupID)
     {

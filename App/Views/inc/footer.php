@@ -21,8 +21,8 @@
         <div class="footer-content-right">
             <h2>GET IN TOUCH</h2>
             <ul>
-                <li>+201000000000</li>
-                <li>plagiarismdetection@gmail.com</li>
+                <li>+01014029719</li> 
+                <li>plagiarismdetection24@gmail.com</li>
             </ul>
         </div>
     </div>

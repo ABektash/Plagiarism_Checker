@@ -20,6 +20,8 @@ class submitController extends Controller
     {
         $id = $_GET['assignmentID'] ?? null;
 
+
+
         if (!$id) {
             $this->view('submit', ['error' => 'No assignment ID provided.']);
             return;
@@ -37,6 +39,7 @@ class submitController extends Controller
 
     public function submit()
     {
+
         // Get assignment ID
         $id = $_GET['assignmentID'] ?? null;
 
@@ -77,7 +80,6 @@ class submitController extends Controller
         }
 
     }
-
 
 
 }
