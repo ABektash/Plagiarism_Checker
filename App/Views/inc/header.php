@@ -8,23 +8,26 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 
 <div class="navbar">
-<h1 class="navheader" onclick="window.location.href='<?php url('home/index'); ?>'">PLAGIARISM DETECTION</h1>
+    <h1 class="navheader" onclick="window.location.href='<?php url('home/index'); ?>'">PLAGIARISM DETECTION</h1>
 
-<ul class="navbar-menu">
-    <?php if (isset($_SESSION['pages']) && $_SESSION["user"]["UserType_id"] != 1): ?>
-        <?php if (in_array('Dashboard', $_SESSION['pages'])): ?>
-            <a href="<?php url('dashboard/index'); ?>" class="nav-link">Dashboard</a>
-        <?php endif; ?>
+    <ul class="navbar-menu">
+        <?php if (isset($_SESSION['pages']) && $_SESSION["user"]["UserType_id"] != 1): ?>
+            <?php if (in_array('Dashboard', $_SESSION['pages'])): ?>
+                <a href="<?php url('dashboard/index'); ?>" class="nav-link">Dashboard</a>
+            <?php endif; ?>
 
-        <?php if (in_array('Manage Assignments', $_SESSION['pages'])): ?>
-            <a href="<?php url('manageAssignments/index'); ?>" class="nav-link">Manage Assignments</a>
-        <?php endif; ?>
+            <?php if (in_array('Manage Assignments', $_SESSION['pages'])): ?>
+                <a href="<?php url('manageAssignments/index'); ?>" class="nav-link">Manage Assignments</a>
+            <?php endif; ?>
 
-        <?php if (in_array('My Groups', $_SESSION['pages'])): ?>
-            <a href="<?php url('manageGroupInsturctor/index'); ?>" class="nav-link">My Groups</a>
+            <?php if (in_array('My Groups', $_SESSION['pages'])): ?>
+                <a href="<?php url('manageGroupInsturctor/index'); ?>" class="nav-link">My Groups</a>
+            <?php endif; ?>
         <?php endif; ?>
-    <?php endif; ?>
-</ul>
+        <?php if (isset($_SESSION['pages']) && $_SESSION["user"]["UserType_id"] == 1):  ?>
+            <a href="<?php url('adminDashboard'); ?>" class="nav-link">Admin Main Page</a>
+        <?php endif; ?>
+    </ul>
 
     <div class="navbar-right">
         <?php if (!isset($_SESSION['user'])): ?>
@@ -34,7 +37,9 @@ if (session_status() == PHP_SESSION_NONE) {
 
             <div class="profile-photo">
                 <!-- <img src="/Plagiarism_Checker/public/assets/images/defaultpic.jpg" alt="Profile Photo" onclick="window.location.href='<?php url('profile/index'); ?>'"> -->
-                <i alt="Profile Photo" class="fa-solid fa-user fa-xl" id="profile-icon" onclick="window.location.href='<?php url('profile/index'); ?>'"></i> 
+
+                <?php $redirectUrl = isset($_SESSION["user"]["UserType_id"]) && $_SESSION["user"]["UserType_id"] == 1 ? 'adminDashboard' : 'profile/index'; ?>
+                <i alt="Profile Photo" class="fa-solid fa-user fa-xl" id="profile-icon" onclick="window.location.href='<?php url($redirectUrl); ?>'"></i>
                 <span class="notification-dot"></span>
             </div>
 
@@ -54,5 +59,5 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php endif; ?>
     </div>
 </div>
- 
+
 <script src="/Plagiarism_Checker/public\assets\js\header.js"></script>

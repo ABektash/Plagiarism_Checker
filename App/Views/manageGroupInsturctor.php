@@ -24,8 +24,7 @@
                     <?php
                     $userID = $_SESSION['user']['ID'];
 
-                    $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getGroups?userID=" . $userID;
-                    $response = file_get_contents($url);
+                    $response = file_get_contents(redirect("ManageGroupInsturctor/getGroups") . "?userID=" . $userID);
                     $groups = json_decode($response, true);
 
                     if (is_array($groups) && !empty($groups)) {
@@ -70,8 +69,8 @@
                     if (isset($_POST['GroupNumber'])) {
                         $userID = $_SESSION['user']['ID'];
                         $groupID = $_POST['GroupNumber'];
-                        $url = "http://localhost/Plagiarism_Checker/public/ManageGroupInsturctor/getMembers?userID=" . $userID . "&groupID=" . $groupID;
-                        $response = file_get_contents($url);
+
+                        $response = file_get_contents(redirect("ManageGroupInsturctor/getMembers") . "?userID=" . $userID . "&groupID=" . $groupID);
                         $members = json_decode($response, true);
 
                         if (is_array($members) && !empty($members)) {

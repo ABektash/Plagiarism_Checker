@@ -164,8 +164,6 @@ class Submission
         return isset($assignment) ? $assignment : null;
     }
 
-
-
     public function returnAsJson()
     {
         $firstName = null;
@@ -206,5 +204,42 @@ class Submission
         }
         $stmt->close();
         return $this->submissions;
+    }
+
+
+    public function updateStatus($submissionID, $status)
+    {
+        $submissionID = mysqli_real_escape_string($this->db, $submissionID);
+        $status = mysqli_real_escape_string($this->db, $status);
+
+        $sql = "UPDATE submissions SET status = '$status' WHERE ID = '$submissionID'";
+
+        $result = mysqli_query($this->db, $sql);
+
+        if ($result) {
+            return true;
+        } else {
+            error_log('Database Update Failed: ' . mysqli_error($this->db));
+            return false;
+        }
+    }
+
+    public function createSubmission($assignmentID, $userID, $submissionData)
+    {
+        $assignmentID = mysqli_real_escape_string($this->db, $assignmentID);
+        $userID = mysqli_real_escape_string($this->db, $userID);
+        $submissionData = mysqli_real_escape_string($this->db, $submissionData);
+
+        $sql = "INSERT INTO submissions (assignmentID, userID, submissionData, status) 
+                VALUES ('$assignmentID', '$userID', '$submissionData', 'Pending')";
+
+        $result = mysqli_query($this->db, $sql);
+
+        if ($result) {
+            return mysqli_insert_id($this->db);
+        } else {
+            error_log('Database Insertion Failed: ' . mysqli_error($this->db));
+            return false;
+        }
     }
 }
