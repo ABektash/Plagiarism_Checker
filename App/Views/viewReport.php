@@ -18,7 +18,7 @@ $userType = $_SESSION['user']['UserType_id'];
 <body>
 
     <?php include 'inc/header.php'; ?>
-    
+
     <?php if ($userType != 1) { ?>
         <button onclick="window.location.href='<?php echo url('dashboard/index'); ?>'" class="GOBACK">Go Back</button>
     <?php } else { ?>
@@ -71,7 +71,6 @@ $userType = $_SESSION['user']['UserType_id'];
     </main>
 
     <?php include 'inc/footer.php'; ?>
-
 
 </body>
 

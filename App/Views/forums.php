@@ -31,7 +31,7 @@
                                         echo htmlspecialchars('Dr. ' . $forum['InstructorName'] ?? 'Unknown');
                                         break;
                                     default:
-                                        echo htmlspecialchars('Unknown');
+                                        echo htmlspecialchars('Dr. ' . $forum['InstructorName'] . ' & ' . $forum['StudentName'] ?? 'Unknown');
                                         break;
                                 }
                                 ?>
@@ -49,7 +49,10 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p style="text-align: center;">No chats exist</p>
-                <?php endif; ?>
+
+                <?php
+                    var_dump($allForums);
+                endif; ?>
             </div>
         </div>
 
@@ -60,7 +63,15 @@
                 <h2 id="chat-title">Select a Chat</h2>
             </div>
 
+            <?php if (isset($forumExist) && $forumExist): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        loadChat(<?= htmlspecialchars($forumID) ?>);
+                    });
+                </script>
+            <?php endif; ?>
             <div id="chat-box" class="chat-box">
+
             </div>
 
             <div class="chat-input">

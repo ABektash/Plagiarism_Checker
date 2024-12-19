@@ -19,12 +19,11 @@ class Assignments implements AssignmentSubject
     public $assignments = [];
     private array $observers = [];
 
-        public function __construct($db, $userId = null)
+    public function __construct($db, $userId = null)
     {
         $this->conn = $db;
         $this->UserID = $userId ?? ($_SESSION['user']['ID'] ?? null);
     }
-
     public function getAssignments()
     {
         $query = "SELECT ID, Title, Description, groupID, DueDate FROM assignments";
@@ -52,49 +51,24 @@ class Assignments implements AssignmentSubject
     {
         $query = "SELECT ID, Title, Description, DueDate, groupID FROM assignments WHERE ID = ?";
         $stmt = $this->conn->prepare($query);
-    
+
         if (!$stmt) {
             error_log("Failed to prepare statement: " . $this->conn->error);
             return false;
         }
-    
+
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         $assignment = $result->fetch_assoc();
-    
+
         if (!$assignment) {
             error_log("No assignment found for ID: " . $id);
         }
-    
+
         return $assignment;
     }
-    
-    public function saveFileToDatabase($assignmentId, $fileName, $filePath)
-    {
-        // SQL query to update the assignment with the file information
-        $query = "UPDATE assignments SET fileName = ?, filePath = ? WHERE id = ?";
-    
-        // Prepare the SQL statement
-        $stmt = $this->conn->prepare($query);
-        
-        if (!$stmt) {
-            die("Database prepare failed: " . $this->conn->error);  // Use mysqli_error() here
-        }
-    
-        // Bind the parameters
-        $stmt->bind_param('ssi', $fileName, $filePath, $assignmentId);  // Use 'ssi' for string, string, integer
-    
-        // Execute the query and check if it was successful
-        if (!$stmt->execute()) {
-            die("Failed to execute query: " . $stmt->error);  // Use mysqli error() method
-        }
-    
-        return true;
-    }
-    
-
     public function addAssignment($title, $description, $dueDate, $groupID)
     {
         if (!isset($_SESSION["user"]["ID"])) {
@@ -137,9 +111,6 @@ class Assignments implements AssignmentSubject
             return false;
         }
     }
-
-
-
     public function editAssignment($id, $title, $description, $dueDate, $groupID)
     {
         $query = "UPDATE assignments 
@@ -162,7 +133,6 @@ class Assignments implements AssignmentSubject
             return false;
         }
     }
-
     public function deleteAssignment($id)
     {
         $id = intval($id);
@@ -176,7 +146,6 @@ class Assignments implements AssignmentSubject
             return false;
         }
     }
-
     public function getGroups()
     {
         $query = "SELECT ID, Name FROM groups";
@@ -184,7 +153,6 @@ class Assignments implements AssignmentSubject
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function get($field, $type = 'string')
     {
         $result = null;
@@ -233,18 +201,14 @@ class Assignments implements AssignmentSubject
         $stmt->close();
         return $this->assignments;
     }
-
-
     public function addObserver(AssignmentObserver $observer): void
     {
         $this->observers[] = $observer;
     }
-
     public function removeObserver(AssignmentObserver $observer): void
     {
         $this->observers = array_filter($this->observers, fn($obs) => $obs !== $observer);
     }
-
     public function notifyObservers(string $message): void
     {
         foreach ($this->observers as $observer) {

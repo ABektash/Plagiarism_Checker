@@ -9,7 +9,7 @@ class PlagiarismReport
     public $similarityPercentage;
     public $userID;
     public $submission;
-    public function __construct($db, $submissionID = null, $userID)
+    public function __construct($db, $submissionID = null, $userID = null)
     {
         $this->db = $db;
         $this->submissionID = $submissionID;
@@ -90,6 +90,38 @@ class PlagiarismReport
         $stmt->close();
         return $reports;
     }
+
+    public function saveReport($submissionID, $responseAPI, $feedback = null, $similarityPercentage = 0, $grade = null)
+    {
+        try {
+            $submissionID = mysqli_real_escape_string($this->db, $submissionID);
+            $responseAPI = mysqli_real_escape_string($this->db, $responseAPI);
+            $feedback = mysqli_real_escape_string($this->db, $feedback ?? '');
+            $similarityPercentage = mysqli_real_escape_string($this->db, $similarityPercentage);
+            $grade = $grade !== null ? mysqli_real_escape_string($this->db, $grade) : 'NULL';
+
+            $sql = "
+            INSERT INTO plagiarism_reports (submissionID, responseAPI, feedback, similarityPercentage, Grade) 
+            VALUES ('$submissionID', '$responseAPI', '$feedback', '$similarityPercentage', $grade)
+            ON DUPLICATE KEY UPDATE 
+            responseAPI = '$responseAPI', 
+            feedback = '$feedback', 
+            similarityPercentage = '$similarityPercentage', 
+            Grade = $grade
+        ";
+
+            $result = mysqli_query($this->db, $sql);
+
+            if (!$result) {
+                error_log('Database Error: ' . mysqli_error($this->db));
+                error_log('Failed SQL: ' . $sql);
+                return false;
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log('Exception in saveReport: ' . $e->getMessage());
+            return false;
+        }
+    }
 }
-
-

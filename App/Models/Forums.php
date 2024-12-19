@@ -144,6 +144,46 @@ class Forums
         }
         return $Allforums;
     }
+
+    public function getAllForumsForAdmin()
+    {
+        $query = "SELECT 
+                    f.ID AS ForumID,
+                    f.SubmissionID,
+                    f.InstructorID,
+                    f.StudentID,
+                    f.Createdat,
+                    last_message.last_message_time,
+                    CONCAT(i.FirstName, ' ', i.LastName) AS InstructorName,
+                    CONCAT(s.FirstName, ' ', s.LastName) AS StudentName,
+                    a.Title AS AssignmentTitle,
+                    sub.submissionDate AS SubmissionTime
+                FROM 
+                    forums f
+                LEFT JOIN (
+                    SELECT 
+                        ForumID, 
+                        MAX(Sentat) AS last_message_time
+                    FROM 
+                        forums_messages
+                    GROUP BY 
+                        ForumID
+                ) AS last_message ON f.ID = last_message.ForumID
+                LEFT JOIN users i ON f.InstructorID = i.ID
+                LEFT JOIN users s ON f.StudentID = s.ID
+                LEFT JOIN submissions sub ON f.SubmissionID = sub.ID
+                LEFT JOIN assignments a ON sub.assignmentID = a.ID
+                ORDER BY 
+                    last_message.last_message_time DESC;";
+
+        $result = $this->db->query($query);
+        $Allforums = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $Allforums[] = $row;
+        }
+        return $Allforums;
+    }
 }
 
 
@@ -171,18 +211,22 @@ class Forums_Messages
     {
         $forumID = mysqli_real_escape_string($this->db, $forumID);
         $userID = $_SESSION['user']['ID'] ?? null;
+        $UserType_id = $_SESSION['user']['UserType_id'] ?? null;
 
-        $updateQuery = "UPDATE forums_messages
-                        SET Isread = 1
-                        WHERE ForumID = '$forumID'
-                          AND SenderID != '$userID';";
+        $updateQuery = "UPDATE forums_messages fm
+                        SET fm.Isread = 1
+                        WHERE fm.ForumID = '$forumID'
+                        AND fm.SenderID != '$userID'
+                        AND '$userID' NOT IN (
+                            SELECT ID FROM users WHERE UserType_id = 1);";
 
         $this->db->query($updateQuery);
 
-        $selectQuery = "SELECT m.SenderID, m.Messagetext, m.Isread, m.sentat
+        $selectQuery = "SELECT m.SenderID, m.Messagetext, m.Isread, m.Sentat, u.UserType_id AS sender_UserType_id
                         FROM forums_messages m
+                        JOIN users u ON m.SenderID = u.ID
                         WHERE m.ForumID = '$forumID'
-                        ORDER BY m.Sentat ASC;";
+                        ORDER BY m.sentat ASC;";
 
         $result = $this->db->query($selectQuery);
         $AllMessages = [];
