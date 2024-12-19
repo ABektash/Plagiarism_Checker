@@ -47,7 +47,7 @@
                                 <option value="<?= $instructor['inst_id'] ?>"><?= $instructor['inst_name'] ?></option>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <option disabled>No instructors found</option>
+                            <option disabled style="color: white;">No instructors found</option>
                         <?php endif; ?>
                     </select>
                 </div>

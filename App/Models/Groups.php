@@ -124,6 +124,7 @@ class Groups
         // Execute and return the result (true on success, false otherwise)
         return $stmt->execute();
     }
+    
     public function createGroup()
     {
         try {

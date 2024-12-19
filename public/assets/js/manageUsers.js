@@ -54,9 +54,9 @@ function filterTable() {
       match = true;
     }
 
-    if (userTypeFilter &&cells[9] &&cells[9].innerText.includes(userTypeFilter)) {
+    if (userTypeFilter &&cells[8] &&cells[8].innerText.includes(userTypeFilter)) {
       match = match && true;
-    } else if (userTypeFilter &&cells[9] &&!cells[9].innerText.includes(userTypeFilter)
+    } else if (userTypeFilter &&cells[8] &&!cells[8].innerText.includes(userTypeFilter)
     ) {
       match = false;
     }

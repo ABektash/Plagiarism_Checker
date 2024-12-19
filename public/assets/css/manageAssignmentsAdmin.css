@@ -136,7 +136,7 @@
     overflow: auto;
   }
   
-  .delete-button {
+  /* .delete-button {
     background-color: #027e6f;
     color: white;
     border: none;
@@ -151,7 +151,18 @@
   .delete-button:hover {
     background-color: red;
     color: white;
-  }
+  } */
+
+  .delete-button {
+  background-color: transparent;
+  border: none;
+  color: var(--blue);
+  width: 15%;
+  /* padding: 10px 15px; */
+}
+.delete-button:hover {
+  color: red;
+}
   
   .edit-button {
     background-color: #027e6f;
@@ -175,6 +186,7 @@
     background-color: #027e6f;
     color: white;
     border: none;
+    border-radius: 7px;
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -205,21 +217,15 @@
   }
   
   #close-btn {
-    background-color: rgb(211, 5, 5);
-    color: white;
+    background-color:transparent;
     border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 16px;
+    /* border-radius: 7px; */
+    padding: 15px;
   }
   
   #close-btn:hover {
-    background-color: #02a793;
-    color: white;
-    border: none;
-    padding: 5px 10px;
     cursor: pointer;
-    font-size: 16px;
+    /* background-color: #02a793; */
   }
   
   #h2Assignments {

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css'>
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignmentsAdmin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" >
 
     <title>Plagiarism Detection</title>
 </head>
@@ -72,7 +73,7 @@
                                             method="POST"
                                             onsubmit="return confirm('Are you sure you want to delete this assignment?')">
                                             <button type="submit" class="delete-button">
-                                                <i class='bx bx-trash'></i> Delete
+                                                <i class='bx bx-trash' style="font-size: 1.25em;"></i> 
                                             </button>
                                         </form>
                                     </td>
@@ -91,7 +92,7 @@
                 <div class="forum-post">
                     <div class="header-container">
                         <h1 id="HeaderManage">Add New Assignment</h1>
-                        <button type="reset" id="close-btn" onclick="closeForumADD()">X</button>
+                        <button type="reset" id="close-btn" onclick="closeForumADD()"><i class="fa-solid fa-x" style="color: red;"></i></button>
                     </div>
                     <form id="assignment-form-Add" method="post"
                         action="<?php url('ManageAssignmentsAdmin/addAssignment'); ?>">
@@ -141,7 +142,7 @@
                 <div class="forum-post">
                     <div class="header-container">
                         <h1 id="HeaderManage">Edit Assignment</h1>
-                        <button type="reset" id="close-btn" onclick="closeForumEdit()">X</button>
+                        <button type="reset" id="close-btn" onclick="closeForumEdit()"><i class="fa-solid fa-x" style="color: #ff0000;"></i></button>
                     </div>
                     <form id="assignment-form-Edit" method="post">
                         <div class="post-title">

@@ -79,6 +79,11 @@
   cursor: pointer;
 }
 
+option:disabled {
+  color: red;
+  font-style: italic;
+}
+
 
 table {
   width: 100%;
@@ -98,7 +103,7 @@ table th {
   background-color: var(--blue);
   font-size: medium;
   text-align: center;
-  color: white;
+  color: #fffbeb;
 }
 table td {
   font-size: medium;
