@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 if (isset($_POST['userType'])) {
 
-    require_once '../Models/UserTypePage.php';
+    require_once '../Models/PageReference.php';
     require_once '../Models/Page.php';
     require_once '../Config/DatabaseConnection.php';
     $db_instance = DatabaseConnection::getInstance();
@@ -17,10 +17,10 @@ if (isset($_POST['userType'])) {
     }
 
     $pageModel = new Page($conn);
-    $userTypePageModel = new UserTypePage($conn);
+    $PageReferenceModel = new PageReference($conn);
 
     $availablePages = $pageModel->getAllPages();
-    $chosenPages = $userTypePageModel->getPagesByUserType($userTypeID);
+    $chosenPages = $PageReferenceModel->getPagesByUserType($userTypeID);
 
     $response = [
         'availablePages' => $availablePages,

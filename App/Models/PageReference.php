@@ -1,5 +1,5 @@
 <?php
-class UserTypePage {
+class PageReference {
     private $db;
 
     public function __construct($db) {
@@ -7,7 +7,7 @@ class UserTypePage {
     }
 
     public function getPagesByUserType($userTypeID) {
-        $query = "SELECT PageID FROM usertype_pages WHERE UserTypeID = $userTypeID";
+        $query = "SELECT PageID FROM page_reference WHERE ParentPageID = $userTypeID";
         $result = $this->db->query($query);
         $pages = [];
 
@@ -19,12 +19,12 @@ class UserTypePage {
     }
 
     public function deletePagesByUserType($userTypeID) {
-        $sql = "DELETE FROM usertype_pages WHERE UserTypeID = $userTypeID";
+        $sql = "DELETE FROM page_reference WHERE ParentPageID = $userTypeID";
         $this->db->query($sql);
     }
 
     public function addPageToUserType($userTypeID, $pageId) {
-        $sql = "INSERT INTO usertype_pages (UserTypeID, PageID) VALUES ($userTypeID, $pageId)";
+        $sql = "INSERT INTO page_reference (ParentPageID, PageID) VALUES ($userTypeID, $pageId)";
         $this->db->query($sql);
     }
 }

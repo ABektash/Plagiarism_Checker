@@ -1,7 +1,7 @@
 <?php
 require_once MODELS . 'User.php';
 require_once MODELS . 'Page.php';
-require_once MODELS . 'UserTypePage.php';
+require_once MODELS . 'PageReference.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -62,10 +62,10 @@ class SignupController extends Controller
                 $user->last_name = $_POST['lname'];
                 $user->email = $_POST['email'];
                 $user->password = $_POST['password'];
-                $userTypePageModel = new UserTypePage($this->db);
+                $PageReferenceModel = new PageReference($this->db);
                 $pageModel = new Page($this->db);
 
-                $allowedPageIds = $userTypePageModel->getPagesByUserType(4);
+                $allowedPageIds = $PageReferenceModel->getPagesByUserType(4);
                 $_SESSION['pages'] = [];
 
                 foreach ($allowedPageIds as $pageId) {

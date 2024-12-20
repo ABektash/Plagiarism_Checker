@@ -1,6 +1,6 @@
 <?php
 require_once MODELS . 'UserType.php';
-require_once MODELS . 'UserTypePage.php';
+require_once MODELS . 'PageReference.php';
 require_once MODELS . 'Page.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -9,7 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 class ManagePermissionsController extends Controller
 {
-    private $userTypePageModel;
+    private $PageReferenceModel;
     private $pageModel;
     private $db;
 
@@ -44,7 +44,7 @@ class ManagePermissionsController extends Controller
     public function submit()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->userTypePageModel = new UserTypePage($this->db);
+            $this->PageReferenceModel = new PageReference($this->db);
 
             $userTypeID = isset($_POST['userTypeID']) ? intval($_POST['userTypeID']) : null;
             $chosenPages = isset($_POST['chosenPages']) ? $_POST['chosenPages'] : [];
@@ -53,10 +53,10 @@ class ManagePermissionsController extends Controller
             if ($userTypeID && !empty($chosenPages)) {
                 $chosenPages = array_unique($chosenPages);
 
-                $this->userTypePageModel->deletePagesByUserType($userTypeID);
+                $this->PageReferenceModel->deletePagesByUserType($userTypeID);
 
                 foreach ($chosenPages as $pageId) {
-                    $this->userTypePageModel->addPageToUserType($userTypeID, $pageId);
+                    $this->PageReferenceModel->addPageToUserType($userTypeID, $pageId);
                 }
 
                 $data["result"] = "Success";
@@ -72,12 +72,12 @@ class ManagePermissionsController extends Controller
 
     public function getPages()
     {
-        $this->userTypePageModel = new UserTypePage($this->db);
+        $this->PageReferenceModel = new PageReference($this->db);
         $this->pageModel = new Page($this->db);
 
         $allPages = $this->pageModel->getAllPages();
 
-        $chosenPageIds = $this->userTypePageModel->getPagesByUserType(4);
+        $chosenPageIds = $this->PageReferenceModel->getPagesByUserType(4);
 
         $availablePages = [];
         $chosenPages = [];

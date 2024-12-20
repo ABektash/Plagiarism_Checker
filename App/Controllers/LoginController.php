@@ -1,7 +1,7 @@
 <?php
 require_once MODELS . 'User.php';
 require_once MODELS . 'Page.php';
-require_once MODELS . 'UserTypePage.php';
+require_once MODELS . 'PageReference.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -52,9 +52,9 @@ class LoginController extends Controller
 
                 if ($login_result) {
                     $_SESSION['user'] = $login_result;
-                    $userTypePageModel = new UserTypePage($this->db);
+                    $PageReferenceModel = new PageReference($this->db);
                     $pageModel = new Page($this->db);
-                    $allowedPageIds = $userTypePageModel->getPagesByUserType($_SESSION['user']['UserType_id']);
+                    $allowedPageIds = $PageReferenceModel->getPagesByUserType($_SESSION['user']['UserType_id']);
                     $_SESSION['pages'] = [];
 
                     foreach ($allowedPageIds as $pageId) {
@@ -64,11 +64,13 @@ class LoginController extends Controller
                         }
                     }
                     if ($_SESSION['user']['UserType_id'] == 1) {
-                        $this->view('adminDashboard');
+                        echo "<script> window.location.href = '" . redirect('adminDashboard') . "';</script>";
+
                     } elseif ($_SESSION['user']['UserType_id'] == 2 || $_SESSION['user']['UserType_id'] == 3) {
-                        $this->view('dashboard');
+                        echo "<script> window.location.href = '" . redirect('dashboard') . "';</script>";
+
                     } else {
-                        $this->view('home');
+                        echo "<script> window.location.href = '" . redirect('home') . "';</script>";
                     }
                 } else {
                     $errors['passwordError'] = "Invalid email or password.";

@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require_once 'Page.php';
-require_once 'UserTypePage.php';
+require_once 'PageReference.php';
 require_once 'AssignmentObserver.php';
 
 class User implements AssignmentObserver
