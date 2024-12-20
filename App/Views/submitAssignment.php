@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewReport.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/loading.css">
 
     <script src="/Plagiarism_Checker/public/assets/js/PlagiarismDetectionAPI.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
@@ -45,7 +46,8 @@
 
                 <div class="file-upload">
                     <label for="assignment-file">Upload Assignment File (PDF only):</label><br><br>
-                    <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf" required><br><br>
+                    <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf"
+                        required><br><br>
                 </div>
 
                 <button type="submit" class="Add-button">
@@ -62,6 +64,40 @@
                 <h5 style="font-size: 1.5rem;">Unexpected error occurred. Please try again later.</h5>
             </div>
         <?php endif; ?>
+        <!-- Popup Container (Initially hidden) -->
+        <div class="popup-container">
+            <div class="loading-container">
+                <div class="loading-text">
+                    <div class="line-1">
+                        <span>P</span>
+                        <span>L</span>
+                        <span>A</span>
+                        <span>G</span>
+                        <span>I</span>
+                        <span>A</span>
+                        <span>R</span>
+                        <span>I</span>
+                        <span>S</span>
+                        <span>M</span>
+                    </div>
+                    <div class="line-2">
+                        <span>D</span>
+                        <span>E</span>
+                        <span>T</span>
+                        <span>E</span>
+                        <span>C</span>
+                        <span>T</span>
+                        <span>I</span>
+                        <span>O</span>
+                        <span>N</span>
+                    </div>
+                </div>
+                <div class="animated-line"></div>
+                <div class="description">
+                    <p>Please wait while the assignment is being uploaded.</p>
+                </div>
+            </div>
+        </div>
 
     </main>
 
@@ -74,9 +110,10 @@
     ?>
     const ENV = {
         API_KEY: "<?php echo $_ENV['Plagiarism_API_KEY'] ?? ''; ?>",
-    };
 
-    document.addEventListener('DOMContentLoaded', function() {
+    };
+    document.addEventListener('DOMContentLoaded', async function () {
+
         async function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -115,7 +152,10 @@
             const submissionID = await submitAssignment(assignmentID, extractedText);
 
             if (submissionID) {
-                await CallAPI(extractedText, extractedTitle, submissionID);
+                showPopup();
+                await CallAPI(extractedText, extractedTitle, submissionID);               
+                hidePopup();
+                redirectToDashboard();
             } else {
                 alert('Failed to submit the assignment.');
             }
@@ -127,5 +167,6 @@
         }
     });
 </script>
+
 
 </html>

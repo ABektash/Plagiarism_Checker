@@ -22,7 +22,7 @@ class ViewReportController extends Controller
         $id = $_SESSION['user']['ID'] ?? null;
         $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        if (($id !== null) && ($userType == 1 || $userType == 2 || $userType == 3)) { //admin can ?
+        if (($id !== null)) {
 
             $this->view('viewReport');
         } else {

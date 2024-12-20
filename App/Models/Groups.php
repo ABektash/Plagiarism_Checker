@@ -50,7 +50,6 @@ class Groups
             SELECT 
                 users.ID AS student_id,
                 CONCAT(users.FirstName, ' ', users.LastName) AS student_name,
-                users.Email AS student_email
             FROM 
                 user_groups
             INNER JOIN 
@@ -204,39 +203,50 @@ class Groups
         $stmt->close();
         return $assignments;
     }
-    public function getAllSubmissions($assignmentIDs = [])
-    {
-        if (empty($assignmentIDs)) {
-            return [];
-        }
+public function getAllSubmissions($assignmentIDs = [])
+{
+    if (empty($assignmentIDs)) {
+        return [];
+    }
 
+    // Create placeholders for the assignment IDs
+    $placeholders = implode(',', array_fill(0, count($assignmentIDs), '?'));
 
-        $placeholders = implode(',', array_fill(0, count($assignmentIDs), '?'));
-        $query = "
-        SELECT s.* 
+    // Modify the query to include a join with the 'users' table
+    $query = "
+        SELECT s.*, u.FirstName, u.LastName 
         FROM submissions s
+        JOIN users u ON s.userID = u.ID
         WHERE s.assignmentID IN ($placeholders)
     ";
 
-        $stmt = $this->db->prepare($query);
+    $stmt = $this->db->prepare($query);
 
-        $types = str_repeat('i', count($assignmentIDs));
-        $stmt->bind_param($types, ...$assignmentIDs);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // Bind the parameters for assignment IDs
+    $types = str_repeat('i', count($assignmentIDs));
+    $stmt->bind_param($types, ...$assignmentIDs);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        $submissions = [];
-        while ($row = $result->fetch_assoc()) {
-            $submission = new Submission($this->db);
-            foreach ($row as $key => $value) {
-                $submission->$key = $value;
-            }
-            $submissions[] = $submission;
+    $submissions = [];
+    while ($row = $result->fetch_assoc()) {
+        $submission = new Submission($this->db);
+
+        // Assign all row data to the submission object
+        foreach ($row as $key => $value) {
+            $submission->$key = $value;
         }
 
-        $stmt->close();
-        return $submissions;
+        // Add the first and last name to the submission object
+        $submission->userFullName = $row['FirstName'] . ' ' . $row['LastName'];
+
+        $submissions[] = $submission;
     }
+
+    $stmt->close();
+    return $submissions;
+}
+
 
 
     public function getAllPlagiarismReports($assignmentIDs = [])

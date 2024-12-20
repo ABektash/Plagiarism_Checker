@@ -78,7 +78,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td>' . htmlspecialchars($title) . '</td>';
                     echo '<td>' . htmlspecialchars($dueDate) . '</td>';
                     echo '<td>' . htmlspecialchars($status) . '</td>';
-                    echo '<td><a class="a-link" href="' . redirect("submit/index?assignmentID=" . $assignment["ID"]) . '">View</a></td>';
+                    echo '<td><a class="a-link" href="' . redirect("SubmitAssignment/index?assignmentID=" . $assignment["ID"]) . '">View</a></td>';
                     echo '</tr>';
                 }
             
@@ -173,7 +173,9 @@ if (session_status() == PHP_SESSION_NONE) {
                     echo '<td>' . htmlspecialchars($assignmentTitle) . '</td>';
                     echo '<td class="similarity-progress">' . htmlspecialchars($similarityScore) . '</td>';
                     echo '<td>' . htmlspecialchars($reportDate) . '</td>';
-                    echo '<td><a class="a-link" href="' . $viewReportLink . '">View Report</a></td>';
+                    echo '<td><a class="a-link" onclick="window.location.href=\'http://localhost/Plagiarism_Checker/public/viewreport\';">View Report</a></td>';
+
+
                     echo '</tr>';
                 }
 

@@ -4,7 +4,7 @@ async function CallAPI(extractedText, extractedTitle, submissionID) {
         headers: {
             accept: 'application/json',
             'content-type': 'application/json',
-            //authorization: ENV.API_KEY,
+            // authorization: ENV.API_KEY,
         },
 
         body: JSON.stringify({
@@ -100,4 +100,18 @@ async function extractTextFromPDF(file) {
     } catch (error) {
         return null;
     }
+}
+
+function showPopup() {
+    const popup = document.querySelector('.popup-container');
+    popup.style.display = 'flex';
+}
+
+function hidePopup() {
+    const popup = document.querySelector('.popup-container');
+    popup.style.display = 'none';
+}
+
+function redirectToDashboard() {
+    window.location.href = 'http://localhost/Plagiarism_Checker/public/dashboard';
 }
