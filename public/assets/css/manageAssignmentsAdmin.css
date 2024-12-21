@@ -1,142 +1,154 @@
 #content {
-    position: relative;
-    width: calc(100% - 280px);
-    left: 280px;
-    transition: 0.3s ease;
-  }
-  #sidebar.hide ~ #content {
-    width: calc(100% - 60px);
-    left: 60px;
-  }
-  /* Add these CSS animations */
+  position: relative;
+  width: calc(100% - 280px);
+  left: 280px;
+  transition: 0.3s ease;
+}
+#sidebar.hide ~ #content {
+  width: calc(100% - 60px);
+  left: 60px;
+}
+/* Add these CSS animations */
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-20px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 
-  #content main {
-    width: 100%;
-    padding: 36px 24px;
-    font-family: var(--poppins);
-    max-height: calc(100vh - 56px);
-    overflow-y: auto;
-  }
-  #content main .head-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    grid-gap: 16px;
-    flex-wrap: wrap;
-  }
-  #content main .head-title h1 {
-    font-size: 36px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--dark);
-  }
-  
-  .manageAssignmentsMain {
-    padding: 3%;
-    margin: 3%;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  body {
-    background-color: #f3f3f3;
-  }
-  
-  #forum-container-EDIT {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
-    box-shadow: 2px 2px;
-    display: none;
-    position: fixed;
-    top: 20%;
-    left: 0;
-    right: 0;
-    z-index: 9999; /* Ensure it's above everything else */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
-  }
-  
-  #forum-container-ADD {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 20px;
-    box-shadow: 2px 2px;
-    display: none;
-    position: fixed;
-    top: 20%;
-    left: 0;
-    right: 0;
-    z-index: 9999; /* Ensure it's above everything else */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
-  }
-  
-  .Choose-Group-Container {
-    margin-bottom: 2%;
-    font-size: 16px;
-    outline: none;
-    transition: all 0.3s ease;
-  }
-  .Choose-Group-Container .Group-Selection {
-    padding: 1%;
-    margin-top: 1%;
-  }
-  
-  #HeaderManage {
-    color: white;
-    margin-bottom: 1rem;
-  }
-  
-  .form-post {
-    text-align: left;
-  }
-  #HeaderManage {
-    color: #027e6f;
-    margin: 0;
-    margin-bottom: 1rem;
-  }
-  
-  input[type="text"],
-  input[type="date"],
-  textarea {
-    width: 75%;
-    padding: 10px;
-  
-    box-sizing: border-box;
-  }
-  
-  .forum-post textarea {
-    width: 75%;
-    max-width: 100%;
-    max-height: 200px;
-    box-sizing: border-box;
-    overflow: auto;
-  }
-  
-  /* .delete-button {
+#content main {
+  width: 100%;
+  padding: 36px 24px;
+  font-family: var(--poppins);
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+#content main .head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 16px;
+  flex-wrap: wrap;
+}
+#content main .head-title h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+
+.manageAssignmentsMain {
+  padding: 3%;
+  margin: 3%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  background-color: #f3f3f3;
+}
+
+#forum-container-EDIT {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 7px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  box-shadow: 2px 2px;
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 0;
+  right: 0;
+  z-index: 9999; /* Ensure it's above everything else */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
+}
+
+#forum-container-ADD {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 7px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  box-shadow: 2px 2px;
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 0;
+  right: 0;
+  z-index: 9999; /* Ensure it's above everything else */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  box-shadow: 0 0 6000px 2000px rgba(44, 44, 44, 0.5);
+}
+
+.Choose-Group-Container {
+  margin-bottom: 2%;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.Choose-Group-Container .Group-Selection {
+  padding: 1%;
+  margin-top: 1%;
+}
+
+#HeaderManage {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.form-post {
+  text-align: left;
+}
+#HeaderManage {
+  color: #027e6f;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 75%;
+  padding: 10px;
+
+  box-sizing: border-box;
+}
+
+.forum-post textarea {
+  width: 75%;
+  max-width: 100%;
+  max-height: 200px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* .delete-button {
     background-color: #027e6f;
     color: white;
     border: none;
@@ -153,7 +165,7 @@
     color: white;
   } */
 
-  .delete-button {
+.delete-button {
   background-color: transparent;
   border: none;
   color: var(--blue);
@@ -163,223 +175,223 @@
 .delete-button:hover {
   color: red;
 }
-  
-  .edit-button {
-    background-color: #027e6f;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 1rem;
+
+.edit-button {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.edit-button:hover {
+  background-color: #02a793;
+  color: white;
+}
+
+.submit-button {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #02a793;
+}
+
+.file-upload {
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#close-btn {
+  background-color: transparent;
+  border: none;
+  /* border-radius: 7px; */
+  padding: 15px;
+}
+
+#close-btn:hover {
+  cursor: pointer;
+  /* background-color: #02a793; */
+}
+
+#h2Assignments {
+  margin-top: 1%;
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border-spacing: 0;
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 0px solid #dddddd;
+  text-align: center;
+}
+
+table th {
+  background-color: var(--blue);
+  font-size: medium;
+  text-align: center;
+  color: white;
+}
+
+table td {
+  font-size: medium;
+  color: var(--dark);
+  background-color: var(--light);
+}
+
+.a-link,
+.delete-a-link {
+  color: #05a895;
+  text-decoration: none;
+  width: 10%;
+}
+.a-link:hover {
+  color: #02a793;
+}
+.delete-a-link:hover {
+  color: red;
+}
+label {
+  font-style: bold;
+}
+
+.Add-button {
+  background-color: #027e6f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: right;
+  text-decoration: none;
+  display: flex;
+  border-radius: 5px;
+  cursor: pointer;
+  width: max-content;
+  transition: all 0.3s ease;
+}
+.Add-button:hover {
+  background-color: #02a793;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Group-Container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  gap: 20px;
+  background-color: #fff;
+}
+
+.Left-Group-Container {
+  display: flex;
+  width: 70%;
+}
+
+.Right-Group-Container {
+  display: flex;
+  width: 30%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  #content {
+    width: calc(100% - 60px);
+    left: 200px;
   }
-  .edit-button:hover {
-    background-color: #02a793;
-    color: white;
+}
+
+@media screen and (max-width: 576px) {
+  #content main .box-info {
+    grid-template-columns: 1fr;
   }
-  
-  .submit-button {
-    background-color: #027e6f;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 7px;
-    cursor: pointer;
-    margin-top: 1rem;
+  #content main .table-data .head {
+    min-width: 420px;
   }
-  
-  .submit-button:hover {
-    background-color: #02a793;
+  #content main .table-data .order table {
+    min-width: 420px;
   }
-  
-  .file-upload {
-    margin-top: 10px;
+  #content main .table-data .todo .todo-list {
+    min-width: 420px;
   }
-  
-  .error {
-    color: red;
-    margin-top: 10px;
+  .popup-content {
+    width: 70%;
+    max-width: 80%;
+    margin: 10% auto;
   }
-  
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+}
+
+@media (max-width: 1050px) {
+  .Left-Group-Container {
+    display: grid;
   }
-  
-  #close-btn {
-    background-color:transparent;
-    border: none;
-    /* border-radius: 7px; */
-    padding: 15px;
-  }
-  
-  #close-btn:hover {
-    cursor: pointer;
-    /* background-color: #02a793; */
-  }
-  
-  #h2Assignments {
-    margin-top: 1%;
-    text-align: center;
-    font-size: 2.2rem;
-  }
-  
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    border-spacing: 0;
   }
-  
+
   table th,
   table td {
-    padding: 12px;
-    border: 0px solid #dddddd;
     text-align: center;
+    font-size: 40%;
   }
-  
-  table th {
-    background-color: var(--blue);
-    font-size: medium;
-    text-align: center;
-    color: white;
-  }
-  
-  table td {
-    font-size: medium;
-    color: var(--dark);
-    background-color: var(--light);
-  }
-  
-  .a-link,.delete-a-link {
-    color: #05a895;
-    text-decoration: none;
-    width: 10%;
-  }
-  .a-link:hover {
-    color: #02a793;
-  }
-  .delete-a-link:hover {
-    color: red;
-  }
-  label {
-    font-style: bold;
-  }
-  
-  .Add-button {
-    background-color: #027e6f;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    text-align: right;
-    text-decoration: none;
-    display: flex;
-    border-radius: 5px;
-    cursor: pointer;
-    width: max-content;
-    transition: all 0.3s ease;
-  }
-  .Add-button:hover {
-    background-color:  #02a793;
-  }
-  
-  .search-bar {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .Group-Container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    gap: 20px;
-    background-color: #fff;
-  }
-  
-  .Left-Group-Container {
-    display: flex;
-    width: 70%;
-  }
-  
   .Right-Group-Container {
     display: flex;
-    width: 30%;
-    justify-content: flex-end;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
   }
-  
-  @media screen and (max-width: 768px) {
-    #content {
-      width: calc(100% - 60px);
-      left: 200px;
-    }
+
+  .Right-Group-Container .Add-button,
+  .Right-Group-Container #user-type-filter {
+    font-size: 10px;
+    width: 100%;
+    max-width: 200px;
   }
-  
-  @media screen and (max-width: 576px) {
-    #content main .box-info {
-      grid-template-columns: 1fr;
-    }
-    #content main .table-data .head {
-      min-width: 420px;
-    }
-    #content main .table-data .order table {
-      min-width: 420px;
-    }
-    #content main .table-data .todo .todo-list {
-      min-width: 420px;
-    }
-    .popup-content {
-      width: 70%;
-      max-width: 80%;
-      margin: 10% auto;
-    }
-  }
-  
-  @media (max-width: 1050px) {
-    .Left-Group-Container {
-      display: grid;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-  
-    table th,
-    table td {
-      text-align: center;
-      font-size: 40%;
-    }
-    .Right-Group-Container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-  
-    .Right-Group-Container .Add-button,
-    .Right-Group-Container #user-type-filter {
-      font-size: 10px;
-      width: 100%;
-      max-width: 200px;
-    }
-  }
-  
+}

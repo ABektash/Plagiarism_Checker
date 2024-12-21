@@ -17,24 +17,50 @@ class SubmitAssignmentController extends Controller
     }
     public function index()
     {
-        $id = $_GET['assignmentID'] ?? null;
+        $id = $_SESSION['user']['ID'] ?? null;
+        $userType = $_SESSION['user']['UserType_id'] ?? null;
 
-        if (!$id) {
-            $this->view('SubmitAssignment', ['error' => 'No assignment ID provided.']);
-            return;
-        }
+        if (($id !== null) && ($userType == 1 || $userType == 2 || $userType == 3)) {
+            $assignmentID = $_GET['assignmentID'] ?? null;
 
-        $assignmentModel = new Assignments($this->db);
-        $submissionModel = new Submission($this->db);
-        $alreadySubmitted = $submissionModel->alreadySubmitted($_SESSION["user"]["ID"], $id);
-        $assignment = $assignmentModel->getAssignmentById($id);
+            if ($assignmentID !== null) {
+                $assignmentModel = new Assignments($this->db);
+                $submissionModel = new Submission($this->db);
 
-        if ($assignment) {
-            $this->view('SubmitAssignment', ['assignment' => $assignment, 'alreadySubmitted' => $alreadySubmitted]);
+                $assignment = $assignmentModel->getAssignmentById($assignmentID);
+                $alreadySubmitted = $submissionModel->alreadySubmitted($id, $assignmentID);
+
+                if ($assignment) {
+                    $this->view('SubmitAssignment', [
+                        'assignment' => $assignment,
+                        'alreadySubmitted' => $alreadySubmitted
+                    ]);
+                } else {
+                    $data = [
+                        "error_code" => 404,
+                        "error_message" => "Assignment not found or could not be retrieved.",
+                        "page_To_direct" => "assignments",
+                    ];
+                    $this->view('errorPage', $data);
+                }
+            } else {
+                $data = [
+                    "error_code" => 400,
+                    "error_message" => "Invalid or missing assignment ID.",
+                    "page_To_direct" => "assignments",
+                ];
+                $this->view('errorPage', $data);
+            }
         } else {
-            $this->view('SubmitAssignment', ['error' => 'No assignment data found.']);
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, you don't have access to this page.",
+                "page_To_direct" => "login",
+            ];
+            $this->view('errorPage', $data);
         }
     }
+
 
     public function submitAssignment()
     {

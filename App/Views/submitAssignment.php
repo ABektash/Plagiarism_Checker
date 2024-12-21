@@ -22,7 +22,7 @@
 
     <button onclick="history.back()" class="GOBACK" id="goback">Go Back</button>
 
-    <main class="manageAssignmentsMain" id="assignment-section">
+    <main class="manageAssignmentsMain" id="assignment-section" style="padding: 2%;">
         <h2 id="h2Assignments">Assignment Details</h2>
 
         <?php if (isset($assignment)): ?>
@@ -43,17 +43,20 @@
                     <label for="due-date">Due Date:</label><br><br>
                     <h5><?php echo htmlspecialchars($assignment['DueDate']); ?></h5>
                 </div>
-
-                <?php if (!$alreadySubmitted) {?>
-                    <div class="file-upload">
-                        <label for="assignment-file">Upload Assignment File (PDF only):</label><br><br>
-                        <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf"
-                            required><br><br>
-                    </div>
-                    <button type="submit" class="Add-button">
-                        <span style="font-size: 1.2rem;">Submit</span>
-                    </button>
-                <?php } else { echo "<br>Assignment already submitted!"; }?>
+                <?php if ($_SESSION['user']['UserType_id'] == 3): ?>
+                    <?php if (!$alreadySubmitted) { ?>
+                        <div class="file-upload">
+                            <label for="assignment-file">Upload Assignment File (PDF only):</label><br><br>
+                            <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf"
+                                required><br><br>
+                        </div>
+                        <button type="submit" class="Add-button">
+                            <span style="font-size: 1.2rem;">Submit</span>
+                        </button>
+                    <?php } else {
+                        echo "<br>Assignment already submitted!";
+                    } ?>
+                <?php endif; ?>
             </form>
 
         <?php elseif (isset($error)): ?>
@@ -113,7 +116,7 @@
         API_KEY: "<?php echo $_ENV['Plagiarism_API_KEY'] ?? ''; ?>",
 
     };
-    document.addEventListener('DOMContentLoaded', async function () {
+    document.addEventListener('DOMContentLoaded', async function() {
 
         async function handleFormSubmit(event) {
             event.preventDefault();
@@ -154,7 +157,7 @@
 
             if (submissionID) {
                 showPopup();
-                await CallAPI(extractedText, extractedTitle, submissionID);               
+                await CallAPI(extractedText, extractedTitle, submissionID);
                 hidePopup();
                 redirectToDashboard();
             } else {

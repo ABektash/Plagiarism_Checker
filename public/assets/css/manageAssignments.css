@@ -173,23 +173,16 @@ textarea {
 }
 
 #close-btn {
-  background-color: rgb(211, 5, 5);
-  color: white;
+  background-color:transparent;
   border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
+  /* border-radius: 7px; */
+  padding: 15px;
 }
 
 #close-btn:hover {
-  background-color:  #02a793;
-  color: white;
-  border: none;
-  padding: 5px 10px;
   cursor: pointer;
-  font-size: 16px;
+  /* background-color: #02a793; */
 }
-
 #h2Assignments {
   margin-top: 1%;
   text-align: center;

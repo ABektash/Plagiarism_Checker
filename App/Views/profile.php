@@ -184,7 +184,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <p class="card-text">
                                             <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
                                         </p>
-                                        <a href='<?php url('forums/index' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
+                                        <a href='<?php url('forums/index/' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <div class="card-body">
                                             <h5 class="card-title"><?= htmlspecialchars($submission['assignmentTitle']) ?></h5>
                                             <p class="card-text"><?= htmlspecialchars($submission['status']) ?></p>
-                                            <a href='<?php url('submitAssignment/index?assignmentID=' . $assignment['ID']); ?>' class="btn btn-primary">View Details</a>
+                                            <a href='<?php url('submitAssignment/index?assignmentID=' . $submission['assignmentID']); ?>' class="btn btn-primary">View Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +237,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <p class="card-text">
                                             <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
                                         </p>
-                                        <a href='<?php url('forums/index' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
+                                        <a href='<?php url('forums/index/' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
                                     </div>
                                 </div>
                             </div>

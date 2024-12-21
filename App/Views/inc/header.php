@@ -40,7 +40,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
                 <?php $redirectUrl = isset($_SESSION["user"]["UserType_id"]) && $_SESSION["user"]["UserType_id"] == 1 ? 'adminDashboard' : 'profile/index'; ?>
                 <i alt="Profile Photo" class="fa-solid fa-user fa-xl" id="profile-icon" onclick="window.location.href='<?php url($redirectUrl); ?>'"></i>
-                <span class="notification-dot"></span>
+                <!-- <span class="notification-dot"></span> -->
             </div>
 
 

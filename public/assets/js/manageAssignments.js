@@ -103,16 +103,13 @@ function openForumEdit(element) {
 
   // Update the form action URL with the assignment ID for editing
   const formEdit = document.getElementById("assignment-form-Edit");
-  formEdit.action = `http://localhost/Plagiarism_Checker/public/ManageAssignments/editAssignment/${assignmentId}`;
+  formEdit.action = `${editAssignmentUrl}/${assignmentId}`;
 
   // Show the edit form modal with animation
   const editFormContainer = document.getElementById("forum-container-EDIT");
   editFormContainer.style.display = "block";
   editFormContainer.style.animation = "slideIn 0.5s forwards";
 }
-
-
-
 
 
 // Function to filter assignments in the table

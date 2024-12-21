@@ -80,7 +80,7 @@
                                 echo "<td>" . htmlspecialchars($member['UserID']) . "</td>";
                                 echo "<td>" . htmlspecialchars($member['FirstName']) . " " . htmlspecialchars($member['LastName']) . "</td>";
                                 echo "<td>" . htmlspecialchars($member['Email']) . "</td>";
-                                echo "<td><a class='a-link' href='#'><i class='bx bxs-user'></i></a></td>";
+                                echo "<td><a class='a-link' href='" . redirect("profile/student/" . $member['UserID']) . "'><i class='bx bxs-user'></a></td>";
                                 echo "</tr>";
                             }
                         } else {
