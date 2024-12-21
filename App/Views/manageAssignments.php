@@ -25,9 +25,7 @@
     <?php
     if (isset($insertError)) {
         echo "<script>alert('Action was Unsuccessful!');</script>";
-        echo "<script>
-                            window.location.href = '" . redirect('manageAssignments/index') . "';
-                            </script>";
+        echo "<script> window.location.href = '" . redirect('manageAssignments/index') . "'; </script>";
     }
     ?>
 
@@ -56,15 +54,16 @@
                                 <td><?php echo htmlspecialchars($assignment['groupID']); ?></td>
                                 <td><?php echo htmlspecialchars($assignment['DueDate']); ?></td>
                                 <td><a class="a-link" href="#" onclick="openForumEdit(this)"><i class='bx bx-edit'></i></a></td>
+                                
                                 <td>
-                                    <form action="<?php url('ManageAssignments/deleteAssignment/' . $assignment['ID']) ?>"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this assignment?')">
-                                        <button type="submit" class="delete-button">
-                                            <i class='bx bx-trash'></i> Delete
-                                        </button>
-                                    </form>
-                                </td>
+                                        <form action="<?php url('ManageAssignments/deleteAssignment/' . $assignment['ID']) ?>"
+                                            method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this assignment?')">
+                                            <button type="submit" class="delete-button">
+                                                <i class='bx bx-trash' style="font-size: 1.25em;"></i> 
+                                            </button>
+                                        </form>
+                                    </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

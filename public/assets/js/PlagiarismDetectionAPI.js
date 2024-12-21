@@ -4,7 +4,7 @@ async function CallAPI(extractedText, extractedTitle, submissionID) {
         headers: {
             accept: 'application/json',
             'content-type': 'application/json',
-            // authorization: ENV.API_KEY,
+              authorization: ENV.API_KEY,
         },
 
         body: JSON.stringify({
@@ -112,6 +112,3 @@ function hidePopup() {
     popup.style.display = 'none';
 }
 
-function redirectToDashboard() {
-    window.location.href = 'http://localhost/Plagiarism_Checker/public/dashboard';
-}

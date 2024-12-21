@@ -2,155 +2,155 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/manageAssignments.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Report</title>
+
+    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewReport.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/header.css">
     <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/footer.css">
-    <link rel="stylesheet" href="/Plagiarism_Checker/public/assets/css/viewReport.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/Plagiarism_Checker/public/assets/js/viewReport.js" defer></script>
 </head>
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-$userType = $_SESSION['user']['UserType_id'];
-?>
+
+
 
 <body>
-
     <?php include 'inc/header.php'; ?>
 
-    <?php if ($userType != 1) { ?>
-        <button onclick="window.location.href='<?php echo url('dashboard/index'); ?>'" class="GOBACK">Go Back</button>
-    <?php } else { ?>
-        <button onclick="window.location.href='<?php echo url('manageSubmissions/index'); ?>'" class="GOBACK">Go
-            Back</button>
-    <?php } ?>
+    <div class="container">
 
-
-
-    <main class="manageAssignmentsMain">
-        <h2 id="h2Assignments">Your Report</h2>
-
-        <!-- Student Page -->
-        <?php if ($_SESSION['user']['UserType_id'] == 3): ?>
-            <section>
-                <div class="chartContainer">
-                    <h3>Similarity Score</h3>
-                    <div class="piechart"></div>
-
-                    <!-- Legend section -->
-                    <div class="legend-container">
-                        <div class="legend">
-                            <div class="legend-color green-box"></div>
-                            <span>13% Similarity</span>
-                        </div>
-                        <div class="legend">
-                            <div class="legend-color grey-box"></div>
-                            <span>87%</span>
-                        </div>
-                    </div>
-                    <div class="grade-container">
-                        <h1>Your Grade: 93/100</h1>
-                    </div>
-                    <div>
-                        <button onclick="window.location.href='<?php echo url('forums/index'); ?>'" class="GOBACK">Contact
-                            Instructor</button>
-                    </div>
-                </div>
-                <div class="textContainer">
-                    <h1 style="margin-left:2%; font-size:2rem; color:#027e6f;">AI Response:</h1>
-                    <h5>Your similarity score was 13%, suggesting that you referenced external material to help complete
-                        your assignment. While it’s fine to consult resources for learning, we encourage you to focus on
-                        understanding the concepts instead of relying too heavily on online sources. This way, you'll deepen
-                        your knowledge and build confidence in tackling similar problems on your own. Keep up the great
-                        effort!</h5>
-                </div>
-            </section>
-
-            <div class="grade-container">
-                <h5>Instructor Comments: While you did reference external materials, be cautious about how much you rely on
-                    these sources. Aim to synthesize your findings and present them in your own words to deepen your
-                    understanding and improve your writing style.</h5>
+        <section class="section">
+            <h2>Report Details</h2>
+            <div class="report-data">
+                <p><span>Assignment Title:</span> <?php echo htmlspecialchars($assignmentTitle ?? 'N/A', ENT_QUOTES); ?></p>
+                <p><span>Submitted By:</span> <?php echo htmlspecialchars($userName ?? 'N/A', ENT_QUOTES); ?></p>
+                <p><span>Submission Date:</span> <?php echo htmlspecialchars($submissionTime ?? 'N/A', ENT_QUOTES); ?></p>
+                <p><span>Due Date:</span> <?php echo htmlspecialchars($assignmentDue ?? 'N/A', ENT_QUOTES); ?></p>
+                <p><span>Similarity Percentage:</span> <?php echo htmlspecialchars($similarity ?? 'N/A', ENT_QUOTES); ?>%</p>
+                <p><span>Grade:</span> <?php echo htmlspecialchars($grade ?? 'N/A', ENT_QUOTES); ?>/100</p>
             </div>
+        </section>
+
+        <section class="section">
+            <h2>Similarity Breakdown</h2>
+            <div class="piechart" style="background: conic-gradient(#4caf50 <?php echo htmlspecialchars($similarity ?? 0, ENT_QUOTES); ?>%, #ccc 0%);"></div>
+            <div class="legend-container">
+                <div class="legend">
+                    <div class="green-box"></div>
+                    <span><?php echo htmlspecialchars($similarity ?? 'N/A', ENT_QUOTES); ?>% Similarity</span>
+                </div>
+                <div class="legend">
+                    <div class="grey-box"></div>
+                    <span><?php echo 100 - (float)($similarity ?? 0); ?>% Original</span>
+                </div>
+            </div>
+        </section>
+
+        <?php if (!empty($feedback)): ?>
+            <section class="section full-width">
+                <h2>Instructor Feedback</h2>
+                <p><?php echo nl2br(htmlspecialchars($feedback, ENT_QUOTES)); ?></p>
+
+                <?php if ($_SESSION['user']['UserType_id'] == 3): ?>
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button id="contact-instructor-btn">Contact Instructor</button>
+                    </div>
+
+                <?php endif; ?>
+
+            </section>
+        <?php else: ?>
+            <section class="section full-width">
+                <h2>Instructor Feedback</h2>
+                <p>No feedback available.</p>
+            </section>
         <?php endif; ?>
 
 
-        <!-- Instructor Page -->
-        <?php if ($_SESSION['user']['UserType_id'] == 2): ?>
-            <section>
-                <div class="chartContainer">
-                    <h3>Similarity Score</h3>
-                    <div class="piechart" style="margin-left: 15%;"></div>
+        <section class="section full-width">
+            <h2>Submission Content</h2>
+            <pre style="white-space: pre-wrap; word-wrap: break-word;">
+            <?php echo htmlspecialchars(preg_replace('/^\{"text":"|"\}$/', '', trim($submissionContent ?? 'No submission content available.')), ENT_QUOTES); ?>
+            </pre>
+        </section>
 
-                    <!-- Legend section -->
-                    <div class="legend-container">
-                        <div class="legend">
-                            <div class="legend-color green-box"></div>
-                            <span>13% Similarity</span>
+        <?php
+        $reportDecoded = json_decode($report, true);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $originalityScore = $reportDecoded['originalityai']['plagia_score'] ?? 'N/A';
+            $analysisItems = $reportDecoded['originalityai']['items'] ?? [];
+        } else {
+            $originalityScore = 'N/A';
+            $analysisItems = [];
+            error_log("JSON Decode Error: " . json_last_error_msg());
+        }
+        ?>
+
+        <section class="section full-width">
+            <h2>Report Analysis</h2>
+
+            <?php if (!empty($reportDecoded['originalityai']['items'])): ?>
+                <div class="analysis-container">
+                    <?php foreach ($reportDecoded['originalityai']['items'] as $index => $item): ?>
+                        <div class="text-segment">
+                            <h3>Text Segment</h3>
+                            <p><?php echo htmlspecialchars($item['text'], ENT_QUOTES); ?></p>
+                            <?php if (!empty($item['candidates'])): ?>
+                                <h4>Potential Matches</h4>
+                                <div class="matches">
+                                    <?php foreach ($item['candidates'] as $candidate): ?>
+                                        <div class="candidate">
+                                            <p><strong>URL:</strong>
+                                                <a href="<?php echo htmlspecialchars($candidate['url'], ENT_QUOTES); ?>" target="_blank">
+                                                    Visit Source
+                                                </a>
+                                            </p>
+                                            <p><strong>Plagiarism Score:</strong> <?php echo htmlspecialchars($candidate['plagia_score'], ENT_QUOTES); ?></p>
+                                            <p><strong>Prediction:</strong> <?php echo htmlspecialchars($candidate['prediction'], ENT_QUOTES); ?></p>
+                                            <p><strong>Plagiarized Text:</strong> <?php echo htmlspecialchars($candidate['plagiarized_text'], ENT_QUOTES); ?></p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <div class="legend">
-                            <div class="legend-color grey-box"></div>
-                            <span>87%</span>
-                        </div>
-                    </div>
-                    <div class="grade-container">
-                        <h1>Your Grade: <input type="text" id="grade" name="grade" oninput="validateGrade()" min="0"
-                                max="100">/100</h1>
-                    </div>
-                    <p id="error-message" style="color: red; display: none;">Please enter a grade between 0 and 100.</p>
+                    <?php endforeach; ?>
                 </div>
-                <div class="textContainer">
-                    <h1 style="margin-left:2%; font-size:2rem; color:#027e6f;">AI Response:</h1>
-                    <h5>Your similarity score was 13%, suggesting that you referenced external material to help complete
-                        your assignment. While it’s fine to consult resources for learning, we encourage you to focus on
-                        understanding the concepts instead of relying too heavily on online sources. This way, you'll deepen
-                        your knowledge and build confidence in tackling similar problems on your own. Keep up the great
-                        effort!</h5>
+            <?php else: ?>
+                <p>No Analysis.</p>
+            <?php endif; ?>
+
+        </section>
+
+
+
+        <?php if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 2): ?>
+
+            <section class="section full-width">
+                <h2>Instructor Comments & Grade</h2>
+                <div class="textarea-container">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="instructor-grade" style="display: block; font-weight: bold; margin-bottom: 10px;">Grade (Out of 100):</label>
+                        <input type="number" id="instructor-grade" name="instructor-grade" placeholder="Enter Grade (Max: 100)" min="0" max="100" required>
+                    </div>
+                    <div style="flex: 2; min-width: 300px;">
+                        <label for="instructor-comment" style="display: block; font-weight: bold; margin-bottom: 10px;">Comments:</label>
+                        <textarea id="instructor-comment" name="instructor-comment" rows="5" placeholder="Enter your comments here..." required></textarea>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; text-align: right;">
+                    <button id="instructor-Finalize-btn">Finalize Report</button>
                 </div>
             </section>
 
-            <div class="grade-container" style="width:90%;">
-                <textarea id="instructor-comment" name="instrucor-comment" rows="5" required
-                    placeholder="Please Enter your comments..." style="width:90%;"></textarea>
-                <button onclick="submitReport(this);" class="GOBACK">Finalize Report</button>
-            </div>
         <?php endif; ?>
 
 
-        <?php include 'inc/footer.php'; ?>
+    </div>
+
+    <?php include 'inc/footer.php'; ?>
 
 </body>
-<script>
-    function validateGrade() {
-        const gradeInput = document.getElementById("grade");
-        const errorMessage = document.getElementById("error-message");
-
-        // Check if the value is within range
-        if (gradeInput.value < 0 || gradeInput.value > 100) {
-            errorMessage.style.display = "block"; // Show error message
-            gradeInput.style.borderColor = "red";
-        } else {
-            errorMessage.style.display = "none";  // Hide error message if valid
-            gradeInput.style.borderColor = "";    // Reset border color
-        }
-    }
-
-    function submitReport(element) {
-        const gradeInput = document.getElementById("grade").value;
-
-        // Check if grade is a valid number and within range
-        if (isNaN(gradeInput) || gradeInput < 0 || gradeInput > 100 || gradeInput === "") {
-            alert("Please enter a valid numeric grade between 0 and 100 before submitting the report.");
-            return;
-        }
-
-        // Confirm submission
-        const confirmed = confirm("Are you sure you want to submit this report to the student: XXXXX?");
-        if (confirmed) {
-            history.back();
-        }
-    }
-
-</script>
 
 </html>

@@ -1,7 +1,10 @@
 <?php
 class UserType {
     private $db;
-    
+    private $ID;
+    private $name;
+
+
     public function __construct($db) {
         $this->db = $db;
     }

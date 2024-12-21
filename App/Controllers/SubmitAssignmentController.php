@@ -25,10 +25,12 @@ class SubmitAssignmentController extends Controller
         }
 
         $assignmentModel = new Assignments($this->db);
+        $submissionModel = new Submission($this->db);
+        $alreadySubmitted = $submissionModel->alreadySubmitted($_SESSION["user"]["ID"], $id);
         $assignment = $assignmentModel->getAssignmentById($id);
 
         if ($assignment) {
-            $this->view('SubmitAssignment', ['assignment' => $assignment]);
+            $this->view('SubmitAssignment', ['assignment' => $assignment, 'alreadySubmitted' => $alreadySubmitted]);
         } else {
             $this->view('SubmitAssignment', ['error' => 'No assignment data found.']);
         }

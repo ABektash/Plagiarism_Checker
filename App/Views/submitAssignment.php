@@ -44,15 +44,16 @@
                     <h5><?php echo htmlspecialchars($assignment['DueDate']); ?></h5>
                 </div>
 
-                <div class="file-upload">
-                    <label for="assignment-file">Upload Assignment File (PDF only):</label><br><br>
-                    <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf"
-                        required><br><br>
-                </div>
-
-                <button type="submit" class="Add-button">
-                    <span style="font-size: 1.2rem;">Submit</span>
-                </button>
+                <?php if (!$alreadySubmitted) {?>
+                    <div class="file-upload">
+                        <label for="assignment-file">Upload Assignment File (PDF only):</label><br><br>
+                        <input type="file" id="assignment-file" name="assignment-file" accept="application/pdf"
+                            required><br><br>
+                    </div>
+                    <button type="submit" class="Add-button">
+                        <span style="font-size: 1.2rem;">Submit</span>
+                    </button>
+                <?php } else { echo "<br>Assignment already submitted!"; }?>
             </form>
 
         <?php elseif (isset($error)): ?>

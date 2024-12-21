@@ -114,13 +114,12 @@
                         </div>
 
                         <div class="Choose-Group-Container">
-                            <label>Group:</label>
-
-                            <select name="groupID" class="Group-Selection">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                            <select name="groupID" class="Group-Selection" id="groupSelection">
+                            <?php foreach ($data['groups'] as $group): ?>
+                                <option value="<?= $group['groupID'] ?>" <?= $group['groupID'] == 1 ? 'selected' : '' ?>>
+                                    <?= $group['group_name'] ?>
+                                    </option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
 
@@ -164,29 +163,14 @@
 
                         <div class="Choose-Group-Container">
                             <label>Group:</label><br>
-                            <select name="groupID" id="Group-Number-Edit" class="Group-Selection" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">5</option>
-                                <option value="1">165</option>
-                                <option value="2">265</option>
-                                <option value="3">354</option>
-                                <option value="4">4456</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-
+                            <select name="groupID" id="Group-Number-Edit" class="Group-Selection">
+                            <?php foreach ($data['groups'] as $group): ?>
+                                <option value="<?= $group['groupID'] ?>" <?= $group['groupID'] == 1 ? 'selected' : '' ?>>
+                                    <?= $group['group_name'] ?>
+                                    </option>
+                            <?php endforeach; ?>
                             </select>
+
                         </div>
 
                         <button type="submit" class="edit-button">Edit Assignment</button>
@@ -204,5 +188,7 @@
 </body>
 
 <script src="/Plagiarism_Checker/public\assets\js\manageAssignmentsAdmin.js"></script>
+<script src="/Plagiarism_Checker/public/assets/js/manageGroups.js"></script>
+
 
 </html>

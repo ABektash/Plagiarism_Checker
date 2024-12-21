@@ -65,8 +65,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
     <ul class="side-menu">
         <li>
-            <a href="<?php url('logout/index'); ?>" class="logout" onclick="return confirmLogout()">
-                <i class='bx bxs-log-out-circle'></i>
+            <a href="<?php url('logout'); ?>" class="logout" onclick="return confirmLogout()">
+            <i class='bx bxs-log-out-circle' style="font-size: 1.25rem;"></i>
                 <span class="text">Logout</span>
             </a>
         </li>

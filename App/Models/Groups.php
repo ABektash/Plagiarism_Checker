@@ -1,6 +1,6 @@
 <?php
 require_once 'User.php';
-require_once 'UserTypePage.php';
+require_once 'PageReference.php';
 require_once 'Assignments.php';
 require_once 'Submission.php';
 require_once 'PlagiarismReport.php';
@@ -47,17 +47,18 @@ class Groups
     public function getStudentsByGroup($groupID)
     {
         $query = "
-            SELECT 
-                users.ID AS student_id,
-                CONCAT(users.FirstName, ' ', users.LastName) AS student_name,
-            FROM 
-                user_groups
-            INNER JOIN 
-                users ON user_groups.userID = users.ID
-            WHERE 
-                user_groups.groupID = ? AND users.UserType_id = 3
-            ORDER BY 
-                student_name";
+        SELECT 
+            users.ID AS student_id,
+            CONCAT(users.FirstName, ' ', users.LastName) AS student_name,
+            users.Email AS student_email
+        FROM 
+            user_groups
+        INNER JOIN 
+            users ON user_groups.userID = users.ID
+        WHERE 
+            user_groups.groupID = ? AND users.UserType_id = 3
+        ORDER BY 
+            student_name";
 
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $groupID);
@@ -71,6 +72,7 @@ class Groups
 
         return $students;
     }
+
     public function getInstructorsByGroup($groupID)
     {
         $query = "
@@ -100,7 +102,7 @@ class Groups
     }
     public function addStudentToGroup($studentID, $groupID)
     {
-        $sql = "INSERT INTO user_groups (student_id, group_id) VALUES (:student_id, :group_id)";
+        $sql = "INSERT INTO user_groups (userID, groupID) VALUES (:student_id, :group_id)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':student_id', $studentID);
@@ -123,7 +125,7 @@ class Groups
         // Execute and return the result (true on success, false otherwise)
         return $stmt->execute();
     }
-    
+
     public function createGroup()
     {
         try {
@@ -203,49 +205,44 @@ class Groups
         $stmt->close();
         return $assignments;
     }
-public function getAllSubmissions($assignmentIDs = [])
-{
-    if (empty($assignmentIDs)) {
-        return [];
-    }
+    public function getAllSubmissions($assignmentIDs = [])
+    {
+        if (empty($assignmentIDs)) {
+            return [];
+        }
 
-    // Create placeholders for the assignment IDs
-    $placeholders = implode(',', array_fill(0, count($assignmentIDs), '?'));
+        $placeholders = implode(',', array_fill(0, count($assignmentIDs), '?'));
 
-    // Modify the query to include a join with the 'users' table
-    $query = "
+        $query = "
         SELECT s.*, u.FirstName, u.LastName 
         FROM submissions s
         JOIN users u ON s.userID = u.ID
         WHERE s.assignmentID IN ($placeholders)
     ";
 
-    $stmt = $this->db->prepare($query);
+        $stmt = $this->db->prepare($query);
 
-    // Bind the parameters for assignment IDs
-    $types = str_repeat('i', count($assignmentIDs));
-    $stmt->bind_param($types, ...$assignmentIDs);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        $types = str_repeat('i', count($assignmentIDs));
+        $stmt->bind_param($types, ...$assignmentIDs);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    $submissions = [];
-    while ($row = $result->fetch_assoc()) {
-        $submission = new Submission($this->db);
+        $submissions = [];
+        while ($row = $result->fetch_assoc()) {
+            $submission = new Submission($this->db);
 
-        // Assign all row data to the submission object
-        foreach ($row as $key => $value) {
-            $submission->$key = $value;
+            foreach ($row as $key => $value) {
+                $submission->$key = $value;
+            }
+
+            $submission->userFullName = $row['FirstName'] . ' ' . $row['LastName'];
+
+            $submissions[] = $submission;
         }
 
-        // Add the first and last name to the submission object
-        $submission->userFullName = $row['FirstName'] . ' ' . $row['LastName'];
-
-        $submissions[] = $submission;
+        $stmt->close();
+        return $submissions;
     }
-
-    $stmt->close();
-    return $submissions;
-}
 
 
 

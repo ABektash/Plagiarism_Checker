@@ -1,5 +1,6 @@
 <?php
 require_once MODELS . 'Forums.php';
+require_once MODELS . 'plagiarismReport.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -28,14 +29,24 @@ class ForumsController extends Controller
 
             if ($forumid !== null) {
                 $_GET['forumID'] = $forumid;
-                $data = [
-                    "allForums" => $allForums,
-                    "forumExist" => true,
-                    "forumID" => $forumid
-                ];
+                $check = $forum->getForumById($forumid); 
+            
+                if (!empty($check)) {
+                    $data = [
+                        "allForums" => $allForums,
+                        "forumExist" => true,
+                        "forumID" => $forumid,
+                    ];
+                } else {
+                    $data = [
+                        "allForums" => $allForums,
+                        "forumExist" => false, 
+                    ];
+                }
             } else {
                 $data = [
                     "allForums" => $allForums,
+                    "forumExist" => false, 
                 ];
             }
 
@@ -73,29 +84,48 @@ class ForumsController extends Controller
 
     public function delete()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['forumID'])) {
-            $forumID = $_POST['forumID'];
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $input = json_decode(file_get_contents('php://input'), true);
+
+            if (!isset($input['forumID'])) {
+                http_response_code(400);
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Forum ID is required."
+                ]);
+                exit;
+            }
+
+            $forumID = mysqli_real_escape_string($this->db, $input['forumID']);
             $forum = new Forums($this->db);
 
             $result = $forum->deleteForum($forumID);
 
             if ($result) {
-                $id = $_SESSION['user']['ID'];
-                $forum = new Forums($this->db);
-                $forumData = $forum->getForumById($id);
-
-                $data = [
-                    "forum" => $forumData,
-                    "messages" => null
-                ];
-
-                $this->view('manageSubmissions', $data);
+                http_response_code(200);
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Chat deleted successfully."
+                ]);
             } else {
-                $data["deleteError"] = "Couldn't delete the forum!";
-                $this->view('forums', $data);
+                http_response_code(500);
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Failed to delete the chat. Please try again."
+                ]);
             }
+        } else {
+            http_response_code(405);
+            echo json_encode([
+                "status" => "error",
+                "message" => "Invalid request method."
+            ]);
         }
+        exit;
     }
+
 
     public function submit()
     {
@@ -162,14 +192,44 @@ class ForumsController extends Controller
 
     private function handleCreateForum()
     {
-        $forum = new Forums($this->db);
+        header('Content-Type: application/json');
 
-        if ($forum->createForum($_POST['submissionID'], $_POST['instructorID'], $_POST['studentID'])) {
-            $this->view('forums');
-        } else {
-            $data["creatingForumError"] = "Couldn't create the chat!";
-            $this->view('forums', $data);
+        try {
+            if (!isset($_POST['reportID'])) {
+                throw new Exception("Missing report ID.");
+            }
+
+            $forum = new Forums($this->db);
+            $plagiarismReportModel = new PlagiarismReport($this->db);
+
+            $reportID = mysqli_real_escape_string($this->db, $_POST['reportID']);
+            $submissionID = $plagiarismReportModel->getSubmissionIDofReport($reportID);
+            $instructorID = $plagiarismReportModel->getInstructorIDofReport($reportID);
+
+            if (!$submissionID || !$instructorID) {
+                throw new Exception("Invalid report ID or related data missing.");
+            }
+
+            
+            $forumID = $forum->getOrCreateForum($submissionID, $instructorID, $_SESSION['user']['ID']);
+
+            if ($forumID) {
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Forum exists or created successfully.",
+                    "forumID" => 10
+                ]);
+            } else {
+                throw new Exception("Failed to create or retrieve the forum.");
+            }
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error",
+                "message" => $e->getMessage()
+            ]);
         }
+
         exit;
     }
 }

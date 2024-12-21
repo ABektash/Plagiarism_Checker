@@ -30,7 +30,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <div class="col-lg-4 order-lg-1 order-2">
                         <div class="d-flex align-items-center justify-content-around m-4">
                             <?php
-                            if ($_SESSION['user']['UserType_id'] == 2) {
+                            if ($userType == 2) {
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
                                 echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
@@ -41,7 +41,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                 echo "<h4 class='mb-0 fw-semibold lh-1'>$numberOfAssignments</h4>";
                                 echo '<p class="mb-0 fs-4">Assignments made</p>';
                                 echo '</div>';
-                            } elseif ($_SESSION['user']['UserType_id'] == 3) {
+                            } elseif ($userType == 3) {
                                 echo '<div class="text-center">';
                                 echo '<i class="fa fa-user fs-6 d-block mb-2"></i>';
                                 echo "<h4 class='mb-0 fw-semibold lh-1'>$groupsCount</h4>";
@@ -69,13 +69,13 @@ if (session_status() == PHP_SESSION_NONE) {
                                 </div>
                             </div>
                             <div class="text-center">
-                                <h5 class="fs-5 mb-0 fw-semibold"><?php echo $_SESSION['user']['FirstName'] . " " . $_SESSION['user']['LastName'] ?></h5>
+                                <h5 class="fs-5 mb-0 fw-semibold"><?php echo $FirstName . " " . $LastName ?></h5>
                                 <?php
-                                if ($_SESSION['user']['UserType_id'] == 1) {
+                                if ($userType == 1) {
                                     echo "<p class='mb-0 fs-4'>Admin</p>";
-                                } elseif ($_SESSION['user']['UserType_id'] == 2) {
+                                } elseif ($userType == 2) {
                                     echo "<p class='mb-0 fs-4'>Instructor</p>";
-                                } elseif ($_SESSION['user']['UserType_id'] == 3) {
+                                } elseif ($userType == 3) {
                                     echo "<p class='mb-0 fs-4'>Student</p>";
                                 } else {
                                     echo "<p class='mb-0 fs-4'>Visitor</p>";
@@ -86,16 +86,21 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div>
                     <div class="col-lg-4 order-last">
                         <ul class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-start my-3 gap-3">
+                            <?php if ($_SESSION['user']['UserType_id'] ==$userType){?>
+
                             <li><button class="btn btn-primary" onclick="window.location.href='<?php url('editProfile/index'); ?>'">Edit profile</button></li>
+                      
+                            <?php }?>
+
                             <li><button class="btn btn-primary" onclick="history.back()">Back</button></li>
                         </ul>
                     </div>
                 </div>
                 <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-light-info rounded-2" id="pills-tab" role="tablist">
                     <?php
-                    if ($_SESSION['user']['UserType_id'] == 1 || $_SESSION['user']['UserType_id'] == 4) {
+                    if ($userType == 1 || $userType == 4) {
                         // No specific tabs for these users
-                    } elseif ($_SESSION['user']['UserType_id'] == 2) {
+                    } elseif ($userType == 2) {
                         echo '<li class="nav-item" role="presentation">';
                         echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="true">';
                         echo '<i class="fa fa-check-square me-2 fs-6"></i>';
@@ -108,7 +113,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         echo '<span class="d-none d-md-block">Discussion Forums</span>';
                         echo '</button>';
                         echo '</li>';
-                    } elseif ($_SESSION['user']['UserType_id'] == 3) {
+                    } elseif ($userType == 3) {
                         echo '<li class="nav-item" role="presentation">';
                         echo '<button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6 active" id="pills-assignments-tab" data-bs-toggle="pill" data-bs-target="#pills-assignments" type="button" role="tab" aria-controls="pills-assignments" aria-selected="true">';
                         echo '<i class="fa fa-check-square me-2 fs-6"></i>';
@@ -132,7 +137,6 @@ if (session_status() == PHP_SESSION_NONE) {
         <!-- Start of the tab content area -->
         <div class="tab-content" id="pills-tabContent">
             <?php
-            $userType = $_SESSION['user']['UserType_id'];
 
             if ($userType == 2) {
             ?>
@@ -149,7 +153,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <div class="card-body">
                                             <h5 class="card-title"><?= htmlspecialchars($assignment['Title']) ?></h5>
                                             <p class="card-text"><?= htmlspecialchars(substr($assignment['Description'], 0, 100)) ?></p>
-                                            <a href="/assignment/details/<?= $assignment['ID'] ?>" class="btn btn-primary">View Details</a>
+                                            <a href='<?php url('submitAssignment/index?assignmentID=' . $assignment['ID']); ?>' class="btn btn-primary">View Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +184,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <p class="card-text">
                                             <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
                                         </p>
-                                        <a href="/discussion/view/<?= htmlspecialchars($forum['forumID']) ?>" class="btn btn-primary">View Discussion</a>
+                                        <a href='<?php url('forums/index' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +207,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <div class="card-body">
                                             <h5 class="card-title"><?= htmlspecialchars($submission['assignmentTitle']) ?></h5>
                                             <p class="card-text"><?= htmlspecialchars($submission['status']) ?></p>
-                                            <a href="/assignment/details/<?= $submission['assignmentID'] ?>" class="btn btn-primary">View Details</a>
+                                            <a href='<?php url('submitAssignment/index?assignmentID=' . $assignment['ID']); ?>' class="btn btn-primary">View Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +237,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <p class="card-text">
                                             <?= htmlspecialchars(substr($forum['lastMessage'], 0, 100)) ?>...
                                         </p>
-                                        <a href="/discussion/view/<?= htmlspecialchars($forum['forumID']) ?>" class="btn btn-primary">View Discussion</a>
+                                        <a href='<?php url('forums/index' . $forum['forumID']); ?>' class="btn btn-primary">View Discussion</a>
                                     </div>
                                 </div>
                             </div>

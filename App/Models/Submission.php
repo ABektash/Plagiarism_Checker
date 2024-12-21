@@ -10,10 +10,12 @@ class Submission
     private $db;
     public $UserID;
     public $ID;
+    public $userFullName;
     public $assignmentID;
     public $submissionDate;
     public $status;
     public $assignment;
+    private $studentID;
     private $studentName;
     public $submissions = [];
 
@@ -164,30 +166,55 @@ class Submission
         return isset($assignment) ? $assignment : null;
     }
 
+    public $userID;
     public function returnAsJson()
     {
-        $firstName = null;
-        $lastName = null;
-        $query = "SELECT FirstName, LastName FROM users WHERE ID = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("i", $this->UserID);
-        $stmt->execute();
-        $stmt->bind_result($firstName, $lastName);
-        $stmt->fetch();
-        $stmt->close();
-
-        $this->studentName = $firstName . ' ' . $lastName;
-        $this->assignment = $this->fetchAssignment();
-        return json_encode([
-            'ID' => $this->ID,
-            'assignmentID' => $this->assignmentID,
-            'userID' => $this->UserID,
-            'submissionDate' => $this->submissionDate,
-            'status' => $this->status,
-            'studentName' => $this->studentName,
-            'assignment' => json_decode($this->assignment->returnAsJson())
-        ]);
+        try {
+            $firstName = '';
+            $lastName = '';
+            $this->studentName = 'Unknown';
+            $this->assignment = null;
+            
+            $query = "SELECT FirstName, LastName FROM users WHERE ID = ?";
+            $stmt = $this->db->prepare($query);
+    
+            if (!$stmt) {
+                throw new Exception("Failed to prepare statement: " . $this->db->error);
+            }
+    
+            $stmt->bind_param("i", $this->userID);
+            $stmt->execute();
+            $stmt->bind_result($firstName, $lastName);
+            $stmt->fetch();
+            $stmt->close();
+    
+            $this->studentName = trim($firstName . ' ' . $lastName);
+    
+            if (empty($this->studentName)) {
+                $this->studentName = 'Unknown';
+            }
+    
+            $this->assignment = $this->fetchAssignment();
+    
+            return json_encode([
+                'ID' => $this->ID ?? null,
+                'assignmentID' => $this->assignmentID ?? null,
+                'userID' => $this->userID ?? null,
+                'submissionDate' => $this->submissionDate ?? null,
+                'status' => $this->status ?? null,
+                'studentName' => $this->studentName,
+                'assignment' => $this->assignment ? json_decode($this->assignment->returnAsJson()) : null,
+            ]);
+        } catch (Exception $e) {
+            error_log("Error in returnAsJson: " . $e->getMessage());
+            return json_encode([
+                'error' => true,
+                'message' => "Failed to process submission details.",
+            ]);
+        }
     }
+    
+
     public function fetchAll()
     { ##MAYBE ERROR
         $query = "SELECT * FROM submissions WHERE userID = ?";
@@ -241,5 +268,21 @@ class Submission
             error_log('Database Insertion Failed: ' . mysqli_error($this->db));
             return false;
         }
+    }
+
+    public function alreadySubmitted($userId, $assignmentId)
+    {
+        $userId = (int)$userId;
+        $assignmentId = (int)$assignmentId;
+
+        $query = "SELECT 1 FROM submissions WHERE userID = $userId AND assignmentID = $assignmentId LIMIT 1";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            return true;
+        }
+
+        return false;
     }
 }

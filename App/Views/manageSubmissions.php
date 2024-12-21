@@ -45,10 +45,10 @@
                             <tr>
                                 <td><?= htmlspecialchars($submission['studentID']) ?></td>
                                 <td><?= htmlspecialchars($submission['assignmentTitle']) ?></td>
-                                <td><a class="a-link" href="<?php url('viewEssay/index/' . $submission['assignmentID']); ?>"><i class='bx bx-upload'></i></a></td>
+                                <td><a class="a-link" href="<?php url('viewreport/index?reportID=' . $submission['reportID']); ?>"><i class='bx bx-upload'></i></a></td>
                                 <td><?= htmlspecialchars($submission['submissionDate']) ?></td>
-                                <td><a class="a-link" href="<?php url('viewReport/index/' . $submission['assignmentID']); ?>"><i class='bx bx-file'></i></a></td>
-                                <td><a class="a-link" href="<?php url('forums/index/' . $submission['assignmentID']); ?>"><i class='bx bx-message'></i></a></td>
+                                <td><a class="a-link" href="<?php url('viewreport/index?reportID=' . $submission['reportID']); ?>"><i class='bx bx-file'></i></a></td>
+                                <td><a class="a-link" href="<?php url('forums/index/' . $submission['forumID']); ?>"><i class='bx bx-message'></i></a></td>
                                 <td><a class="a-link delete-a-link" href="#" onclick="confirmDeletion(<?= $submission['submissionID'] ?>)"><i class='bx bx-trash'></i></a></td>
                             </tr>
                         <?php endforeach; ?>

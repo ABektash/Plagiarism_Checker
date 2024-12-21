@@ -291,4 +291,37 @@ const designInitialization = () => {
     ensureSidebarVisibility();
 };
 
+
+function deleteChat(forumID) {
+    if (confirm('Are you sure you want to delete this chat?')) {
+        fetch('/Plagiarism_Checker/public/Forums/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ forumID: forumID }),
+        })
+            .then((response) => {
+                console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Parsed Data:', data);
+                if (data.status === 'success') {
+                    window.location.href = '/Plagiarism_Checker/public/adminDashboard';
+                } else {
+                    alert(data.message || 'Error deleting the chat.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error deleting chat:', error);
+                alert('An error occurred. Please try again.');
+            });
+
+    }
+}
+
 document.addEventListener("DOMContentLoaded", designInitialization);

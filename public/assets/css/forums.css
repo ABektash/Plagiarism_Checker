@@ -231,6 +231,19 @@ body {
     color: white;
     cursor: pointer;
 }
+.delete-chat-btn{
+    padding: 12px 20px;
+    font-size: 1rem;
+    background-color: #027e6f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.delete-chat-btn:hover{
+    background: red;
+}
 
 .chat-input button:hover {
     background: #027e6f;

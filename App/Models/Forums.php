@@ -5,21 +5,41 @@ if (session_status() == PHP_SESSION_NONE) {
 class Forums
 {
     private $db;
+    private $ID;
+    private $instructorID;
+    private $studentID;
+    private $SubmissionID;
+    private $created_at;
+
 
     public function __construct($db)
     {
         $this->db = $db;
     }
 
-    public function createForum($submissionID, $instructorID, $studentID)
+    public function getOrCreateForum($submissionID, $instructorID, $studentID)
     {
         $submissionID = mysqli_real_escape_string($this->db, $submissionID);
         $instructorID = mysqli_real_escape_string($this->db, $instructorID);
         $studentID = mysqli_real_escape_string($this->db, $studentID);
 
-        $query = "INSERT INTO `forums` (`SubmissionID`, `InstructorID`, `StudentID`) VALUES ('$submissionID', '$instructorID', '$studentID');";
-        return mysqli_query($this->db, $query);
+        $query = "SELECT `ID` FROM `forums` WHERE `SubmissionID` = '$submissionID'";
+        $result = mysqli_query($this->db, $query);
+
+        if ($result && $row = mysqli_fetch_assoc($result)) {
+            return $row['ID'];
+        }
+
+        $query = "INSERT INTO `forums` (`SubmissionID`, `InstructorID`, `StudentID`) 
+              VALUES ('$submissionID', '$instructorID', '$studentID')";
+
+        if (mysqli_query($this->db, $query)) {
+            return mysqli_insert_id($this->db);
+        }
+
+        return false;
     }
+
 
     public function getForumById($id)
     {
@@ -183,6 +203,26 @@ class Forums
             $Allforums[] = $row;
         }
         return $Allforums;
+    }
+
+    function getForumIdBySubmissionId($submissionId)
+    {
+        $submissionId = (int)$submissionId;
+
+        $query = "SELECT ID FROM forums WHERE SubmissionID = $submissionId LIMIT 1";
+
+        $result = mysqli_query($this->db, $query);
+
+        if (!$result) {
+            error_log("Query failed: " . mysqli_error($this->db));
+            return null;
+        }
+
+        if ($row = $result->fetch_assoc()) {
+            return $row['ID'];
+        }
+
+        return null;
     }
 }
 

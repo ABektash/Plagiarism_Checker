@@ -1,6 +1,11 @@
 <?php
 class Page {
     private $db;
+    private $ID;
+    private $friendlyName;
+    private $fileName;
+
+
 
     public function __construct($db) {
         $this->db = $db;

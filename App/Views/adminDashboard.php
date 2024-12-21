@@ -91,7 +91,7 @@
 						<i class='bx bx-group'></i>
 						<h3>Groups</h3>
 						<p><strong><?php echo $GLOBALS['groupsCount']; ?></strong> total groups</p>
-						<a href="<?php url('manageGroups'); ?>" class="btn">Manage Students</a>
+						<a href="<?php url('manageGroups'); ?>" class="btn">Manage Groups</a>
 					</div>
 
 					<div class="card">

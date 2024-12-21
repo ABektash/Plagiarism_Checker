@@ -124,4 +124,168 @@ class PlagiarismReport
             return false;
         }
     }
+
+    public function getReportData($reportID)
+    {
+        $sql = "SELECT 
+                    pr.responseAPI AS report,
+                    pr.feedback AS feedback,
+                    pr.similarityPercentage AS similarity,
+                    pr.Grade AS grade,
+                    CONCAT(u.FirstName, ' ', u.LastName) AS userName,
+                    a.Title AS assignmentTitle,
+                    s.submissionDate AS submissionTime,
+                    a.DueDate AS assignmentDue,
+                    s.submissionData AS submissionContent
+                FROM plagiarism_reports pr
+                INNER JOIN submissions s ON pr.submissionID = s.ID
+                INNER JOIN assignments a ON s.assignmentID = a.ID
+                INNER JOIN users u ON s.userID = u.ID
+                WHERE pr.ID = $reportID";
+
+        $result = mysqli_query($this->db, $sql);
+
+        if (!$result) {
+            error_log('Database Error: ' . mysqli_error($this->db));
+            error_log('Failed SQL: ' . $sql);
+            return false;
+        }
+
+        $data = mysqli_fetch_assoc($result);
+
+        if (!$data) {
+            error_log('No data found for report ID: ' . $reportID);
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function updateReportFeedback($reportID, $feedback)
+    {
+        try {
+            $reportID = mysqli_real_escape_string($this->db, $reportID);
+            $feedback = mysqli_real_escape_string($this->db, $feedback);
+
+            $sql = "
+            UPDATE plagiarism_reports 
+            SET 
+                feedback = '$feedback'
+            WHERE id = '$reportID'
+        ";
+
+            $result = mysqli_query($this->db, $sql);
+
+            if (!$result) {
+                error_log('Database Error in UpdateReportFeedback: ' . mysqli_error($this->db));
+                error_log('Failed SQL: ' . $sql);
+                return false;
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log('Exception in UpdateReportFeedback: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function updateReportGrade($reportID, $grade)
+    {
+        try {
+            $reportID = mysqli_real_escape_string($this->db, $reportID);
+            $grade = mysqli_real_escape_string($this->db, $grade);
+
+            $sql = "
+            UPDATE plagiarism_reports 
+            SET 
+                Grade = '$grade'
+            WHERE id = '$reportID'
+        ";
+
+            $result = mysqli_query($this->db, $sql);
+
+            if (!$result) {
+                error_log('Database Error in UpdateReportGrade: ' . mysqli_error($this->db));
+                error_log('Failed SQL: ' . $sql);
+                return false;
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log('Exception in UpdateReportGrade: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getSubmissionIDofReport($reportID)
+    {
+        try {
+            $reportID = mysqli_real_escape_string($this->db, $reportID);
+
+            $sql = "
+            SELECT submissionID 
+            FROM plagiarism_reports 
+            WHERE id = '$reportID'
+        ";
+
+            $result = mysqli_query($this->db, $sql);
+
+            if (!$result) {
+                error_log('Database Error in getSubmissionID: ' . mysqli_error($this->db));
+                error_log('Failed SQL: ' . $sql);
+                return false;
+            }
+
+            $row = mysqli_fetch_assoc($result);
+
+            return $row['submissionID'] ?? false;
+        } catch (Exception $e) {
+            error_log('Exception in getSubmissionID: ' . $e->getMessage());
+            return false;
+        }
+    }
+    public function getInstructorIDofReport($reportID)
+    {
+        try {
+            $reportID = mysqli_real_escape_string($this->db, $reportID);
+
+            $sql = "
+            SELECT a.userID AS instructorID
+            FROM plagiarism_reports pr
+            INNER JOIN submissions s ON pr.submissionID = s.ID
+            INNER JOIN assignments a ON s.assignmentID = a.ID
+            WHERE pr.ID = '$reportID'
+        ";
+
+            $result = mysqli_query($this->db, $sql);
+
+            if (!$result) {
+                error_log('Database Error in getInstructorIDofReport: ' . mysqli_error($this->db));
+                error_log('Failed SQL: ' . $sql);
+                return false;
+            }
+
+            $row = mysqli_fetch_assoc($result);
+
+            return $row['instructorID'] ?? false;
+        } catch (Exception $e) {
+            error_log('Exception in getInstructorIDofReport: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    function getReportIdBySubmissionId($submissionId) {
+        $submissionId = (int)$submissionId;
+    
+        $query = "SELECT ID FROM plagiarism_reports WHERE submissionID = $submissionId LIMIT 1";
+    
+        $result = mysqli_query($this->db, $query);
+    
+        if ($result && $row = $result->fetch_assoc()) {
+            return $row['ID'];
+        }
+    
+        return null;
+    }
+    
 }

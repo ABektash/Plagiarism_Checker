@@ -192,7 +192,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
     margin-top: 1rem;
   }
@@ -289,6 +289,7 @@
     border-radius: 5px;
     cursor: pointer;
     width: max-content;
+    transition: all 0.3s ease;
   }
   .Add-button:hover {
     background-color:  #02a793;

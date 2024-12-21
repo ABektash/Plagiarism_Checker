@@ -2,6 +2,7 @@
 require_once MODELS . 'Submission.php';
 require_once MODELS . 'Groups.php';
 require_once MODELS . 'Forums.php';
+require_once MODELS . 'User.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -26,6 +27,8 @@ class ProfileController extends Controller
 
         if (($id !== null) && ($userType == 2 || $userType == 3 || $userType == 4)) {
             $group = new Groups($this->db);
+            $user = new User($this->db );
+            $data= $user->getUserById($id);
             $data["groupsCount"] = $group->getUserGroupCountByUserID($_SESSION['user']['ID']);
 
             if ($userType == 2) {
@@ -36,6 +39,7 @@ class ProfileController extends Controller
                 $data["numberOfAssignments"] = count($assignments);
                 $data["assignments"] = $assignments;
                 $data["forumsData"] = $forumsData;
+                $data["userType"] = $userType;
             } elseif ($userType == 3) {
                 $submission = new Submission($this->db);
                 $forum = new Forums($this->db);
@@ -44,6 +48,50 @@ class ProfileController extends Controller
                 $data["numberOfAssignments"] = count($submissions);
                 $data["submissions"] = $submissions;
                 $data["forumsData"] = $forumsData;
+                $data["userType"] = $userType;
+            }
+
+            $this->view('profile', $data);
+        } else {
+
+            $data = [
+                "error_code" => 403,
+                "error_message" => "We're sorry, You don't have access to this page.",
+                "page_To_direct" => "home",
+            ];
+
+            $this->view('errorPage', $data);
+        }
+    }
+
+    public function student($id)
+    {
+        $userType = 3;
+
+        if (($id !== null) && ($userType == 2 || $userType == 3 || $userType == 4)) {
+            $group = new Groups($this->db);
+            $user = new User($this->db );
+            $data= $user->getUserById($id);
+            $data["groupsCount"] = $group->getUserGroupCountByUserID($id);
+
+            if ($userType == 2) {
+                $submission = new Submission($this->db);
+                $forum = new Forums($this->db);
+                $forumsData = $forum->getForumsData($id);
+                $assignments = $submission->getAssignmentsByUserID($id);
+                $data["numberOfAssignments"] = count($assignments);
+                $data["assignments"] = $assignments;
+                $data["forumsData"] = $forumsData;
+                $data["userType"] = $userType;
+            } elseif ($userType == 3) {
+                $submission = new Submission($this->db);
+                $forum = new Forums($this->db);
+                $forumsData = $forum->getForumsData($id);
+                $submissions = $submission->getSubmissionsByUserId($id);
+                $data["numberOfAssignments"] = count($submissions);
+                $data["submissions"] = $submissions;
+                $data["forumsData"] = $forumsData;
+                $data["userType"] = $userType;
             }
 
             $this->view('profile', $data);

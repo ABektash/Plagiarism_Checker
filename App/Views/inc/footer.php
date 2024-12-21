@@ -11,13 +11,15 @@
                 <img src="/Plagiarism_Checker/public/assets/images/linkedin_icon.png" alt="" />
             </div>
         </div>
-        <div class="footer-content-center">
-            <h2>JOIN US</h2>
-            <ul>
-                <li onclick="window.location.href='<?php url('login/index'); ?>'">Login</li>
-                <li onclick="window.location.href='<?php url('login/index'); ?>'">Sign Up</li>
-            </ul>
-        </div>
+        <?php if (!isset($_SESSION["user"])) {?>
+            <div class="footer-content-center">
+                <h2>JOIN US</h2>
+                <ul>
+                    <li onclick="window.location.href='<?php url('login/index'); ?>'">Login</li>
+                    <li onclick="window.location.href='<?php url('login/index'); ?>'">Sign Up</li>
+                </ul>
+            </div>
+        <?php }?>
         <div class="footer-content-right">
             <h2>GET IN TOUCH</h2>
             <ul>

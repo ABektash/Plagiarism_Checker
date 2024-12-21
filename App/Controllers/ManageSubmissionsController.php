@@ -1,5 +1,7 @@
 <?php
 require_once MODELS . 'Submission.php';
+require_once MODELS . 'PlagiarismReport.php';
+require_once MODELS . 'Forums.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -24,7 +26,16 @@ class ManageSubmissionsController extends Controller
 
         if (($id !== null) && ($userType == 1)) {
             $submission = new Submission($this->db);
+            $plagiarism = new PlagiarismReport($this->db);
+            $forum = new Forums($this->db);
+
             $submissions = $submission->getAllSubmissions();
+
+            foreach ($submissions as &$sub) {
+                $sub['reportID'] = $plagiarism->getReportIdBySubmissionId($sub['submissionID']);
+                $sub['forumID'] = $forum->getForumIdBySubmissionId($sub['submissionID']);
+            }
+
             $data["submissions"] = $submissions;
 
             $this->view('manageSubmissions', $data);

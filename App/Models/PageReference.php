@@ -1,6 +1,10 @@
 <?php
 class PageReference {
     private $db;
+    private $ID;
+    private $parentID;
+    private $pageID;
+
 
     public function __construct($db) {
         $this->db = $db;

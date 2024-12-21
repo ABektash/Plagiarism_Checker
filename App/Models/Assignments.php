@@ -9,12 +9,12 @@ require_once 'AssignmentSubject.php';
 class Assignments implements AssignmentSubject
 {
     private $conn;
-    public $UserID;
     public $ID;
     public $Title;
     public $Description;
     public $StartDate;
     public $DueDate;
+    public $UserID;
     public $groupID;
     public $assignments = [];
     private array $observers = [];
