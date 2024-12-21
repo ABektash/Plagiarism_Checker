@@ -65,7 +65,7 @@ class SignupController extends Controller
                 $PageReferenceModel = new PageReference($this->db);
                 $pageModel = new Page($this->db);
 
-                $allowedPageIds = $PageReferenceModel->getPagesByUserType(4);
+                $allowedPageIds = $PageReferenceModel->getPagesByParentID(4);
                 $_SESSION['pages'] = [];
 
                 foreach ($allowedPageIds as $pageId) {

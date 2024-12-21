@@ -53,10 +53,10 @@ class ManagePermissionsController extends Controller
             if ($userTypeID && !empty($chosenPages)) {
                 $chosenPages = array_unique($chosenPages);
 
-                $this->PageReferenceModel->deletePagesByUserType($userTypeID);
+                $this->PageReferenceModel->deletePagesByParentID($userTypeID);
 
                 foreach ($chosenPages as $pageId) {
-                    $this->PageReferenceModel->addPageToUserType($userTypeID, $pageId);
+                    $this->PageReferenceModel->addPageToParent($userTypeID, $pageId);
                 }
 
                 $data["result"] = "Success";
@@ -77,7 +77,7 @@ class ManagePermissionsController extends Controller
 
         $allPages = $this->pageModel->getAllPages();
 
-        $chosenPageIds = $this->PageReferenceModel->getPagesByUserType(4);
+        $chosenPageIds = $this->PageReferenceModel->getPagesByParentID(4);
 
         $availablePages = [];
         $chosenPages = [];

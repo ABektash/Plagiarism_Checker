@@ -804,14 +804,14 @@ class AdminTest extends TestCase
 
         $userPermissions = new PageReference($this->db);
 
-        $userPermissions->addPageToUserType($userTypeID, $pageID);
+        $userPermissions->addPageToParent($userTypeID, $pageID);
 
-        $pages = $userPermissions->getPagesByUserType($userTypeID);
+        $pages = $userPermissions->getPagesByParentID($userTypeID);
         $this->assertTrue(in_array($pageID, $pages), "Page should be added to the user type.");
 
-        $userPermissions->deletePagesByUserType($userTypeID);
+        $userPermissions->deletePagesByParentID($userTypeID);
 
-        $pages = $userPermissions->getPagesByUserType($userTypeID);
+        $pages = $userPermissions->getPagesByParentID($userTypeID);
         $this->assertEmpty($pages, "Pages should be deleted for the user type.");
     }
 

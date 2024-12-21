@@ -44,6 +44,186 @@ class InstructorTest extends TestCase
     }
 
 
+    public function testSignup()
+{
+    $first_name = 'John';
+    $last_name = 'Doe';
+    $email = 'johndoe@example.com';
+    $password = 'password123';  
+    $organization = 'Test Organization';
+    $address = '123 Test St, Test City';
+    $phone_number = '1234567890';
+    $birthday = '1990-01-01';
+
+    $user = new User($this->db); 
+
+    $user->first_name = $first_name;
+    $user->last_name = $last_name;
+    $user->email = $email;
+    $user->password = $password;
+    $user->organization = $organization;
+    $user->address = $address;
+    $user->phone_number = $phone_number;
+    $user->birthday = $birthday;
+
+    $result = $user->signup();
+
+    $this->assertTrue($result, "The signup should be successful.");
+
+    $query = $this->db->query("SELECT * FROM users WHERE Email = '$email'");
+    $user_data = $query->fetch_assoc();
+
+    $this->assertNotEmpty($user_data, "The user should exist in the database.");
+    $this->assertEquals($first_name, $user_data['FirstName'], "The first name should match the inserted value.");
+    $this->assertEquals($last_name, $user_data['LastName'], "The last name should match the inserted value.");
+    $this->assertEquals($email, $user_data['Email'], "The email should match the inserted value.");
+    $this->assertTrue(password_verify($password, $user_data['Password']), "The password should be hashed correctly.");
+    $this->assertEquals($organization, $user_data['Organization'], "The organization should match the inserted value.");
+    $this->assertEquals($address, $user_data['Address'], "The address should match the inserted value.");
+    $this->assertEquals($phone_number, $user_data['PhoneNumber'], "The phone number should match the inserted value.");
+    $this->assertEquals($birthday, $user_data['Birthday'], "The birthday should match the inserted value.");
+
+    $this->assertEquals($_SESSION['user']['ID'], $user_data['ID'], "The user ID in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['FirstName'], $first_name, "The first name in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['LastName'], $last_name, "The last name in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['Email'], $email, "The email in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['Organization'], $organization, "The organization in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['Address'], $address, "The address in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['PhoneNumber'], $phone_number, "The phone number in the session should match the database.");
+    $this->assertEquals($_SESSION['user']['Birthday'], $birthday, "The birthday in the session should match the database.");
+
+    $this->db->query("DELETE FROM users WHERE Email = '$email'");
+}
+
+
+public function testLogin()
+{
+    $email = 'johndoe@example.com';
+    $password = 'password123'; 
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id)
+              VALUES ('John', 'Doe', '$email', '$hashed_password', 'Test Organization', '123 Test St, Test City', '1234567890', '1990-01-01', 4)";
+    $this->db->query($query);
+
+    $user = new User($this->db); 
+
+    $result = $user->login($email, $password);
+
+    $this->assertIsArray($result, "The login should return user data.");
+    $this->assertEquals($email, $result['Email'], "The email should match the logged-in user.");
+    $this->assertEquals('John', $result['FirstName'], "The first name should match the logged-in user.");
+    $this->assertEquals('Doe', $result['LastName'], "The last name should match the logged-in user.");
+    
+    $this->assertEquals($_SESSION['user']['ID'], $result['ID'], "The user ID in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['FirstName'], 'John', "The first name in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['LastName'], 'Doe', "The last name in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['Email'], $email, "The email in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['Organization'], 'Test Organization', "The organization in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['Address'], '123 Test St, Test City', "The address in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['PhoneNumber'], '1234567890', "The phone number in the session should match the login result.");
+    $this->assertEquals($_SESSION['user']['Birthday'], '1990-01-01', "The birthday in the session should match the login result.");
+
+    // Test login with incorrect password
+    $incorrect_password = 'wrongpassword';
+    $result = $user->login($email, $incorrect_password);
+
+    $this->assertFalse($result, "The login should fail with incorrect password.");
+
+    // Test login with a non-existing email
+    $non_existing_email = 'nonexistent@example.com';
+    $result = $user->login($non_existing_email, $password);
+
+    $this->assertFalse($result, "The login should fail with a non-existing email.");
+}
+
+public function testEditUser()
+{
+    $user = new User($this->db); 
+
+    $first_name = 'John';
+    $last_name = 'Doe';
+    $email = 'johndoe@example.com';
+    $password = 'password123';
+    $organization = 'Test Organization';
+    $address = '123 Test St';
+    $phone_number = '1234567890';
+    $birthday = '1985-05-15';
+    $user_type_id = 2;
+
+    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
+              VALUES ('$first_name', '$last_name', '$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
+    mysqli_query($this->db, $query);
+    $user_id = mysqli_insert_id($this->db);
+
+    $new_first_name = 'Jane';
+    $new_last_name = 'Smith';
+    $new_email = 'janesmith@example.com';
+    $new_organization = 'New Organization';
+    $new_address = '456 New St';
+    $new_phone_number = '0987654321';
+    $new_birthday = '1990-01-01';
+    $new_password = 'newpassword456';
+    $new_user_type_id = 3;
+
+    $result = $user->editUser($user_id, $new_first_name, $new_last_name, $new_email, $new_organization, $new_address, $new_phone_number, $new_birthday, $new_password, $new_user_type_id);
+
+    $this->assertTrue($result, "User should be updated successfully.");
+
+    $query = "SELECT * FROM users WHERE id = '$user_id'";
+    $result = mysqli_query($this->db, $query);
+    $updated_user = mysqli_fetch_assoc($result);
+
+    $this->assertEquals($new_first_name, $updated_user['FirstName']);
+    $this->assertEquals($new_last_name, $updated_user['LastName']);
+    $this->assertEquals($new_email, $updated_user['Email']);
+    $this->assertEquals($new_organization, $updated_user['Organization']);
+    $this->assertEquals($new_address, $updated_user['Address']);
+    $this->assertEquals($new_phone_number, $updated_user['PhoneNumber']);
+    $this->assertEquals($new_birthday, $updated_user['Birthday']);
+    $this->assertTrue(password_verify($new_password, $updated_user['Password']));
+    $this->assertEquals($new_user_type_id, $updated_user['UserType_id']);
+
+    // Test case 2: Try to update with an already existing email
+    $existing_email = 'existingemail@example.com';
+    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
+              VALUES ('Existing', 'User', '$existing_email', '" . password_hash($password, PASSWORD_DEFAULT) . "', 'Existing Org', '789 Existing St', '1122334455', '1992-02-02', 2)";
+    mysqli_query($this->db, $query);
+
+    $result = $user->editUser($user_id, $new_first_name, $new_last_name, $existing_email, $new_organization, $new_address, $new_phone_number, $new_birthday, $new_password, $new_user_type_id);
+
+    $this->assertFalse($result, "User update should fail because the email already exists.");
+}
+
+public function testResetPassword()
+{
+    $user = new User($this->db); 
+
+    $email = 'johndoe@example.com';
+    $original_password = 'originalPassword123';
+    $new_password = 'newPassword456';
+
+    $hashed_password = password_hash($original_password, PASSWORD_DEFAULT);
+    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
+              VALUES ('John', 'Doe', '$email', '$hashed_password', 'Test Org', '123 Test St', '1234567890', '1985-05-15', 2)";
+    mysqli_query($this->db, $query);
+
+    $result = $user->resetPassword($email, $new_password);
+    
+    $this->assertTrue($result, "Password reset should be successful.");
+
+    $query = "SELECT Password FROM users WHERE Email = '$email'";
+    $result = mysqli_query($this->db, $query);
+    $updated_user = mysqli_fetch_assoc($result);
+
+    $this->assertTrue(password_verify($new_password, $updated_user['Password']), "The new password should be hashed and match the entered password.");
+
+    $non_existing_email = 'nonexistent@example.com';
+    
+    $result = $user->resetPassword($non_existing_email, $new_password);
+}
+
+
     public function testGetAssignmentById()
     {
         $assignments = new Assignments($this->db);
@@ -322,184 +502,7 @@ class InstructorTest extends TestCase
     }
 
 
-    public function testSignup()
-{
-    $first_name = 'John';
-    $last_name = 'Doe';
-    $email = 'johndoe@example.com';
-    $password = 'password123';  
-    $organization = 'Test Organization';
-    $address = '123 Test St, Test City';
-    $phone_number = '1234567890';
-    $birthday = '1990-01-01';
-
-    $user = new User($this->db); 
-
-    $user->first_name = $first_name;
-    $user->last_name = $last_name;
-    $user->email = $email;
-    $user->password = $password;
-    $user->organization = $organization;
-    $user->address = $address;
-    $user->phone_number = $phone_number;
-    $user->birthday = $birthday;
-
-    $result = $user->signup();
-
-    $this->assertTrue($result, "The signup should be successful.");
-
-    $query = $this->db->query("SELECT * FROM users WHERE Email = '$email'");
-    $user_data = $query->fetch_assoc();
-
-    $this->assertNotEmpty($user_data, "The user should exist in the database.");
-    $this->assertEquals($first_name, $user_data['FirstName'], "The first name should match the inserted value.");
-    $this->assertEquals($last_name, $user_data['LastName'], "The last name should match the inserted value.");
-    $this->assertEquals($email, $user_data['Email'], "The email should match the inserted value.");
-    $this->assertTrue(password_verify($password, $user_data['Password']), "The password should be hashed correctly.");
-    $this->assertEquals($organization, $user_data['Organization'], "The organization should match the inserted value.");
-    $this->assertEquals($address, $user_data['Address'], "The address should match the inserted value.");
-    $this->assertEquals($phone_number, $user_data['PhoneNumber'], "The phone number should match the inserted value.");
-    $this->assertEquals($birthday, $user_data['Birthday'], "The birthday should match the inserted value.");
-
-    $this->assertEquals($_SESSION['user']['ID'], $user_data['ID'], "The user ID in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['FirstName'], $first_name, "The first name in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['LastName'], $last_name, "The last name in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['Email'], $email, "The email in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['Organization'], $organization, "The organization in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['Address'], $address, "The address in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['PhoneNumber'], $phone_number, "The phone number in the session should match the database.");
-    $this->assertEquals($_SESSION['user']['Birthday'], $birthday, "The birthday in the session should match the database.");
-
-    $this->db->query("DELETE FROM users WHERE Email = '$email'");
-}
-
-
-public function testLogin()
-{
-    $email = 'johndoe@example.com';
-    $password = 'password123'; 
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id)
-              VALUES ('John', 'Doe', '$email', '$hashed_password', 'Test Organization', '123 Test St, Test City', '1234567890', '1990-01-01', 4)";
-    $this->db->query($query);
-
-    $user = new User($this->db); 
-
-    $result = $user->login($email, $password);
-
-    $this->assertIsArray($result, "The login should return user data.");
-    $this->assertEquals($email, $result['Email'], "The email should match the logged-in user.");
-    $this->assertEquals('John', $result['FirstName'], "The first name should match the logged-in user.");
-    $this->assertEquals('Doe', $result['LastName'], "The last name should match the logged-in user.");
     
-    $this->assertEquals($_SESSION['user']['ID'], $result['ID'], "The user ID in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['FirstName'], 'John', "The first name in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['LastName'], 'Doe', "The last name in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['Email'], $email, "The email in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['Organization'], 'Test Organization', "The organization in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['Address'], '123 Test St, Test City', "The address in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['PhoneNumber'], '1234567890', "The phone number in the session should match the login result.");
-    $this->assertEquals($_SESSION['user']['Birthday'], '1990-01-01', "The birthday in the session should match the login result.");
-
-    // Test login with incorrect password
-    $incorrect_password = 'wrongpassword';
-    $result = $user->login($email, $incorrect_password);
-
-    $this->assertFalse($result, "The login should fail with incorrect password.");
-
-    // Test login with a non-existing email
-    $non_existing_email = 'nonexistent@example.com';
-    $result = $user->login($non_existing_email, $password);
-
-    $this->assertFalse($result, "The login should fail with a non-existing email.");
-}
-
-public function testEditUser()
-{
-    $user = new User($this->db); 
-
-    $first_name = 'John';
-    $last_name = 'Doe';
-    $email = 'johndoe@example.com';
-    $password = 'password123';
-    $organization = 'Test Organization';
-    $address = '123 Test St';
-    $phone_number = '1234567890';
-    $birthday = '1985-05-15';
-    $user_type_id = 2;
-
-    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
-              VALUES ('$first_name', '$last_name', '$email', '" . password_hash($password, PASSWORD_DEFAULT) . "', '$organization', '$address', '$phone_number', '$birthday', '$user_type_id')";
-    mysqli_query($this->db, $query);
-    $user_id = mysqli_insert_id($this->db);
-
-    $new_first_name = 'Jane';
-    $new_last_name = 'Smith';
-    $new_email = 'janesmith@example.com';
-    $new_organization = 'New Organization';
-    $new_address = '456 New St';
-    $new_phone_number = '0987654321';
-    $new_birthday = '1990-01-01';
-    $new_password = 'newpassword456';
-    $new_user_type_id = 3;
-
-    $result = $user->editUser($user_id, $new_first_name, $new_last_name, $new_email, $new_organization, $new_address, $new_phone_number, $new_birthday, $new_password, $new_user_type_id);
-
-    $this->assertTrue($result, "User should be updated successfully.");
-
-    $query = "SELECT * FROM users WHERE id = '$user_id'";
-    $result = mysqli_query($this->db, $query);
-    $updated_user = mysqli_fetch_assoc($result);
-
-    $this->assertEquals($new_first_name, $updated_user['FirstName']);
-    $this->assertEquals($new_last_name, $updated_user['LastName']);
-    $this->assertEquals($new_email, $updated_user['Email']);
-    $this->assertEquals($new_organization, $updated_user['Organization']);
-    $this->assertEquals($new_address, $updated_user['Address']);
-    $this->assertEquals($new_phone_number, $updated_user['PhoneNumber']);
-    $this->assertEquals($new_birthday, $updated_user['Birthday']);
-    $this->assertTrue(password_verify($new_password, $updated_user['Password']));
-    $this->assertEquals($new_user_type_id, $updated_user['UserType_id']);
-
-    // Test case 2: Try to update with an already existing email
-    $existing_email = 'existingemail@example.com';
-    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
-              VALUES ('Existing', 'User', '$existing_email', '" . password_hash($password, PASSWORD_DEFAULT) . "', 'Existing Org', '789 Existing St', '1122334455', '1992-02-02', 2)";
-    mysqli_query($this->db, $query);
-
-    $result = $user->editUser($user_id, $new_first_name, $new_last_name, $existing_email, $new_organization, $new_address, $new_phone_number, $new_birthday, $new_password, $new_user_type_id);
-
-    $this->assertFalse($result, "User update should fail because the email already exists.");
-}
-
-public function testResetPassword()
-{
-    $user = new User($this->db); 
-
-    $email = 'johndoe@example.com';
-    $original_password = 'originalPassword123';
-    $new_password = 'newPassword456';
-
-    $hashed_password = password_hash($original_password, PASSWORD_DEFAULT);
-    $query = "INSERT INTO users (FirstName, LastName, Email, Password, Organization, Address, PhoneNumber, Birthday, UserType_id) 
-              VALUES ('John', 'Doe', '$email', '$hashed_password', 'Test Org', '123 Test St', '1234567890', '1985-05-15', 2)";
-    mysqli_query($this->db, $query);
-
-    $result = $user->resetPassword($email, $new_password);
-    
-    $this->assertTrue($result, "Password reset should be successful.");
-
-    $query = "SELECT Password FROM users WHERE Email = '$email'";
-    $result = mysqli_query($this->db, $query);
-    $updated_user = mysqli_fetch_assoc($result);
-
-    $this->assertTrue(password_verify($new_password, $updated_user['Password']), "The new password should be hashed and match the entered password.");
-
-    $non_existing_email = 'nonexistent@example.com';
-    
-    $result = $user->resetPassword($non_existing_email, $new_password);
-}
 
     private function mockResult(array $rows)
     {

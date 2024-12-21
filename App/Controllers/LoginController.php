@@ -54,7 +54,7 @@ class LoginController extends Controller
                     $_SESSION['user'] = $login_result;
                     $PageReferenceModel = new PageReference($this->db);
                     $pageModel = new Page($this->db);
-                    $allowedPageIds = $PageReferenceModel->getPagesByUserType($_SESSION['user']['UserType_id']);
+                    $allowedPageIds = $PageReferenceModel->getPagesByParentID($_SESSION['user']['UserType_id']);
                     $_SESSION['pages'] = [];
 
                     foreach ($allowedPageIds as $pageId) {

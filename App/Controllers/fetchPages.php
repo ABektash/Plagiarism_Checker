@@ -20,7 +20,7 @@ if (isset($_POST['userType'])) {
     $PageReferenceModel = new PageReference($conn);
 
     $availablePages = $pageModel->getAllPages();
-    $chosenPages = $PageReferenceModel->getPagesByUserType($userTypeID);
+    $chosenPages = $PageReferenceModel->getPagesByParentID($userTypeID);
 
     $response = [
         'availablePages' => $availablePages,

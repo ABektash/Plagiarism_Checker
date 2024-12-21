@@ -187,6 +187,11 @@
 
 </body>
 
+<script>
+    <?php $editAssignmentUrl = redirect("ManageAssignmentsAdmin/editAssignment");?>
+    const editAssignmentUrl = "<?php echo htmlspecialchars($editAssignmentUrl, ENT_QUOTES); ?>";
+</script>
+
 <script src="/Plagiarism_Checker/public\assets\js\manageAssignmentsAdmin.js"></script>
 <script src="/Plagiarism_Checker/public/assets/js/manageGroups.js"></script>
 

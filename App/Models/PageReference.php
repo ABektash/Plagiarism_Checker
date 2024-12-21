@@ -10,8 +10,8 @@ class PageReference {
         $this->db = $db;
     }
 
-    public function getPagesByUserType($userTypeID) {
-        $query = "SELECT PageID FROM page_reference WHERE ParentPageID = $userTypeID";
+    public function getPagesByParentID($parentID) {
+        $query = "SELECT PageID FROM page_reference WHERE ParentPageID = $parentID";
         $result = $this->db->query($query);
         $pages = [];
 
@@ -22,13 +22,13 @@ class PageReference {
         return $pages;
     }
 
-    public function deletePagesByUserType($userTypeID) {
-        $sql = "DELETE FROM page_reference WHERE ParentPageID = $userTypeID";
+    public function deletePagesByParentID($parentID) {
+        $sql = "DELETE FROM page_reference WHERE ParentPageID = $parentID";
         $this->db->query($sql);
     }
 
-    public function addPageToUserType($userTypeID, $pageId) {
-        $sql = "INSERT INTO page_reference (ParentPageID, PageID) VALUES ($userTypeID, $pageId)";
+    public function addPageToParent($parentID, $pageId) {
+        $sql = "INSERT INTO page_reference (ParentPageID, PageID) VALUES ($parentID, $pageId)";
         $this->db->query($sql);
     }
 }
